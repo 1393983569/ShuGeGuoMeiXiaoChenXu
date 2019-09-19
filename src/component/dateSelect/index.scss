@@ -1,0 +1,50 @@
+$theme: #8BC34A;
+.box{
+  font-size: 17Px;
+  height: 50Px;
+  line-height: 50Px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  padding: 0 10Px;
+
+  &-content{
+    z-index: 999;
+    position: relative;
+    height: 30Px;
+    line-height: 30Px;
+    border-bottom: 1Px solid $theme;
+    &-year,&-month,&-day{
+      width: 30Px;
+      text-align: center;
+      display: inline-block;
+      &::after{
+        color: $theme;
+        content: '|'
+      }
+    }
+    &-dayNum,&-monthNum,&-yearNum{
+      text-align: center;
+      display: inline-block;
+      padding-left: 10Px;
+      &::after{
+        display: inline-block;
+        padding-left: 10Px;
+        color: $theme;
+        content: '▼'
+      }
+    }
+    &-list{
+      width: 100%;
+      white-space: nowrap;
+      height: 200Px;
+      position: absolute;
+      text-align: center;
+      display: block;
+      top: 29Px;
+      background-color: #8BC34A;
+      overflow: scroll;
+    }
+  }
+}

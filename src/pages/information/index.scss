@@ -1,0 +1,55 @@
+$back-color: #8BC34A;
+.box{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: #F6F6F6;
+  // overflow: hidden;
+  .head{
+    width: 100%;
+    display: flex;
+    height: 40Px;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    background-color: $back-color;
+    &-button{
+      &::after {
+        border: none;
+      }
+      height: 30Px;
+      width: 156Px;
+      border: 1Px solid #ffffff;
+      background-color: rgba(245, 245, 245, 0);
+      border-radius: 15Px;
+    }
+  }
+  &-content{
+    height: 100Px;
+    margin: 8Px 8Px;
+    padding: 10Px;
+    overflow: scroll;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    // &:last-child{
+    //   margin-bottom: 100Px;
+    // }
+    &-text{
+      width: 100%;
+      position: relative;
+      word-break: break-all;
+      word-wrap: break-word;
+      &-date{
+        position: absolute;
+        bottom: 0;
+        font-size: 12Px;
+        color: #999999;
+      }
+    }
+    &-headline{
+      font-size: 14Px;
+    }
+  }
+}

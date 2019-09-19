@@ -1,0 +1,216 @@
+@mixin menu-plus-subtract {
+  width: 17Px;
+  height: 17Px;
+  line-height: 17Px;
+  text-align: center;
+  background-color: #8BC34A;
+  border-radius: 3Px;
+  overflow: hidden;
+}
+.box{
+  position: fixed;
+  max-height: 100vh;
+  top: 30Px;
+  // height: 100%;
+  // overflow: auto;
+  overflow-y:scroll;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  &-left{
+    width:25%;
+    overflow: scroll;
+    background-color: #F9F9F9;
+    &-stair{
+      display: flex;
+      justify-content: space-between;
+      font-size: 17Px;
+      background-color: #eeeeee;
+      text-align: center;
+      // height: 50Px;
+      // line-height: 50Px;
+      padding: 10Px 10Px;
+      box-sizing: border-box;
+      color: #222222;
+    }
+    &-stair:active{
+      background-color: #dadada;
+    }
+    &-centre{
+      color: #999999;
+      height: 40Px;
+      line-height: 40Px;
+      text-align: center;
+      font-size: 14Px;
+    }
+    &-show{
+      overflow: hidden;
+      display: block;
+      // max-height: 0;
+      // transition: max-height 1s
+    }
+    &-hide{
+      overflow: hidden;
+      display: none;
+      // max-height: 2000px;
+      // transition: max-heigh 1s
+    }
+    &-showColor{
+      color: #8BC34A;
+    }
+    &-hideColor{
+      color: #999999;
+    }
+  }
+  &-right{
+    flex: 1;
+    padding: 14Px 9Px;
+    // width:75%;
+    overflow: scroll;
+  }
+}
+.menu{
+  display: flex;
+  flex-direction: row;
+  padding: 10Px;
+  &-left{
+    height: 60Px;
+    // width: 60Px;
+  }
+  &-right{
+    flex: 1;
+    padding-left: 10Px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: space-around;
+  }
+  &-centre-text{
+    margin-right: 5Px;
+    font-size: 13Px;
+  }
+  &-top-text{
+    font-size: 17Px;
+  }
+  &-centre-price{
+    display: inline-block;
+    color: #FF9800;
+    width: 50%;
+  }
+  &-centre-num{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    line-height: 22Px;
+    align-items: space-around;
+    width: 50%;
+    &-left{
+      @include menu-plus-subtract;
+      color: #F9F9F9;
+    }
+    &-right{
+      @include menu-plus-subtract;
+    }
+    &-centre{
+
+    }
+  }
+  &-bottom-text{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10Px;
+  }
+  &-centre{
+    &-icon{
+      font-size: 16Px;
+      color: #8BC34A;
+    }
+  }
+  &-inventory{
+    margin-top: 10Px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.border-menu{
+  display: flex;
+  font-size: 14Px;
+  align-items: center;
+  height: 40Px;
+  &-left{
+    height: 20Px;
+    width: 50%;
+    border-left: 2Px solid #8BC34A;
+    padding-left: 5Px;
+  }
+  &-right{
+    height: 20Px;
+    width: 50%;
+    border-left: 2Px solid #8BC34A;
+    padding-left: 5Px;
+  }
+}
+
+.heat-date{
+  background-color: #8BC34A;
+  color: #fff;
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  line-height: 30Px;
+  height: 30Px;
+  z-index: 6;
+  &-right{
+    color: #fff;
+    position: absolute;
+    top: -8Px;
+    font-weight: 700;
+    right: 10Px;
+    font-size: 24Px;
+  }
+  &-dialogBox{
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 0 5Px #333;
+    top: 25Px;
+    right: 10Px;
+    color: #666;
+    z-index: 6;
+    border-radius: 5Px;
+    &:before{
+      content: '';
+      position: absolute;
+      top: -20Px;
+      right: 15Px;
+      width: 0;
+      height: 0;
+      border:  10Px solid;
+      border-color: transparent transparent #fff transparent;
+    }
+    &-item{
+      font-size: 14Px;
+      padding: 10Px;
+      box-sizing: border-box;
+      display: flex;
+      &-left{
+        &-text{
+          font-size: 16Px;
+          margin-right: 5Px;
+        }
+      }
+      &:not(:last-child){
+        border-bottom: #DCDFE6 1Px solid;
+      }
+    }
+
+  }
+  &-dialogBoxHide{
+    display: none;
+  }
+}

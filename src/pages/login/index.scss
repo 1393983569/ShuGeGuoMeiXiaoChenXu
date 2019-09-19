@@ -1,0 +1,55 @@
+.index{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.boxForm{
+  width: 260Px;
+}
+.inputForm{
+  display: block;
+  margin-bottom: 35%;
+  height: 50Px !important;
+}
+.buttonForm{
+  margin-bottom: 22%;
+  &-button{
+    background-color: #8BC34A !important;
+    color: #fff !important;
+    border: #8BC34A solid 1Px !important;
+    height: 40Px !important;
+    line-height: 40Px !important;
+  }
+}
+.inputCustom{
+  margin-bottom: 10Px;
+  height: 50Px;
+  line-height: 50Px;
+  border-radius: 6Px;
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+  padding-left: 20px;
+}
+.textForm{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  color: #FEFEFF;
+  font-weight: 700;
+  font-size: 20Px;
+  text-align: center;
+  margin-bottom: 25%;
+  &-text {
+    flex: 1;
+    margin-bottom: 10Px
+  }
+  &-text-b{
+    font-size: 14Px;
+  }
+}

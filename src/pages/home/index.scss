@@ -1,0 +1,85 @@
+.box{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  .head{
+    background-color: rgba(65, 77, 85, 0.5);
+    color: #EAEBEC;
+    font-size: 16Px;
+    height: 45Px;
+    line-height: 45Px;
+    font-weight: 700;
+    padding: 0 10Px;
+    position: relative;
+    box-sizing: border-box;
+    .hint{
+      float: right;
+      position: relative;
+      &-icon{
+        font-size: 20Px;
+        color: #EAEBEC;
+      }
+      .dot{
+        position: absolute;
+        width: 10Px;
+        height: 10Px;
+        border-radius: 5Px;
+        background:#E51C23;
+        top: 5Px;
+        right:-5Px;
+      }
+    }
+  }
+  .marketing{
+    display: flex;
+    padding: 15Px 14Px;
+    flex-direction: row;
+    height: 90Px;
+    background-color: #444C52;
+    justify-content: left;
+    align-items: center;
+    .marketingText{
+      display: inline-block;
+      margin-left: 15Px;
+      color: #FEFEFF;
+      font-size: 16Px;
+      font-weight: 700;
+    }
+    &-icon{
+      font-size: 35Px;
+      color: #FEFEFF;
+    }
+  }
+  .statement{
+    .text{
+      padding-left: 20Px;
+      height: 110Px;
+      line-height: 110Px;
+      background-color: rgba(66, 74, 81, 0.5);
+      color: #FEFEFF;
+      font-size: 600;
+    }
+    .icon-bar{
+      color: #FEFEFF;
+      display: flex;
+      padding: 0 20Px;
+      height: 90Px;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.4);
+      &-icon{
+        font-size: 24Px;
+      }
+      &-item{
+        margin: 0 10Px;
+      }
+    }
+  }
+}
+
+

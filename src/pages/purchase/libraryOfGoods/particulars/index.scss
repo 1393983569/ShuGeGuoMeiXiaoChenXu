@@ -1,0 +1,68 @@
+.box{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: #F6F6F6;
+  &-imge{
+    width: 100%;
+    height: 260Px;
+  }
+  &-one{
+    font-size: 16Px;
+    padding: 0 10Px;
+    margin-bottom: 10Px;
+    background-color: #fff;
+    &-name{
+      display: flex;
+      flex-wrap: wrap;
+      View{
+        width: 48%;
+        border-left: #8BC34A 2Px solid;
+        margin: 10Px 0;
+        padding-left: 5Px;
+      }
+    }
+  }
+  &-tow{
+    padding: 0 10Px;
+    margin-bottom: 10Px;
+    background-color: #fff;
+    font-size: 16Px;
+    View{
+      height: 30Px;
+      line-height: 30Px;
+    }
+  }
+
+  &-button{
+    width: 70%;
+    border-radius: 25Px;
+    background-color: #8BC34A !important;
+    line-height: 40Px !important;
+    margin-top: 10Px !important;
+    color: #fff !important;
+    border: #8BC34A 1Px solid !important;
+  }
+
+  &-button:active{
+    background-color: rgb(122, 172, 66) !important;
+  }
+
+  &-head{
+    position: relative;
+    &-state{
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      height: 20Px;
+      width: 80Px;
+      line-height: 40Px;
+      height: 40Px;
+      background-color: #8C8C8C;
+      font-size: 14Px;
+      padding: 0 5Px;
+      color: #fff;
+      text-align: center;
+    }
+  }
+}

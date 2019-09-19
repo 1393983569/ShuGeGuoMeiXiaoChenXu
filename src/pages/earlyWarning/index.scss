@@ -1,0 +1,37 @@
+.box{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: #F6F6F6;
+  box-sizing: border-box;
+  padding: 11Px 14Px;
+  &-content{
+    padding: 10Px;
+    background-color: #fff;
+    border-radius: 6Px;
+    margin-bottom: 9Px;
+    &-button{
+      width: 70Px;
+      height: 24Px;
+      line-height: 24Px !important;
+      font-size: 12Px;
+    }
+    &-hear{
+      height: 50Px;
+      line-height: 50Px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1Px solid #eeeeee;
+    }
+    &-input{
+      border: 1Px solid #eeeeee;
+      margin-top: 10Px;
+    }
+    &-bottom{
+      color: #999999;
+      margin-top: 11Px;
+      font-size: 14Px;
+    }
+  }
+}

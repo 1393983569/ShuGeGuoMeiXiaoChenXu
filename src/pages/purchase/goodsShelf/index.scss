@@ -1,0 +1,133 @@
+@mixin menu-plus-subtract {
+  width: 17Px;
+  height: 17Px;
+  line-height: 17Px;
+  text-align: center;
+  background-color: #8BC34A;
+  border-radius: 3Px;
+  overflow: hidden;
+}
+.box{
+  position: fixed;
+  max-height: 100vh;
+  // height: 100%;
+  // overflow: auto;
+  overflow-y:scroll;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  &-left{
+    width:25%;
+    overflow: scroll;
+    background-color: #F9F9F9;
+    &-stair{
+      display: flex;
+      justify-content: space-between;
+      font-size: 17Px;
+      background-color: #eeeeee;
+      text-align: center;
+      // height: 50Px;
+      // line-height: 50Px;
+      padding: 10Px 10Px;
+      box-sizing: border-box;
+      color: #222222;
+    }
+    &-stair:active{
+      background-color: #dadada;
+    }
+    &-down:after{
+      color: #8BC34A;
+      float: right;
+      content: '▼'
+    }
+    &-up:after{
+      color: #8BC34A;
+      float: right;
+      content: '▲'
+    }
+    &-centre{
+      color: #999999;
+      height: 40Px;
+      line-height: 40Px;
+      text-align: center;
+      font-size: 14Px;
+    }
+    &-show{
+      overflow: hidden;
+      display: block;
+      // max-height: 0;
+      // transition: max-height 1s
+    }
+    &-hide{
+      overflow: hidden;
+      display: none;
+      // max-height: 2000px;
+      // transition: max-heigh 1s
+    }
+    &-showColor{
+      color: #8BC34A;
+    }
+    &-hideColor{
+      color: #999999;
+    }
+  }
+  &-right{
+    padding: 14Px 9Px;
+    width:75%;
+    overflow: scroll;
+  }
+}
+.menu{
+  display: flex;
+  flex-direction: row;
+  padding: 10Px;
+  border-bottom: 1Px #ECECEC solid;
+  &-left{
+    height: 90Px;
+    // width: 90Px;
+  }
+  &-right{
+    flex: 1;
+    padding-left: 10Px;
+  }
+  &-centre-text{
+    margin-right: 5Px;
+    font-size: 13Px;
+  }
+  &-top-text{
+    font-size: 17Px;
+  }
+  &-centre-price{
+    display: inline-block;
+    color: #FF9800;
+    width: 50%;
+  }
+  &-centre-num{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    line-height: 22Px;
+    align-items: center;
+    width: 50%;
+    &-left{
+      @include menu-plus-subtract;
+      color: #F9F9F9;
+    }
+    &-right{
+      @include menu-plus-subtract;
+      color: #F9F9F9;
+    }
+    &-centre{
+
+    }
+  }
+  &-bottom-text{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10Px;
+  }
+}

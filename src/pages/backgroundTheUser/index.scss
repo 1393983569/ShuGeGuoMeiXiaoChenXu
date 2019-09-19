@@ -1,0 +1,32 @@
+.box{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: #F6F6F6;
+  &-content{
+    padding: 11Px 14Px;
+    &-item{
+      background-color: #ffffff;
+      border-radius: 6Px;
+      padding: 11Px 11Px;
+      display: flex;
+      &-left{
+        border-right: 1Px solid #8BC34A;
+        height: 40Px;
+        width: 39%;
+        display: flex;
+        align-items: center;
+        padding-right: 7Px;
+        word-break: break-all;
+        word-wrap: break-word;
+      }
+      &-right{
+        width: 60%;
+        height: 40Px;
+        display: flex;
+        align-items: center;
+        padding-left: 7Px;
+      }
+    }
+  }
+}

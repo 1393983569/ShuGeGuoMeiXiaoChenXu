@@ -1,0 +1,20 @@
+.box{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: #F6F6F6;
+  &-content{
+    margin: 10Px 14Px;
+    padding: 10Px 14Px;
+    border-radius: 6Px;
+    background-color: #ffffff;
+    font-size: 14Px;
+    View{
+      height: 50Px;
+      line-height: 50Px;
+    }
+    View:not(last-child){
+      border-bottom: 1Px solid #F7F7F7;
+    }
+  }
+}

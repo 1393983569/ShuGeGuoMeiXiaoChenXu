@@ -1,0 +1,32 @@
+.box{
+  font-size: 14Px;
+  padding: 10Px 10Px;
+  background-color: #ffffff;
+  .head{
+    height: 50Px;
+    line-height: 50Px;
+    border-bottom: 1Px solid #eeeeee;
+  }
+  .content{
+    &-text{
+      position: relative;
+      display: flex;
+      justify-content: flex-start;
+      align-items: inherit;
+      flex-direction: row;
+      &::after{
+        width: 2Px;
+        height: 25Px;
+        position: absolute;
+        top: 8Px;
+        background-color: #8BC34A;
+        content: '';
+      }
+      View{
+        margin-left: 5Px;
+        width: 50%;
+        line-height: 40Px;
+      }
+    }
+  }
+}

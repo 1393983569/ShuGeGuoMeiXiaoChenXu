@@ -1,0 +1,227 @@
+@mixin menu-plus-subtract {
+  width: 17Px;
+  height: 17Px;
+  line-height: 17Px;
+  text-align: center;
+  background-color: #8BC34A;
+  border-radius: 3Px;
+  overflow: hidden;
+}
+.box{
+  position: fixed;
+  max-height: 100vh;
+  // height: 100%;
+  // overflow: auto;
+  overflow-y:scroll;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  &-left{
+    width:25%;
+    overflow: scroll;
+    background-color: #F9F9F9;
+    &-stair{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 17Px;
+      background-color: #eeeeee;
+      text-align: center;
+      // height: 50Px;
+      // line-height: 50Px;
+      padding: 10Px 10Px;
+      box-sizing: border-box;
+      color: #222222;
+      text-align: center;
+    }
+    &-location:last-child{
+      margin-bottom: 100Px;
+    }
+    &-stair:active{
+      background-color: #dadada;
+    }
+    // &-down:after{
+    //   color: #8BC34A;
+    //   float: right;
+    //   content: '▼'
+    // }
+    // &-up:after{
+    //   color: #8BC34A;
+    //   float: right;
+    //   content: '▲'
+    // }
+    &-centre{
+      color: #999999;
+      height: 40Px;
+      line-height: 40Px;
+      text-align: center;
+      font-size: 14Px;
+    }
+    &-show{
+      overflow: hidden;
+      display: block;
+      // max-height: 0;
+      // transition: max-height 1s
+    }
+    &-hide{
+      overflow: hidden;
+      display: none;
+      // max-height: 2000px;
+      // transition: max-heigh 1s
+    }
+    &-showColor{
+      color: #8BC34A;
+    }
+    &-hideColor{
+      color: #999999;
+    }
+  }
+  &-right{
+    padding: 14Px 9Px;
+    // width:75%;
+    overflow: scroll;
+    flex: 1;
+  }
+}
+.menu{
+  display: flex;
+  flex-direction: row;
+  padding: 10Px;
+  &-left{
+    height: 60Px;
+    // width: 60Px;
+  }
+  &-right{
+    flex: 1;
+    padding-left: 10Px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: space-around;
+  }
+  &-centre-text{
+    margin-right: 5Px;
+    font-size: 13Px;
+  }
+  &-top-text{
+    font-size: 17Px;
+  }
+  &-centre-price{
+    display: inline-block;
+    color: #FF9800;
+    width: 50%;
+  }
+  &-centre-num{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    line-height: 22Px;
+    align-items: space-around;
+    width: 50%;
+    &-left{
+      @include menu-plus-subtract;
+      color: #F9F9F9;
+    }
+    &-right{
+      @include menu-plus-subtract;
+    }
+    &-centre{
+
+    }
+  }
+  &-bottom-text{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10Px;
+  }
+  &-centre{
+    &-icon{
+      font-size: 16Px;
+      color: #8BC34A;
+    }
+  }
+  &-inventory{
+    margin-top: 10Px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.down-content{
+  font-size: 16Px;
+  &-input{
+    vertical-align: center;
+    display: flex;
+  }
+  &-balance{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &-state{
+      width: 50Px;
+      height: 30Px;
+      line-height: 30Px;
+      text-align: center;
+      border: #999999 1Px solid;
+      border-radius: 4Px;
+      color: #999;
+    }
+  }
+  View{
+    margin: 5Px 0;
+  }
+  &-loss{
+    display: flex;
+    justify-content: space-between;
+    &-state{
+      width: 48%;
+      height: 30Px;
+      line-height: 30Px;
+      text-align: center;
+      border: #999999 1Px solid;
+      border-radius: 4Px;
+      color: #999;
+    }
+  }
+}
+
+.add-bottom{
+  width: 100%;
+  height: 90Px;
+  background-color: #fff;
+  position: fixed;
+  border-radius: 30Px 30Px 0 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 -1Px 1Px 0 rgb(233, 233, 233);
+  &-button{
+    width: 75%;
+    height: 40Px;
+    line-height: 40Px;
+    background-color: #8BC34A !important;
+    color: #fff;
+    &:active{
+      background-color: rgb(127, 179, 68) !important;
+    }
+  }
+}
+
+.box-head-time{
+  color: #fff;
+  background: #8BC34A;
+  padding: 5Px 14Px;
+  font-size: 14Px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  View{
+    display: inline-block;
+  }
+}

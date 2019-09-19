@@ -1,0 +1,17 @@
+.bottomBar{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 90Px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background: #FFFFFF;
+  width: 100%;
+  border-radius: 20Px 20Px 0 0;
+  box-shadow: 0 -1Px 1Px 0 rgb(233, 233, 233);
+  align-items: center;
+  text-align: center;
+  color: #999999;
+  z-index:4;
+}
