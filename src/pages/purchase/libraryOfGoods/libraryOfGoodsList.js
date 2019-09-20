@@ -42,7 +42,7 @@ export default class Index extends Component{
           menuListData.map((item, index) => {
             return (
               <View key={`${index}_me`} style={'border-bottom: 1Px #ECECEC solid;'}>
-                <View className='menu'>
+                <View className='menu' onClick={this.shopParticulars.bind(this)}>
                   <View className='menu-left'>
                     <Image
                       style='width: 60Px;height: 60Px;background: #fff;'
@@ -65,10 +65,10 @@ export default class Index extends Component{
                 </View>
                 <View className='border-menu'>
                   <View className='border-menu-left'>
-                    零售价
+                    零售价: {parseInt(item.price) * 0.01}￥
                   </View>
                   <View className='border-menu-right'>
-                    折扣价
+                    折扣价: 字段待定
                   </View>
                 </View>
               </View>
@@ -226,6 +226,13 @@ export default class Index extends Component{
   showInventoryRecords(url, e) {
     Taro.navigateTo({
       url: url
+    })
+  }
+
+  // 跳转商品详情
+  shopParticulars() {
+    Taro.navigateTo({
+      url: '/pages/purchase/libraryOfGoods/particulars/particulars'
     })
   }
 

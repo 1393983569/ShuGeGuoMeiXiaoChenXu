@@ -58,7 +58,7 @@ export default class Index extends Component {
           stateData: stateList[0]
         })
       } catch(e) {
-        console.log(e, '53行')
+        console.log(e)
       }
     }).catch(err => {
 
@@ -137,8 +137,8 @@ export default class Index extends Component {
                         <View className="td">{_item.goodsName}</View>
                         <View className="td">{_item.id}</View>
                         <View className="td">{_item.standards}</View>
-                        <View className="td">￥{_item.price}</View>
-                        <View className="td">30</View>
+                        <View className="td">￥{parseInt(_item.price) * 0.01}</View>
+                        <View className="td">{_item.detailAmount}</View>
                         <View className="td">￥{_item.money}</View>
                       </View>
                     )
@@ -158,6 +158,11 @@ export default class Index extends Component {
       <View className='childOrderList'>
         <View className='childOrderList-heat'>
           子订单列表
+          <View className='orderState'>
+            {
+              stateData.subOrderList ? '' : '暂无数据'
+            }
+          </View>
         </View>
         {
           stateData.subOrderList ? stateData.subOrderList.map((item, index) => {

@@ -84,9 +84,9 @@ class index extends Component {
         // url: '/pages/information/index' // 消息中心
         // url: '/pages/InformationForDetails/index' // 资讯详情
         // url: '/pages/reportForms/manage/index' // 经营分析
-        url: '/pages/purchase/goodsShelf/goodsShelf' // 货架
+        // url: '/pages/purchase/goodsShelf/goodsShelf' // 货架
         // url: '/pages/purchase/shoppingCart/shoppingCart' // 购物车
-        // url: '/pages/purchase/orderForm/orderForm' // 订单
+        url: '/pages/purchase/orderForm/orderForm' // 订单
         // url: '/pages/purchase/orderForm/orderParticulars' // 大订单详情
         // url: '/pages/purchase/orderForm/childrenOrderParticulars' // 子订单详情
         // url: '/pages/purchase/libraryOfGoods/libraryOfGoodsList' // 商品库

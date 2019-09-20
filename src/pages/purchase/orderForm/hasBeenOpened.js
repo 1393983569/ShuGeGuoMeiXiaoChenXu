@@ -33,9 +33,9 @@ export default class Index extends Component {
   }
 
   // 跳转详情
-  goParticulars() {
+  goParticulars(orderId, e) {
     Taro.navigateTo({
-      url: '/pages/purchase/orderForm/orderParticulars'
+      url: '/pages/purchase/orderForm/orderParticulars?orderId=' + orderId + '&state="已拆单"'
     })
   }
 
@@ -46,7 +46,7 @@ export default class Index extends Component {
           this.state.dataList.map((item, index) => {
             return(
               <View className='didNotOpen' key={index + 'f'}>
-                <View className='didNotOpen-head' onClick={this.goParticulars}>
+                <View className='didNotOpen-head' onClick={this.goParticulars.bind(this, item.orderNo)}>
                   <Text>
                     订单号：{item.orderNo}
                   </Text>

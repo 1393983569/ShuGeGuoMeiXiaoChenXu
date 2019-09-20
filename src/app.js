@@ -61,8 +61,7 @@ class App extends Component {
       'pages/purchase/orderForm/childrenOrderParticulars', // 子订单详情
       'pages/purchase/libraryOfGoods/libraryOfGoodsList', // 商品库
       'pages/purchase/libraryOfGoods/particulars/particulars', // 商品详情
-      'pages/purchase/libraryOfGoods/takeStock/takeStock', // 盘点
-      'pages/purchase/libraryOfGoods/compileCheck/index', // 盘点记录编辑
+      'pages/purchase/libraryOfGoods/takeStock/takeStock', // 盘点 | 盘点编辑
       'pages/earlyWarning/index', // 预警设置
       'pages/purchase/libraryOfGoods/inventoryRecords/inventoryRecords', // 盘点记录
       'pages/backgroundTheUser/backgroundTheUser', // 后台用户

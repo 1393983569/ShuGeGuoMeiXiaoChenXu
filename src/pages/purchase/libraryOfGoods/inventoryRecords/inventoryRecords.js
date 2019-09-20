@@ -127,9 +127,9 @@ export default class Index extends Component {
   }
 
   // 跳转详情
-  skipParticulars(id, recordingTime, e) {
+  skipParticulars(recordingTime, e) {
     Taro.navigateTo({
-      url: '/pages/purchase/libraryOfGoods/takeStock/takeStock?id=' + id + '&recordingTime=' + recordingTime
+      url: '/pages/purchase/libraryOfGoods/takeStock/takeStock?recordingTime=' + recordingTime
     })
   }
 

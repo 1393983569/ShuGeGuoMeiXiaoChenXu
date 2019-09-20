@@ -33,7 +33,7 @@ export default class Index extends Component{
       // 是否为编辑状态 默认不是
       editStateValue: false,
       // 编辑id
-      recordId: this.$router.params.id || '',
+      // recordId: this.$router.params.id || '',
       // 编辑时间
       recordingTime: this.$router.params.recordingTime || ''
     }
@@ -209,9 +209,9 @@ export default class Index extends Component{
       Taro.getStorageSync('adminId').id,
       this.state.categoryOneId,
       this.state.categoryTwoId,
-      this.state.recordId,
+      // this.state.recordId,
       this.state.pageNum,
-      this.state.recordingTime).then(res => {
+      this.state.recordingTime.substring(0, 16)).then(res => {
       this.setState({
         ...this.state,
         menuListData: res.info.records.map(item => {
@@ -221,8 +221,20 @@ export default class Index extends Component{
             // 展开状态
             item.pullDownState = true
             // 多 和 少
-            item.balanceMoreState = item.status === 1
-            item.balanceFewState = item.status === 2
+            // item.balanceMoreState = item.status === 1
+            // item.balanceFewState = item.status === 2
+            // 电脑库存-实际库存
+            if (parseInt(item.computer_stock) - parseInt(item.actualInventory) === 0) {
+              item.balanceFewState = false
+              item.balanceMoreState = false
+            } else if (parseInt(item.computer_stock) - parseInt(item.actualInventory) > 0) {
+              item.balanceFewState = true
+              item.balanceMoreState = false
+            } else {
+              item.balanceFewState = false
+              item.balanceMoreState = true
+            }
+            // item.balanceFewState = item.status === 2
             // 损耗
             item.natureLoss = item.loss === 2
             item.artificialLoss = item.loss === 1
@@ -231,7 +243,8 @@ export default class Index extends Component{
             // 备注
             item.remark = item.remark
             // 差额
-            item.balance = item.difference
+            // item.balance = item.difference
+            item.balance = Math.abs(parseInt(item.computer_stock) - parseInt(item.actualInventory))
             item.smallImg = item.small_img
             item.amount = item.computer_stock
             return item
@@ -309,6 +322,17 @@ export default class Index extends Component{
   setInventory(index, e) {
     let list = JSON.parse(JSON.stringify(this.state.menuListData))
     list[index].realInventory = e.detail.value
+    if (parseInt(list[index].amount) - parseInt(list[index].realInventory) === 0) {
+      list[index].balanceFewState = false
+      list[index].balanceMoreState = false
+    } else if (parseInt(list[index].amount) - parseInt(list[index].realInventory) > 0) {
+      list[index].balanceFewState = true
+      list[index].balanceMoreState = false
+    } else {
+      list[index].balanceFewState = false
+      list[index].balanceMoreState = true
+    }
+    list[index].balance = Math.abs(parseInt(list[index].amount) - parseInt(list[index].realInventory))
     this.setState({
       menuListData: list
     }, () => {
@@ -405,6 +429,7 @@ export default class Index extends Component{
         actualInventory: item.realInventory,
         balanceMoreState: item.balanceMoreState,
         balanceFewState: item.balanceFewState,
+        balance: item.balance,
         remark: item.remark,
         adminId: Taro.getStorageSync('adminId').id,
         shopId: Taro.getStorageSync('adminId').shopId,
@@ -414,15 +439,16 @@ export default class Index extends Component{
         loss,
         status
       }
+      // if (this.state.editStateValue) data.id = this.state.recordId
       list.push(data)
     })
     // editStateValue
     console.log(list)
-    // if (this.state.editStateValue) {
-    //   this.edit(list)
-    // } else {
-    //   this.add(list)
-    // }
+    if (this.state.editStateValue) {
+      this.edit(list)
+    } else {
+      this.add(list)
+    }
   }
 
   // 添加
@@ -504,18 +530,19 @@ export default class Index extends Component{
         </View>
         <View className='down-content-balance'>
           <View>库存差额：</View>
+          {/* onClick={this.clickBalanceMoreState.bind(this, index, !item.balanceMoreState)} */}
           <View
-            onClick={this.clickBalanceMoreState.bind(this, index, !item.balanceMoreState)}
             className='down-content-balance-state'
-            style={item.balanceMoreState ? 'color: #8BC34A;border: #8BC34A 1Px solid; margin-right: 5Px' : ''}
+            style={item.balanceMoreState ? 'color: #8BC34A;border: #8BC34A 1Px solid; margin-right: 5Px' : 'margin-right: 5Px'}
             >多</View>
+          {/* onClick={this.clickBalanceFewState.bind(this, index, !item.balanceFewState)} */}
           <View
-            onClick={this.clickBalanceFewState.bind(this, index, !item.balanceFewState)}
             className='down-content-balance-state'
-            style={item.balanceFewState ? 'color: #8BC34A;border: #8BC34A 1Px solid;  margin-right: 5Px' : ''}
+            style={item.balanceFewState ? 'color: #8BC34A;border: #8BC34A 1Px solid;  margin-right: 5Px' : 'margin-right: 5Px'}
             >少</View>
           <View>
-            <Input type='number' onInput={this.setBalance.bind(this, index)} value={item.balance} style='width: 60Px' placeholder='请输入'/>
+            <Text>{ item.balance }</Text>
+            {/* <Input type='number' onInput={this.setBalance.bind(this, index)} value={item.balance} style='width: 60Px' placeholder='请输入'/> */}
           </View>
           <Text>斤</Text>
         </View>
@@ -604,7 +631,7 @@ export default class Index extends Component{
                   <View key={`${index}_gr`} className='box-left-location'>
                     <View onClick={this.clickStair.bind(this, index, !item.state)} className='box-left-stair'>
                       <View>
-                        {item.name}1212
+                        {item.name}
                       </View>
                       <View>
                         {

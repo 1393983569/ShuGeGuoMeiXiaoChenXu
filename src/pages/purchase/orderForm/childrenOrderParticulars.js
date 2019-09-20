@@ -13,7 +13,7 @@ export default class Index extends Component {
   }
 
   config = {
-    navigationBarTitleText: '订单详情'
+    navigationBarTitleText: '子订单详情'
   }
 
   componentDidMount() {
@@ -24,24 +24,28 @@ export default class Index extends Component {
   getDataList() {
     findSubOrder(this.state.orderId).then(res => {
       const list = res.info.map((item, index) => {
-        return {
-          id: item.id,
-          createTime: item.createTime,
-          suborderNo: item.suborderNo,
-          shopId: item.shopId,
-          providerDomain: {
-            id: item.providerDomain.id,
-            name: item.providerDomain.name
-          },
-          shopDomain: {
-            adminName: item.shopDomain.adminName,
-            adminPhone: item.shopDomain.adminPhone,
-            detailsAddress: item.shopDomain.detailsAddress,
-            provinceDomain: item.shopDomain.provinceDomain.name,
-            cityDomain: item.shopDomain.cityDomain.name,
-            areaDomain: item.shopDomain.areaDomain.name,
-          },
-          subOrderDetailList: this.mergeList(item.subOrderDetailList, 'category_one_id')
+        try{
+          return {
+            id: item.id,
+            createTime: item.createTime,
+            suborderNo: item.suborderNo,
+            shopId: item.shopId,
+            providerDomain: {
+              id: item.providerDomain.id,
+              name: item.providerDomain.name
+            },
+            shopDomain: {
+              adminName: item.shopDomains.adminName,
+              adminPhone: item.shopDomains.adminPhone,
+              detailsAddress: item.shopDomains.detailsAddress,
+              provinceDomain: item.shopDomains.provinceDomain.name,
+              cityDomain: item.shopDomains.cityDomain.name,
+              areaDomain: item.shopDomains.areaDomain.name,
+            },
+            subOrderDetailList: this.mergeList(item.subOrderDetailList, 'category_one_id')
+          }
+        } catch(e) {
+          console.log(e)
         }
       })
       this.setState({
@@ -177,7 +181,7 @@ export default class Index extends Component {
                         <View className="td">{listItem.name}</View>
                         <View className="td">{listItem.id}</View>
                         <View className="td">{listItem.standards}</View>
-                        <View className="td">{listItem.price}</View>
+                        <View className="td">{parseInt(listItem.price) * 0.01}</View>
                         <View className="td" style={listItem.modificationState ? 'color: red' : ''}>
                           <Input className='td-input' type='number' onInput={this.onInputWarehouseNum.bind(this, item, listItem, listIndex)} value={listItem.inputQuantity} maxLength='15'/>
                         </View>

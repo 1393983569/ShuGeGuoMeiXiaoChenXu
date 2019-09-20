@@ -12,14 +12,14 @@ export function shopSelectDetails(
   adminId,
   categoryOneId,
   categoryTwoId,
-  id,
+  // id,
   pageNum,
   recordingTime) {
   let data = {
     adminId,
     categoryOneId,
     categoryTwoId,
-    id,
+    // id,
     pageNum,
     recordingTime,
     pageSize: 7
