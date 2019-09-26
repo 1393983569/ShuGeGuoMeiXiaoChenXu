@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
 import './index.scss'
-import { findSubOrder, updateOrderStorage } from '../../../api/purchase/childrenOrderParticulars'
+import { findSubOrder, updateOrderStorage, shopAddInven } from '../../../api/purchase/childrenOrderParticulars'
 
 export default class Index extends Component {
   constructor (props) {
@@ -69,17 +69,25 @@ export default class Index extends Component {
             {
               name: item.name,
               id: item.goods_id,
+              ids: item.id,
+              category_one_id: item.category_one_id,
+              category_two_id: item.category_two_id,
+              bar_code: item.bar_code,
               standards: item.standards,
               price: item.price,
               amount: item.amount,
               inputQuantity: item.input_quantity,
               money: item.money,
-              modificationState: false
+              modificationState: item.input_quantity !== item.amount ? true : false
             }
           ]
         }
       } else {
         data[item[name]].categoryList.push({
+          ids: item.id,
+          category_one_id: item.category_one_id,
+          category_two_id: item.category_two_id,
+          bar_code: item.bar_code,
           name: item.name,
           id: item.goods_id,
           standards: item.standards,
@@ -87,7 +95,7 @@ export default class Index extends Component {
           amount: item.amount,
           inputQuantity: item.inputQuantity,
           money: item.money,
-          modificationState: false
+          modificationState: item.input_quantity !== item.amount ? true : false
         })
       }
     })
@@ -101,20 +109,37 @@ export default class Index extends Component {
 
   // 改变入库数量变色
   onInputWarehouseNum(item, listItem, listIndex, e) {
-    console.log(item, listItem, listIndex, e.target.value)
+    let list = []
     const { subOrderDetailList } = this.state.shoppingList
     const shoppingList = JSON.parse(JSON.stringify(this.state.shoppingList))
     const orderDetailList = JSON.parse(JSON.stringify(subOrderDetailList))
     const newList = orderDetailList[listIndex].categoryList.map((_item, _index) => {
       if (_item.id === listItem.id) {
-        _item.inputQuantity = e.target.value
+        orderDetailList[listIndex].categoryList[_index].inputQuantity = e.target.value
+        if (parseInt(_item.amount) !== parseInt(e.target.value)) {
+          orderDetailList[listIndex].categoryList[_index].modificationState = true
+        }
+        list = [{
+          id: _item.ids,
+          inputQuantity: _item.inputQuantity ? _item.inputQuantity : 0
+        }]
       }
       return _item
     })
     orderDetailList[listIndex].categoryList = newList
     shoppingList.subOrderDetailList = orderDetailList
-    this.setState({
-      shoppingList: shoppingList
+    this.upStoerNumber(list, shoppingList)
+  }
+
+  // 修改入库数量
+  upStoerNumber(list, shoppingList) {
+    updateOrderStorage(list).then(res => {
+      console.log(res)
+      this.setState({
+        shoppingList: shoppingList
+      })
+    }).catch(err => {
+      console.log(err)
     })
   }
 
@@ -124,13 +149,21 @@ export default class Index extends Component {
     const list  = []
     this.state.shoppingList.subOrderDetailList.forEach((item, index) => {
       item.categoryList.forEach((_item, _index) => {
+        console.log(_item)
         list.push({
-          id: _item.id,
-          inStorage: _item.inputQuantity ? _item.inputQuantity : 0
+          id: _item.ids,
+          // 条形码
+          barCode: _item.bar_code,
+          computerStock: _item.inputQuantity ? _item.inputQuantity : 0,
+          goodsId: _item.id,
+          goodsName: _item.name,
+          shopId: this.state.shoppingList.shopId,
+          categoryOneId: _item.category_one_id,
+          categoryTwoId: _item.category_two_id
         })
       })
     })
-    updateOrderStorage().then(res => {
+    shopAddInven(list).then(res => {
       console.log(res)
     }).catch(err => {
       console.log(err)
@@ -175,17 +208,16 @@ export default class Index extends Component {
                     </View>
                   </View>
                   {item.categoryList.map((listItem, listIndex) => {
-                    console.log(listItem)
                     return <View key={listIndex+'_ca'}>
                       <View className="tr">
                         <View className="td">{listItem.name}</View>
                         <View className="td">{listItem.id}</View>
                         <View className="td">{listItem.standards}</View>
                         <View className="td">{parseInt(listItem.price) * 0.01}</View>
-                        <View className="td" style={listItem.modificationState ? 'color: red' : ''}>
-                          <Input className='td-input' type='number' onInput={this.onInputWarehouseNum.bind(this, item, listItem, listIndex)} value={listItem.inputQuantity} maxLength='15'/>
-                        </View>
                         <View className="td" style={listItem.modificationState ? 'color: red' : ''}>{listItem.amount}</View>
+                        <View className="td" style={listItem.modificationState ? 'color: red' : ''}>
+                          <Input className='td-input' type='number' onBlur={this.onInputWarehouseNum.bind(this, item, listItem, index)} value={listItem.inputQuantity} maxLength='15'/>
+                        </View>
                         <View className="td">{parseInt(listItem.amount) * parseInt(listItem.price)}</View>
                       </View>
                     </View>
@@ -229,9 +261,7 @@ export default class Index extends Component {
             </View>
             <View className='orderParticulars-message'>
               <View className='orderParticulars-message-flex'>
-                <Text className='orderParticulars-message-placeholder'>
-
-                </Text>
+                <Text className='orderParticulars-message-placeholder'></Text>
                 <Text className='orderParticulars-message-text'>
                   {shoppingList.shopDomain.adminName} {shoppingList.shopDomain.adminPhone}
                 </Text>

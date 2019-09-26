@@ -22,13 +22,21 @@ export function findSubOrder(suborderNo) {
  * @param {Array} dataList
  */
 export function updateOrderStorage(dataList) {
-  const data = {
-    dataList
-  }
-  let newData = querystring.stringify(dataList)
   return request({
-    url: '/shop/updateOrderStorage',
-    data: newData,
+    url: '/shop/updateInputQuantity',
+    data: dataList,
+    method: 'POST'
+  })
+}
+
+/**
+ * 店铺商品入库添加数据
+ * @param {*} dataList
+ */
+export function shopAddInven(dataList) {
+  return request({
+    url: '/shop/addInven',
+    data: dataList,
     method: 'POST'
   })
 }

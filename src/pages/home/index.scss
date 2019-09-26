@@ -60,7 +60,7 @@
       line-height: 110Px;
       background-color: rgba(66, 74, 81, 0.5);
       color: #FEFEFF;
-      font-size: 600;
+      font-size: 28Px;
     }
     .icon-bar{
       color: #FEFEFF;
@@ -76,6 +76,7 @@
         font-size: 24Px;
       }
       &-item{
+        width: 20%;
         margin: 0 10Px;
       }
     }

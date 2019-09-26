@@ -1,0 +1,50 @@
+@mixin flex-align-center {
+  display: flex;
+  align-items: center;
+  height: 50Px;
+}
+.conten{
+  background-color: #fff;
+  border-radius: 6Px;
+  margin: 5Px 10Px;
+}
+.box{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: #F6F6F6;
+  &-head{
+    padding: 5Px 10Px;
+    font-size: 14Px;
+    border-bottom: 1Px solid #f6f6f6;
+    overflow: hidden;
+    &-left{
+      float: left;
+      @include flex-align-center;
+    }
+    &-right{
+      float: right;
+      @include flex-align-center;
+      &-icon{
+        color: #8BC34A;
+      }
+    }
+  }
+  &-bottom{
+    display: flex;
+    align-items: center;
+    height: 50Px;
+    justify-content: space-between;
+    font-size: 14Px;
+    &-button-left{
+      width: 49%;
+      @include flex-align-center;
+      justify-content: center;
+    }
+    &-button-right{
+      width: 49%;
+      @include flex-align-center;
+      justify-content: center;
+    }
+  }
+}

@@ -136,7 +136,7 @@ export default class Index extends Component {
   // 营销平台
   renderMarketing = () => {
     return <View className='marketing' >
-      <View className='iconfont icon_orderstatus_unsettled marketing-icon'></View>
+      <View className='iconfont icon_home_marketingcenter marketing-icon'></View>
       <View className='marketingText' >
         <View>营销平台</View>
         <View>选择适合自己店铺的营销方案</View>
@@ -146,7 +146,6 @@ export default class Index extends Component {
 
   // 报表中心 后面都采用此组件
   renderStatement = (text, list) => {
-    console.log(list, 'ssssssssssssss')
     return <View className='statement'>
       <View className='text'>
         {text}

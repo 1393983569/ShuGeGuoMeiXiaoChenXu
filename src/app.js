@@ -66,6 +66,7 @@ class App extends Component {
       'pages/purchase/libraryOfGoods/inventoryRecords/inventoryRecords', // 盘点记录
       'pages/backgroundTheUser/backgroundTheUser', // 后台用户
       'pages/backgroundTheUser/particulars/index', // 后台详情
+      'pages/member/memberList', // 会员系统
     ],
     window: {
       backgroundTextStyle: 'light',

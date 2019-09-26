@@ -29,7 +29,7 @@ export default class Index extends Component{
   }
 
   config = {
-    navigationBarTitleText: '采购平台'
+    navigationBarTitleText: '货架'
   }
 
   renderMenuList = () => {
