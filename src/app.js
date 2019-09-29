@@ -67,6 +67,7 @@ class App extends Component {
       'pages/backgroundTheUser/backgroundTheUser', // 后台用户
       'pages/backgroundTheUser/particulars/index', // 后台详情
       'pages/member/memberList', // 会员系统
+      'pages/member/memberParticulars', // 会员详情
     ],
     window: {
       backgroundTextStyle: 'light',

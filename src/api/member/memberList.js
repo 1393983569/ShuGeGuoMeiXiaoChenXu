@@ -7,7 +7,7 @@ var querystring = require('querystring')
  */
 export function queryMember(pageNum) {
   return request({
-    url: '/shop/queryMember?pageNum=' + pageNum + '&&pageSize=7',
+    url: '/shop/queryMember?pageNum=' + pageNum + '&pageSize=7',
     method: 'get'
   })
 }

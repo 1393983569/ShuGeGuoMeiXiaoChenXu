@@ -342,7 +342,15 @@ $bg-color: #8BC34A;
   font-size: 14Px;
   border-radius: 15Px !important;
 }
-
+.button-custom-selected{
+  height: 30Px !important;
+  line-height: 30Px !important;
+  color: #8BC34A !important;
+  font-size: 14Px;
+  border-radius: 15Px !important;
+  border: #8BC34A 1Px solid;
+  background-color: #fff !important;
+}
 .orderState{
   color: #DDDDDD;
   text-align: center;

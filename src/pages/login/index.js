@@ -86,7 +86,7 @@ class index extends Component {
         // url: '/pages/reportForms/manage/index' // 经营分析
         // url: '/pages/purchase/goodsShelf/goodsShelf' // 货架
         // url: '/pages/purchase/shoppingCart/shoppingCart' // 购物车
-        url: '/pages/purchase/orderForm/orderForm' // 订单
+        // url: '/pages/purchase/orderForm/orderForm' // 订单
         // url: '/pages/purchase/orderForm/orderParticulars' // 大订单详情
         // url: '/pages/purchase/orderForm/childrenOrderParticulars' // 子订单详情
         // url: '/pages/purchase/libraryOfGoods/libraryOfGoodsList' // 商品库
@@ -96,7 +96,8 @@ class index extends Component {
         // url: '/pages/purchase/libraryOfGoods/inventoryRecords/inventoryRecords' // 盘点记录
         // url: '/pages/backgroundTheUser/backgroundTheUser' // 后台用户
         // url: '/pages/backgroundTheUser/particulars/index' // 后台详情
-        // url: '/pages/member/memberList' // 会员系统
+        // url: '/pages/member/memberList', // 会员系统
+        url: '/pages/member/memberParticulars', // 会员详情
       })
     }
   }

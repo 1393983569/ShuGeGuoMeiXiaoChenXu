@@ -14,7 +14,7 @@ class loading extends Component {
 
   render () {
     return (
-      <Button className='box' style={`background-color: ${this.props.backgroundColor};border-radius: ${this.props.radius};color: ${this.props.color}`} onClick={() => {this.props.onClickButton()}}>
+      <Button className='box' style={`background-color: ${this.props.backgroundColor};border-radius: ${this.props.radius};color: ${this.props.color}; border: 1Px solid ${this.props.borderColor}`} onClick={() => {this.props.onClickButton()}}>
         {this.props.name}
       </Button>
     )
@@ -28,7 +28,8 @@ loading.propTypes = {
     PropTypes.number
   ]),
   color: PropTypes.string,
-  onClickButton: PropTypes.func
+  onClickButton: PropTypes.func,
+  borderColor: PropTypes.string
 }
 
 loading.defaultProps = {
@@ -37,5 +38,6 @@ loading.defaultProps = {
   // 按钮圆角
   radius: '15Px',
   color: '#fff',
-  onClickButton: () => {}
+  onClickButton: () => {},
+  borderColor: '#E2E2E2'
 }

@@ -33,9 +33,9 @@ export function updateOrderStorage(dataList) {
  * 店铺商品入库添加数据
  * @param {*} dataList
  */
-export function shopAddInven(dataList) {
+export function shopAddInven(dataList, subOrderId) {
   return request({
-    url: '/shop/addInven',
+    url: '/shop/addInven?subOrderId=' + subOrderId,
     data: dataList,
     method: 'POST'
   })

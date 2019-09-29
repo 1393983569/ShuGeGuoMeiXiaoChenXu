@@ -136,8 +136,7 @@ export default class Index extends Component {
     const Threshold = 40
     let windowHeight = Taro.getSystemInfoSync().windowHeight
     const scrollStyle = {
-      height: `${windowHeight - 45}Px`,
-      transform: 'translate3d(0,0px,0)'
+      height: `${windowHeight - 45}Px`
     }
     return (
       <View className='box'>

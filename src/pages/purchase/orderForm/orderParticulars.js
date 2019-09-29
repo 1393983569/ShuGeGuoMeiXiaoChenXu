@@ -91,9 +91,9 @@ export default class Index extends Component {
   }
 
   // 跳转子订单详情
-  goChildrenOrder(orderId, e) {
+  goChildrenOrder(orderId, subOrderId, e) {
     Taro.navigateTo({
-      url: '/pages/purchase/orderForm/childrenOrderParticulars?orderId=' + orderId
+      url: '/pages/purchase/orderForm/childrenOrderParticulars?orderId=' + orderId + '&subOrderId=' + subOrderId
     })
   }
 
@@ -188,7 +188,7 @@ export default class Index extends Component {
                   <View>
                     <Button size='mini' className='childOrderList-content-button'>已派单</Button>
                   </View>
-                  <View onClick={this.goChildrenOrder.bind(this, item.suborder_no)}>
+                  <View onClick={this.goChildrenOrder.bind(this, item.suborder_no, item.id)}>
                     <View className='iconfont icon_rightarrow' style='font-size: 14Px; color: #8BC34A'></View>
                   </View>
                 </View>

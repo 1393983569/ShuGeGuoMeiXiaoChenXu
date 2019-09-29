@@ -8,7 +8,8 @@ export default class Index extends Component {
     super(props)
     this.state = {
       shoppingList: [],
-      orderId: this.$router.params.orderId
+      orderId: this.$router.params.orderId,
+      subOrderId: this.$router.params.subOrderId
     }
   }
 
@@ -42,7 +43,8 @@ export default class Index extends Component {
               cityDomain: item.shopDomains.cityDomain.name,
               areaDomain: item.shopDomains.areaDomain.name,
             },
-            subOrderDetailList: this.mergeList(item.subOrderDetailList, 'category_one_id')
+            subOrderDetailList: this.mergeList(item.subOrderDetailList, 'category_one_id'),
+            warehousing: item.warehousing
           }
         } catch(e) {
           console.log(e)
@@ -163,14 +165,17 @@ export default class Index extends Component {
         })
       })
     })
-    shopAddInven(list).then(res => {
+    shopAddInven(list, this.state.subOrderId).then(res => {
       console.log(res)
+      // 入库成功后
+      this.getDataList()
     }).catch(err => {
       console.log(err)
     })
   }
 
-  renderOrder(list) {
+  renderOrder(data) {
+    const list = data.subOrderDetailList
     if (!list || list.length === 0) {
       return
     }
@@ -181,7 +186,11 @@ export default class Index extends Component {
             <Text>订单明细</Text>
           </View>
           <View>
-            <Button className='btn-max-w button-custom' type='primary' onClick={this.putBinStorage}>入库</Button>
+            {
+              data.warehousing ?
+              <Button className='btn-max-w button-custom-selected' type='primary'>已入库</Button> :
+              <Button className='btn-max-w button-custom' type='primary' onClick={this.putBinStorage}>入库</Button>
+            }
           </View>
         </View>
         <View className="tr" style='background-color: #E7F2DA;'>
@@ -195,6 +204,7 @@ export default class Index extends Component {
         </View>
         {
           list.map((item, index) => {
+            console.log(data)
             return(
               <View key={index+'_l'}>
                 <View >
@@ -216,7 +226,11 @@ export default class Index extends Component {
                         <View className="td">{parseInt(listItem.price) * 0.01}</View>
                         <View className="td" style={listItem.modificationState ? 'color: red' : ''}>{listItem.amount}</View>
                         <View className="td" style={listItem.modificationState ? 'color: red' : ''}>
-                          <Input className='td-input' type='number' onBlur={this.onInputWarehouseNum.bind(this, item, listItem, index)} value={listItem.inputQuantity} maxLength='15'/>
+                          {
+                            data.warehousing ?
+                            listItem.inputQuantity :
+                            <Input className='td-input' type='number' onBlur={this.onInputWarehouseNum.bind(this, item, listItem, index)} value={listItem.inputQuantity} maxLength='15'/>
+                          }
                         </View>
                         <View className="td">{parseInt(listItem.amount) * parseInt(listItem.price)}</View>
                       </View>
@@ -309,7 +323,7 @@ export default class Index extends Component {
                 </Text>
               </View>
             </View>
-            {this.renderOrder(shoppingList.subOrderDetailList)}
+            {this.renderOrder(shoppingList)}
           </ScrollView>
         </View>
       </View>
