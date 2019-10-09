@@ -5,7 +5,8 @@ import './index.scss'
 
 export default class Index extends Component{
 
-  constructor () {
+  constructor (props) {
+    super(props)
     this.state = {
       dataList: [
         {

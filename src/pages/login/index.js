@@ -96,8 +96,9 @@ class index extends Component {
         // url: '/pages/purchase/libraryOfGoods/inventoryRecords/inventoryRecords' // 盘点记录
         // url: '/pages/backgroundTheUser/backgroundTheUser' // 后台用户
         // url: '/pages/backgroundTheUser/particulars/index' // 后台详情
-        // url: '/pages/member/memberList', // 会员系统
-        url: '/pages/member/memberParticulars', // 会员详情
+        url: '/pages/member/memberList', // 会员系统
+        // url: '/pages/member/memberParticulars', // 会员详情
+        // url: '/pages/member/integral', // 积分列表
       })
     }
   }

@@ -6,7 +6,8 @@ import './index.scss'
 
 export default class Index extends Component {
 
-  constructor () {
+  constructor (props) {
+    super(props)
     this.state = {
       dataList: [],
       pageNum: 1,
@@ -36,7 +37,7 @@ export default class Index extends Component {
         })
         return
       }
-      let quDataList = dataList
+      let quDataList = JSON.parse(JSON.stringify(dataList))
       res.info.records.forEach(item => {
         try{
           quDataList.push(
@@ -57,6 +58,7 @@ export default class Index extends Component {
           console.log(err)
         }
       })
+      console.log(quDataList)
       this.setState({
         dataList: quDataList,
         load: 'unfinished'
@@ -99,9 +101,17 @@ export default class Index extends Component {
     return name
   }
 
+  // 跳转会员详情
+  redirect(memberId) {
+    Taro.navigateTo({
+      url: '/pages/member/memberParticulars?memberId=' + memberId
+    })
+  }
+
   render() {
     const scrollTop = 0
     const Threshold = 40
+    const { dataList } = this.state
     let windowHeight = Taro.getSystemInfoSync().windowHeight
     const scrollStyle = {
       height: `${windowHeight}Px`
@@ -119,42 +129,46 @@ export default class Index extends Component {
           onScrollToLower={this.onScrollToLower}
         >
         {
-          this.state.dataList.map((item, index) => {
-            return <View className='conten' key={index + '_n'}>
-            <View className='box-head'>
-              <View className='box-head-left'>
-                <View>
-                  <Image
-                  style='width: 40Px;height: 40Px;border-radius: 4Px;'
-                  src={ item.avatar }/>
+          dataList.map((item, index) => {
+            return (
+              <View className='conten' key={index + '_n'}>
+                <View className='box-head'>
+                  <View className='box-head-left'>
+                    <View>
+                      <Image
+                      // src={ item.avatar }
+                      style='width: 40Px;height: 40Px;border-radius: 4Px;'
+                      src='https://camo.githubusercontent.com/3e1b76e514b895760055987f164ce6c95935a3aa/687474703a2f2f73746f726167652e333630627579696d672e636f6d2f6d74642f686f6d652f6c6f676f2d3278313531333833373932363730372e706e67'
+                      />
+                    </View>
+                    <View>
+                      {
+                        item.mobile
+                      }
+                    </View>
+                  </View>
+                  <View className='box-head-right' onClick={() => this.redirect(item.id)}>
+                    <Text>
+                      {
+                        item.identity
+                      }
+                    </Text>
+                    <View className='iconfont icon_home_marketingcenter_rightarrow box-head-right-icon'></View>
+                  </View>
                 </View>
-                <View>
-                  {
-                    item.mobile
-                  }
+                <View className='box-bottom'>
+                  <View className='box-bottom-button-left'>
+                    {
+                      item.level
+                    }
+                  </View>
+                  <View style='color: #8BC34A;'>|</View>
+                  <View className='box-bottom-button-right'>
+                    余额：{ parseInt(item.balance) * 0.01 }
+                  </View>
                 </View>
               </View>
-              <View className='box-head-right'>
-                <Text>
-                  {
-                    item.identity
-                  }
-                </Text>
-                <View className='iconfont icon_home_marketingcenter_rightarrow box-head-right-icon'></View>
-              </View>
-            </View>
-            <View className='box-bottom'>
-              <View className='box-bottom-button-left'>
-                {
-                  item.level
-                }
-              </View>
-              <View style='color: #8BC34A;'>|</View>
-              <View className='box-bottom-button-right'>
-                余额：{ parseInt(item.balance) * 0.01 }
-              </View>
-            </View>
-          </View>
+            )
           })
         }
         <Loading load={this.state.load} />

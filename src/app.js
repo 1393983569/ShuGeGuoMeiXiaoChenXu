@@ -68,6 +68,8 @@ class App extends Component {
       'pages/backgroundTheUser/particulars/index', // 后台详情
       'pages/member/memberList', // 会员系统
       'pages/member/memberParticulars', // 会员详情
+      'pages/member/integral', // 积分列表
+      'pages/member/charge', // 充值记录
     ],
     window: {
       backgroundTextStyle: 'light',
