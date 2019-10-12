@@ -1,0 +1,57 @@
+@mixin initializePage {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: #F6F6F6;
+}
+
+.box-edit{
+  @include initializePage;
+  &-content{
+    padding: 10Px 14Px;
+    &-querydata{
+      background-color: #fff;
+      border-radius: 6Px;
+      padding: 0 14Px;
+    }
+    &-picker{
+      position: relative;
+      padding: 24px 0;
+      &::after{
+        content: '';
+        position: absolute;
+        transform-origin: center;
+        box-sizing: border-box;
+        pointer-events: none;
+        top: -50%;
+        left: -50%;
+        right: -50%;
+        bottom: -50%;
+        border: 0 solid #d6e4ef;
+        transform: scale(0.5);
+        border-bottom-width: 1PX;
+      }
+      &-text{
+        font-size: 32px;
+        margin-right: 20Px;
+      }
+      &-selecttext{
+        font-size: 32px;
+        margin-right: 10Px;
+      }
+    }
+  }
+}
+
+.contentbotton{
+  width: 100%;
+  position: absolute;
+  bottom: 30Px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my-atInput.at-input{
+  margin-left: 0rpx
+}

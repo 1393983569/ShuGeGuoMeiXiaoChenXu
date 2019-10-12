@@ -1,0 +1,13 @@
+.box{
+  &:after {
+    border: 0;
+  }
+  border: 1Px solid #E2E2E2;
+  // width: 70Px;
+  height: 40Px;
+  line-height: 40Px !important;
+  font-size: 12Px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  width: 600px !important;
+}

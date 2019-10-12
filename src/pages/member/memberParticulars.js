@@ -133,6 +133,13 @@ export default class Index extends Component {
     })
   }
 
+  // 跳转消费详情
+  toUpConsumption(orderId) {
+    Taro.navigateTo({
+      url: '/pages/member/consumption?orderId=' + orderId
+    })
+  }
+
   render() {
     const scrollTop = 0
     const Threshold = 40
@@ -294,7 +301,7 @@ export default class Index extends Component {
               </View>
               {
                 consumptionList.map(item => {
-                  return <View className='consumption-record-content' key={item.id}>
+                  return <View className='consumption-record-content' key={item.id} onClick={ () => this.toUpConsumption(item.id) }>
                     <View className='consumption-record-content-item'>
                       { item.createTime }
                     </View>

@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text, Input } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { login } from '../../api/user'
-import imgPng from '../../img/img_bg.png'
+// import imgPng from '../../img/img_bg.png'
 import { add, minus, insertToken, insertUserData, insertMenuList } from '../../actions/counter'
 
 import './index.scss'
@@ -96,7 +96,8 @@ class index extends Component {
         // url: '/pages/purchase/libraryOfGoods/inventoryRecords/inventoryRecords' // 盘点记录
         // url: '/pages/backgroundTheUser/backgroundTheUser' // 后台用户
         // url: '/pages/backgroundTheUser/particulars/index' // 后台详情
-        url: '/pages/member/memberList', // 会员系统
+        url: '/pages/backgroundTheUser/edit/index' // 后台用户编辑
+        // url: '/pages/member/memberList', // 会员系统
         // url: '/pages/member/memberParticulars', // 会员详情
         // url: '/pages/member/integral', // 积分列表
       })
@@ -152,7 +153,7 @@ class index extends Component {
 
   render () {
     return (
-      <View className='index' style={`background: url(${imgPng})`}>
+      <View className='index' style={`background: url(http://qiniu.freshergo.com/1570763640184.png)`}>
         <View className='boxForm'>
           <View className='textForm'>
             <Text className='textForm-text'>蔬哥果妹</Text>

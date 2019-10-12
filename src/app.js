@@ -66,10 +66,12 @@ class App extends Component {
       'pages/purchase/libraryOfGoods/inventoryRecords/inventoryRecords', // 盘点记录
       'pages/backgroundTheUser/backgroundTheUser', // 后台用户
       'pages/backgroundTheUser/particulars/index', // 后台详情
+      'pages/backgroundTheUser/edit/index', // 后台用户编辑
       'pages/member/memberList', // 会员系统
       'pages/member/memberParticulars', // 会员详情
       'pages/member/integral', // 积分列表
       'pages/member/charge', // 充值记录
+      'pages/member/consumption' // 充值记录
     ],
     window: {
       backgroundTextStyle: 'light',

@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text, Input, Icon, Swiper, SwiperItem } from '@tarojs/components'
-import imgPng from '../../img/img_bg.png'
+// import imgPng from '../../img/img_bg.png'
 import './index.scss'
 
 export default class Index extends Component {
@@ -71,8 +71,8 @@ export default class Index extends Component {
         // 会员系统
         member: [
           {
-            name: '会员列表(未做)',
-            url: '/pages/purchase/orderForm/orderForm',
+            name: '会员列表',
+            url: '/ppages/member/memberList',
             icon: 'icon_home_viplist'
           }
         ],
@@ -174,7 +174,7 @@ export default class Index extends Component {
       height: '100%'
     }
     return (
-      <View className='box' style={`background: url(${imgPng})`}>
+      <View className='box' style={`background: url(http://qiniu.freshergo.com/1570763640184.png)`}>
         <ScrollView
         className='scrollview'
         scrollY
