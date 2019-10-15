@@ -164,7 +164,7 @@ export default class Index extends Component {
                   </View>
                   <View style='color: #8BC34A;'>|</View>
                   <View className='box-bottom-button-right'>
-                    余额：{ parseInt(item.balance) * 0.01 }
+                    余额：{ item.balance !== null ? parseInt(item.balance) * 0.01 : 0 }
                   </View>
                 </View>
               </View>

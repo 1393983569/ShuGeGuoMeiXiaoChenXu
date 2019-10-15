@@ -72,7 +72,7 @@ export default class Index extends Component {
         member: [
           {
             name: '会员列表',
-            url: '/ppages/member/memberList',
+            url: '/pages/member/memberList',
             icon: 'icon_home_viplist'
           }
         ],

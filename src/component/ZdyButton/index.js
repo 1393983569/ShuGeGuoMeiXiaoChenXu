@@ -13,10 +13,13 @@ class loading extends Component {
   }
 
   render () {
+    // line-height: ${this.props.lineHeight};
     return (
-      <Button className='box' style={`background-color: ${this.props.backgroundColor};border-radius: ${this.props.radius};color: ${this.props.color}; border: 1Px solid ${this.props.borderColor}`} onClick={() => {this.props.onClickButton()}}>
-        {this.props.name}
-      </Button>
+      <View style='width: 100%; position: relative;'>
+        <Button className='box' style={`line-height: ${this.props.lineHeight}; background-color: ${this.props.backgroundColor};border-radius: ${this.props.radius};color: ${this.props.color}; border: 1Px solid ${this.props.borderColor}`} onClick={() => {this.props.onClickButton()}}>
+          {this.props.name}
+        </Button>
+      </View>
     )
   }
 }
@@ -29,7 +32,8 @@ loading.propTypes = {
   ]),
   color: PropTypes.string,
   onClickButton: PropTypes.func,
-  borderColor: PropTypes.string
+  borderColor: PropTypes.string,
+  lineHeight: PropTypes.string
 }
 
 loading.defaultProps = {
@@ -39,5 +43,6 @@ loading.defaultProps = {
   radius: '15Px',
   color: '#fff',
   onClickButton: () => {},
-  borderColor: '#E2E2E2'
+  borderColor: '#E2E2E2',
+  lineHeight: '20px'
 }

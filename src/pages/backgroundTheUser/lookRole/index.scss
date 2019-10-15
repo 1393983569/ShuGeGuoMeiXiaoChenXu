@@ -1,0 +1,44 @@
+@mixin initializePage {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: #F6F6F6;
+}
+
+.box-edit{
+  @include initializePage;
+  &-content{
+    padding: 10Px 14Px;
+    &-querydata{
+      background-color: #fff;
+      border-radius: 6Px;
+      padding: 10Px 14Px;
+      &-box{
+        overflow: hidden;
+        border-bottom: 1Px solid #dddddd;
+        text-align: center;
+        line-height: 40Px;
+        font-size: 14Px;
+        &-left{
+          width: 48%;
+          float: left;
+          border-right: 1Px solid #dddddd;
+        }
+        &-right{
+          width: 50%;
+          float: right;
+        }
+      }
+      &-box:first-child{
+        border-right: none
+      }
+      &-box:last-child{
+        border-bottom: none
+      }
+    }
+  }
+}
+
+.my-atInput.at-input{
+  margin-left: 0rpx
+}

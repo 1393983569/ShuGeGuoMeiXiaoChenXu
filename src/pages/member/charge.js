@@ -53,6 +53,7 @@ export default class Charge extends Component {
   // 滚动加载
   onScrollToLower() {
     if (!this.state.queryListStatus) return
+    let pageNum = this.state.pageNum
     pageNum++
     this.setState({
       pageNum,

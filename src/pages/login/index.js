@@ -95,8 +95,10 @@ class index extends Component {
         // url: '/pages/earlyWarning/index' // 预警设置
         // url: '/pages/purchase/libraryOfGoods/inventoryRecords/inventoryRecords' // 盘点记录
         // url: '/pages/backgroundTheUser/backgroundTheUser' // 后台用户
+        // url: '/pages/backgroundTheUser/newAdd/index' // 后台用户添加
+        url: '/pages/backgroundTheUser/lookRole/index' // 后台用户添加
         // url: '/pages/backgroundTheUser/particulars/index' // 后台详情
-        url: '/pages/backgroundTheUser/edit/index' // 后台用户编辑
+        // url: '/pages/backgroundTheUser/edit/index' // 后台用户编辑
         // url: '/pages/member/memberList', // 会员系统
         // url: '/pages/member/memberParticulars', // 会员详情
         // url: '/pages/member/integral', // 积分列表

@@ -17,4 +17,18 @@
       border-bottom: 1Px solid #F7F7F7;
     }
   }
+  &-botton{
+    position: absolute;
+    bottom: 40Px;
+    width: 100%;
+    &-flex{
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+  }
+}
+
+.ZdyButtonWidth{
+  width: 40% !important;
 }

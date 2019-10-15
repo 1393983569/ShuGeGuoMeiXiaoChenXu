@@ -45,7 +45,7 @@ export default class Consumption extends Component {
 
   // 滑动到底部
   onScrollToLower() {
-
+    console.log('ssssssssssssssssssssssss')
   }
 
   render() {
