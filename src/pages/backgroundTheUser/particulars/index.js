@@ -50,8 +50,9 @@ export default class Index extends Component{
   }
   // 编辑用户
   onClickEdit() {
+    const { shopObj } = this.state
     Taro.navigateTo({
-      url: ''
+      url: `/pages/backgroundTheUser/edit/index?id=${shopObj.id}&name=${shopObj.name}&mobiele=${shopObj.mobiele}&roleName=${shopObj.role.name}&password=${shopObj.shopDomain.adminPassword}`
     })
   }
 
@@ -84,10 +85,10 @@ export default class Index extends Component{
         <View className='box-botton'>
           <View className='box-botton-flex'>
             <View style='width: 40%'>
-              <ZdyButtonWidth lineHeight='35Px' name='编辑' className='ZdyButtonWidth' color='#fff' backgroundColor='#8BC34A' onClickButton={() => this.onClickDel(shopObj.id)}/>
+              <ZdyButtonWidth lineHeight='35Px' name='编辑' className='ZdyButtonWidth' color='#fff' backgroundColor='#8BC34A' onClickButton={() => this.onClickEdit(shopObj.id)}/>
             </View>
             <View style='width: 40%'>
-              <ZdyButtonWidth lineHeight='35Px' name='删除' className='ZdyButtonWidth' color='#E51C23' backgroundColor='#fff' onClickButton={() => this.onClickEdit(shopObj.id)}/>
+              <ZdyButtonWidth lineHeight='35Px' name='删除' className='ZdyButtonWidth' color='#E51C23' backgroundColor='#fff' onClickButton={() => this.onClickDel(shopObj.id)}/>
             </View>
           </View>
         </View>

@@ -30,8 +30,8 @@ export default class Index extends Component{
           name: item.name,
           id: item.id,
           roleId: item.roleId,
-          description: item.role.description,
-          type: item.role.type,
+          description: item.role !== null ? item.role.description : '暂无',
+          type: item.role !== null ? item.role.type : '',
           roleName: item.role.name !== null ? item.role.name : '暂无',
           createTime: item.createTime,
           mobile: item.mobile

@@ -94,9 +94,9 @@ class index extends Component {
         // url: '/pages/purchase/libraryOfGoods/takeStock/takeStock' // 盘点 | 盘点编辑
         // url: '/pages/earlyWarning/index' // 预警设置
         // url: '/pages/purchase/libraryOfGoods/inventoryRecords/inventoryRecords' // 盘点记录
-        // url: '/pages/backgroundTheUser/backgroundTheUser' // 后台用户
+        url: '/pages/backgroundTheUser/backgroundTheUser' // 后台用户
         // url: '/pages/backgroundTheUser/newAdd/index' // 后台用户添加
-        url: '/pages/backgroundTheUser/lookRole/index' // 后台用户添加
+        // url: '/pages/backgroundTheUser/lookRole/index' // 后台用户角色
         // url: '/pages/backgroundTheUser/particulars/index' // 后台详情
         // url: '/pages/backgroundTheUser/edit/index' // 后台用户编辑
         // url: '/pages/member/memberList', // 会员系统
