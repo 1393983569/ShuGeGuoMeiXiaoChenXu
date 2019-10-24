@@ -2,20 +2,16 @@ import request from '../../utils/request'
 var querystring = require('querystring')
 
 /**
- *  分页查询后台用户
- * @param {*} pageNum
- * @param {*} shopId
+ * 后台用户详情查询
+ * @param {*} id
  */
-export function selectPageAdmin(pageNum, shopId) {
+export function shopSelectDetails(id) {
   const data = {
-    pageNum,
-    shopId,
-    pageSize: 7,
-    type: 2
+    id
   }
   const newData = querystring.stringify(data)
   return request({
-    url: 'shop/selectPageAdmin',
+    url: 'shop/shopSelectDetails',
     method: 'post',
     data: newData
   })

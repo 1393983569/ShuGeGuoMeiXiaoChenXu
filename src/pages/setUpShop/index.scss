@@ -1,0 +1,140 @@
+.box{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: #f6f6f6;
+  &-content{
+    margin: 10Px 14Px;
+    padding: 10Px 14Px;
+    background-color: #fff;
+    font-size: 16Px;
+    &-img{
+      position: relative;
+      &-icon-del{
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #E51C23;
+        font-size: 24Px;
+        font-weight: 700;
+      }
+      &-name{
+        text-align: center;
+        position: relative;
+        font-size: 14Px;
+        padding-top: 5Px;
+        margin-bottom: 10Px;
+        color: #8BC34A;
+      }
+      &-name:before{
+        content: ' ';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        margin-left: -15Px;
+        display: block;
+        width: 30Px;
+        height: 2Px;
+        background-color: #8BC34A;
+      }
+    }
+  }
+}
+
+.margin-top-bottom-10{
+  margin: 10Px 0;
+}
+
+.category-list-box{
+  position: relative;
+  width: 100%;
+  &-head{
+    display: flex;
+    line-height: 40Px;
+    text-align: center;
+    background-color: #8BC34A;
+    &-left{
+      width: 50%;
+    }
+    &-right{
+      width: 50%;
+    }
+  }
+  &-content{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    border: 1Px solid #8BC34A;
+    &-left{
+      margin: 0 auto;
+      width: 50%;
+    }
+    &-right{
+      border-left: 1Px solid #8BC34A;
+      line-height: 40Px;
+      width: 50%;
+      &-content:not(:last-child){
+        border-bottom: 1Px solid #8BC34A;
+      }
+    }
+  }
+}
+
+.officeList-box{
+  font-size: 14Px;
+  &-head{
+    overflow: hidden;
+    margin-bottom: 20Px;
+    &-left{
+      float: left;
+    }
+    &-right{
+      float: right;
+    }
+  }
+  &-content{
+    &-head{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      background-color: #8BC34A;
+      line-height: 40Px;
+      &-text{
+        width: 40%;
+      }
+    }
+    &-content{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      &-text{
+        width: 40%;
+        word-wrap: break-word;
+        word-break: break-all;
+        &-action{
+          color: #8BC34A;
+          width: 40%;
+          display: flex;
+          justify-content: space-around;
+        }
+      }
+    }
+  }
+}
+
+.picker{
+  font-size: 16Px;
+  padding: 24px 0;
+  margin-left: 32px;
+  &-text{
+    color: rgb(121, 121, 121);
+  }
+  &-job{
+    width: 172px;
+    display: inline-block;
+  }
+}
+
+.my-input.at-input:after{
+  border: none !important;
+}

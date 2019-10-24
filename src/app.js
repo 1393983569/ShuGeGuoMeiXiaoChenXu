@@ -50,7 +50,10 @@ class App extends Component {
   config = {
     pages: [
       'pages/login/index', // 登录页
+      'pages/login/forgetPassword', // 忘记密码
       'pages/home/index', // 首页
+      'pages/personalCenter/index', // 个人中心
+      'pages/personalCenter/editPassword', // 修改密码
       'pages/information/index', // 消息中心
       'pages/InformationForDetails/index', // 资讯详情
       'pages/reportForms/manage/index', // 经营分析
@@ -73,7 +76,8 @@ class App extends Component {
       'pages/member/memberParticulars', // 会员详情
       'pages/member/integral', // 积分列表
       'pages/member/charge', // 充值记录
-      'pages/member/consumption' // 充值记录明细
+      'pages/member/consumption', // 充值记录明细
+      'pages/setUpShop/index', // 店铺设置
     ],
     window: {
       backgroundTextStyle: 'light',

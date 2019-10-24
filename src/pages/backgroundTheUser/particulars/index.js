@@ -49,10 +49,10 @@ export default class Index extends Component{
 
   }
   // 编辑用户
-  onClickEdit() {
+  onClickEdit(id) {
     const { shopObj } = this.state
     Taro.navigateTo({
-      url: `/pages/backgroundTheUser/edit/index?id=${shopObj.id}&name=${shopObj.name}&mobiele=${shopObj.mobiele}&roleName=${shopObj.role.name}&password=${shopObj.shopDomain.adminPassword}`
+      url: `/pages/backgroundTheUser/edit/index?id=${shopObj.id}&name=${shopObj.name}&mobile=${shopObj.mobile}&roleName=${shopObj.role.name}&password=${shopObj.shopDomain.adminPassword}`
     })
   }
 
@@ -68,7 +68,7 @@ export default class Index extends Component{
             姓名：{ shopObj.name }
           </View>
           <View>
-            手机号：{ shopObj.mobiele || '暂无' }
+            手机号：{ shopObj.mobile || '暂无' }
           </View>
           <View>
             角色：{ shopObj.role.name }

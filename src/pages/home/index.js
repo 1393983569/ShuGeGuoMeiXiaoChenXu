@@ -1,5 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text, Input, Icon, Swiper, SwiperItem } from '@tarojs/components'
+import { AtAvatar } from 'taro-ui'
+import { shopSelectDetails } from '../../api/public'
 // import imgPng from '../../img/img_bg.png'
 import './index.scss'
 
@@ -94,13 +96,36 @@ export default class Index extends Component {
             icon: 'icon_home_profitandlossdataSetting'
           }
         ]
-      }
+      },
+      userData: {}
     }
   }
 
   config = {
     navigationBarTitleText: '首页',
     navigationBarBackgroundColor: '#404C55'
+  }
+
+  componentDidMount() {
+    this.getUser()
+  }
+
+  // 获取用户信息
+  getUser() {
+    shopSelectDetails(Taro.getStorageSync('adminId').id).then(res => {
+      console.log(res)
+      const data = {
+        imge: res.info.shopDomain.imge,
+        name: res.info.shopDomain.name,
+        simpleName: res.info.shopDomain.simpleName,
+        roleName: res.info.role.name
+      }
+      this.setState({
+        userData: data
+      })
+    }).catch(err => {
+      console.log(err)
+    })
   }
 
   // 页眉提示
@@ -169,10 +194,17 @@ export default class Index extends Component {
     })
   }
 
+  personalCenter() {
+    Taro.navigateTo({
+      url: '/pages/personalCenter/index'
+    })
+  }
+
   render () {
     const scrollStyle = {
       height: '100%'
     }
+    const { userData } = this.state
     return (
       <View className='box' style={`background: url(http://qiniu.freshergo.com/1570763640184.png)`}>
         <ScrollView
@@ -182,8 +214,13 @@ export default class Index extends Component {
         style={scrollStyle}
         >
           <View className='head'>
-            <Text>店长-天水路店</Text>
-            {this.renderHint(5)}
+            <View className='head-left' onClick={ () => this.personalCenter() }>
+              <AtAvatar image={userData.imge} circle='true' size='small' style='display: inline-block; width: 60Px'/>
+              <View style='margin-left: 5Px;'>{ userData.roleName } - { userData.name }</View>
+            </View>
+            <View className='head-right'>
+              {this.renderHint(5)}
+            </View>
           </View>
           <View>
             {this.renderSwiper()}

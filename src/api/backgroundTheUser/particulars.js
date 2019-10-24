@@ -7,7 +7,8 @@ var querystring = require('querystring')
  */
 export function selectDetails(id) {
   const data = {
-    id
+    id,
+    type: 2
   }
   const newData = querystring.stringify(data)
   return request({

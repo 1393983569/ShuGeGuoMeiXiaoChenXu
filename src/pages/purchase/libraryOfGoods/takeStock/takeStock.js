@@ -224,7 +224,7 @@ export default class Index extends Component{
             // item.balanceMoreState = item.status === 1
             // item.balanceFewState = item.status === 2
             // 电脑库存-实际库存
-            if (parseInt(item.computer_stock) - parseInt(item.actualInventory) === 0) {
+            if (parseInt(item.computer_stock) - parseInt(item.actualInventory) === 0 || parseInt(item.computer_stock) - parseInt(item.actualInventory) === null) {
               item.balanceFewState = false
               item.balanceMoreState = false
             } else if (parseInt(item.computer_stock) - parseInt(item.actualInventory) > 0) {
@@ -541,12 +541,14 @@ export default class Index extends Component{
             style={item.balanceFewState ? 'color: #8BC34A;border: #8BC34A 1Px solid;  margin-right: 5Px' : 'margin-right: 5Px'}
             >少</View>
           <View>
-            <Text>{ item.balance }</Text>
+            <Text>{
+              item.balance || '0'
+             }</Text>
             {/* <Input type='number' onInput={this.setBalance.bind(this, index)} value={item.balance} style='width: 60Px' placeholder='请输入'/> */}
           </View>
           <Text>斤</Text>
         </View>
-        {remarkAndLoss}
+        { remarkAndLoss }
       </View>
     )
   }
@@ -619,7 +621,6 @@ export default class Index extends Component{
             }
           </View>
           <View>
-            {/* <AtButton type='primary' style='background-color: #FF9800' size='small'>完成盘点</AtButton> */}
             <ZdyButton name={this.state.editStateValue ? '完成编辑' : '完成盘点' } backgroundColor='#FF9C40' onClickButton={() => {this.submitData()}}/>
           </View>
         </View>

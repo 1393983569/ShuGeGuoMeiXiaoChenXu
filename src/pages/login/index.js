@@ -27,7 +27,7 @@ import './index.scss'
     dispatch(insertMenuList(arr))
   }
 }))
-class index extends Component {
+class Index extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -74,13 +74,12 @@ class index extends Component {
   // 尽量避免在 componentDidMount 中调用 this.setState，可以在 componentWillMount 中处理
   // 页面初次渲染完成时触发，一个页面只会调用一次，代表页面已经准备妥当，可以和视图层进行交互
   componentDidMount () {
-    console.log(this.state.menuList)
     this.props.setMenuList(JSON.parse(JSON.stringify(this.state.menuList)))
     // 判断是否有登录信息
     if (this.props.counter.token || Taro.getStorageSync('token')) {
-      Taro.navigateTo({
-        // url: '/pages/home/index' // 登录页
-        // url: '/pages/home/index' // 首页
+      Taro.redirectTo({
+        // url: '/pages/login/index' // 登录页
+        url: '/pages/home/index' // 首页
         // url: '/pages/information/index' // 消息中心
         // url: '/pages/InformationForDetails/index' // 资讯详情
         // url: '/pages/reportForms/manage/index' // 经营分析
@@ -94,7 +93,7 @@ class index extends Component {
         // url: '/pages/purchase/libraryOfGoods/takeStock/takeStock' // 盘点 | 盘点编辑
         // url: '/pages/earlyWarning/index' // 预警设置
         // url: '/pages/purchase/libraryOfGoods/inventoryRecords/inventoryRecords' // 盘点记录
-        url: '/pages/backgroundTheUser/backgroundTheUser' // 后台用户
+        // url: '/pages/backgroundTheUser/backgroundTheUser' // 后台用户
         // url: '/pages/backgroundTheUser/newAdd/index' // 后台用户添加
         // url: '/pages/backgroundTheUser/lookRole/index' // 后台用户角色
         // url: '/pages/backgroundTheUser/particulars/index' // 后台详情
@@ -102,6 +101,7 @@ class index extends Component {
         // url: '/pages/member/memberList', // 会员系统
         // url: '/pages/member/memberParticulars', // 会员详情
         // url: '/pages/member/integral', // 积分列表
+        // url: '/pages/setUpShop/index', // 店铺设置
       })
     }
   }
@@ -153,6 +153,12 @@ class index extends Component {
     })
   }
 
+  forgetPassword() {
+    Taro.redirectTo({
+      url: '/pages/login/forgetPassword'
+    })
+  }
+
   render () {
     return (
       <View className='index' style={`background: url(http://qiniu.freshergo.com/1570763640184.png)`}>
@@ -165,6 +171,9 @@ class index extends Component {
             <Input type='text' value={this.start.mobile} onInput={this.changeInput} className='inputCustom' placeholder='请输入手机号' focus/>
             <Input type='password' className='inputCustom' onInput={this.changePassword} password placeholder='请输入登录密码'/>
           </View>
+          <View className='forget-the-password'>
+            <View className='forget-the-password-left' onClick={() => this.forgetPassword()}>忘记密码</View>
+          </View>
           <View className='buttonForm'>
             <Button  className='buttonForm-button' plain type='primary' onClick={this.onLogin} >登录</Button>
           </View>
@@ -174,4 +183,4 @@ class index extends Component {
   }
 }
 
-export default index
+export default Index

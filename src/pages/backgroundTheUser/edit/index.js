@@ -1,8 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { AtInput } from 'taro-ui'
+import { AtInput, AtMessage } from 'taro-ui'
 import ZdyButtonWidth from '../../../component/ZdyButtonWidth'
-import { selectRole } from '../../../api/backgroundTheUser/edit'
+import { selectRole, editAdmin } from '../../../api/backgroundTheUser/edit'
 import './index.scss'
 
 export default class Index extends Component{
@@ -36,9 +36,14 @@ export default class Index extends Component{
       }).map(item => {
         return item.name
       })
+      const pickerValue = res.info.filter(item => {
+        return item.name !== '店长'
+      }).map(item => {
+        return item
+      })
       this.setState({
         selector,
-        pickerValue: res.info
+        pickerValue
       }, () => {
         // 获取url传入的值
         this.setRouterData()
@@ -50,8 +55,15 @@ export default class Index extends Component{
 
   // 回显角色
   echoRole(roleName) {
-    const dataList =  this.state.pickerValue.filter(item => {
+    const dataList =  this.state.pickerValue.filter((item, index) => {
       console.log(item.name, roleName, item.name === roleName)
+      //
+      if (item.name === roleName) {
+        // 赋值当前回显下标
+        this.setState({
+          pickerIndex: index
+        })
+      }
       return item.name === roleName
     })
     this.setState({
@@ -68,13 +80,13 @@ export default class Index extends Component{
   // 获取传入的值
   setRouterData() {
     const parmas = this.$router.params
-    console.log(parmas)
     const data = {
       id: parmas.id,
-      mobiele: parmas.mobiele + '' !== 'undefined' || '暂无',
+      mobile: parmas.mobile + '' !== 'undefined' ? parmas.mobile : '暂无',
       name: parmas.name,
       roleName: parmas.roleName,
-      password: parmas.password
+      password: parmas.password,
+      dataId: parmas.id
     }
     this.setState({
       shopObj: data
@@ -83,13 +95,42 @@ export default class Index extends Component{
     })
   }
 
+  // 消息提示
+  handleMessage (type, text) {
+    Taro.atMessage({
+      'message': text,
+      'type': type,
+    })
+  }
+
   // 点击保存
   onClickEdit() {
-    console.log(this.state.shopObj, this.state.mobiele)
+    console.log(this.state.shopObj, )
+    const shopObj = this.state.shopObj
+    const id = this.state.pickerValue[parseInt(this.state.pickerIndex)].id || ''
+    const shopId = Taro.getStorageSync('adminId').shopId
+    if (!shopObj.name) {
+      this.handleMessage('warning', '请输入名称')
+    } else if (shopObj.mobile === null || shopObj.mobile === 'nudefinde') {
+      this.handleMessage('warning', '请输入手机号')
+    } else if (!shopObj.password) {
+      this.handleMessage('warning', '请输入密码')
+    } else if (!id) {
+      this.handleMessage('warning', '请选择角色')
+    } else {
+      console.log(Taro.getStorageSync('adminId').shopId)
+      editAdmin(shopObj.dataId, shopObj.name, shopObj.mobile, shopObj.password, id, shopId).then(res => {
+        this.handleMessage('success', '成功')
+      }).catch(err => {
+        console.log(err)
+        this.handleMessage('error', '失败')
+      })
+    }
   }
 
   // 选择角色
   onChange(e) {
+    console.log(this.state.pickerValue[e.detail.value].id)
     this.setState({
       selectorChecked: this.state.selector[e.detail.value],
       pickerIndex: e.detail.value,
@@ -109,7 +150,7 @@ export default class Index extends Component{
   // 填写电话
   handleChangeMobiele(e) {
     const shopObj = this.state.shopObj
-    shopObj.mobiele = e
+    shopObj.mobile = e
     this.setState({
       shopObj
     })
@@ -127,6 +168,7 @@ export default class Index extends Component{
   render() {
     return(
       <View className='box-edit'>
+        <AtMessage />
         <View className='box-edit-content'>
           <View className='box-edit-content-querydata'>
             <AtInput
@@ -140,11 +182,11 @@ export default class Index extends Component{
             />
              <AtInput
               className='my-atInput'
-              name='mobiele'
+              name='mobile'
               title='手机号:'
               type='number'
               placeholder='手机号'
-              value={this.state.shopObj.mobiele}
+              value={this.state.shopObj.mobile}
               onChange={() => this.handleChangeMobiele()}
             />
             <View>

@@ -15,7 +15,7 @@
 .inputForm{
   display: block;
   margin-bottom: 35%;
-  height: 50Px !important;
+  height: 40Px !important;
 }
 .buttonForm{
   margin-bottom: 22%;
@@ -51,5 +51,83 @@
   }
   &-text-b{
     font-size: 14Px;
+  }
+}
+
+.forget-the-password{
+  overflow: hidden;
+  &-left{
+    float: right;
+    color: #6C6F6E;
+    margin-bottom: 10Px;
+  }
+}
+
+.forgetPassword{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+
+.forgetPassword-box-head{
+  margin-top: 50Px;
+  position: relative;
+  overflow: hidden;
+  color: #8BC34A;
+  padding: 0 18Px;
+  &-left{
+    float: left;
+    &-icon{
+      color: #8BC34A;
+      font-size: 28Px;
+    }
+  }
+  &-right{
+    float: right;
+  }
+}
+
+.forgetPassword-box{
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  &-boxForm{
+    width: 260Px;
+    height: 100%;
+    &-head{
+      text-align: center;
+      color: #fff;
+      &-text{
+        line-height: 70Px;
+        font-size: 16Px;
+        font-weight: 600;
+      }
+      &-textb{
+        line-height: 50Px;
+        font-size: 16Px;
+        font-size: 14Px;
+        font-weight: 600;
+      }
+    }
+    &-inputForm{
+      &-code{
+        background-color: #fff;
+        margin-bottom: 30Px;
+        overflow: hidden;
+        border-radius: 6Px;
+        &-input{
+          width: 59%;
+          float: left;
+        }
+        &-send{
+          color: #333;
+          line-height: 50Px;
+          text-align: center;
+          width: 40%;
+          float: right;
+          border-left: 1Px solid #ddd;
+        }
+      }
+    }
   }
 }
