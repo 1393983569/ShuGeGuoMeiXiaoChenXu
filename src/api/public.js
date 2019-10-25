@@ -51,11 +51,32 @@ export function checkRandCode(code) {
  */
 export function sendSms(code) {
   const data = {
-    code
+    mobile: code
   }
   const newData = querystring.stringify(data)
   return request({
     url: 'basics/sendSms',
+    data: newData,
+    method: 'post'
+  })
+}
+
+/**
+ * 修改密码
+ * @param {*} adminId
+ * @param {*} password
+ * @param {*} msgCode
+ */
+export function forgetPwd(adminId, password, msgCode) {
+  const data = {
+    msgCode,
+    password,
+    adminId,
+    confirmPwd: password
+  }
+  const newData = querystring.stringify(data)
+  return request({
+    url: 'basics/editPwd',
     data: newData,
     method: 'post'
   })

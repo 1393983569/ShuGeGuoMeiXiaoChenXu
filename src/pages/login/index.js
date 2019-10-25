@@ -76,7 +76,7 @@ class Index extends Component {
   componentDidMount () {
     this.props.setMenuList(JSON.parse(JSON.stringify(this.state.menuList)))
     // 判断是否有登录信息
-    if (this.props.counter.token || Taro.getStorageSync('token')) {
+    if (Taro.getStorageSync('token')) {
       Taro.redirectTo({
         // url: '/pages/login/index' // 登录页
         url: '/pages/home/index' // 首页

@@ -87,6 +87,15 @@
     &-new-password{
     }
   }
+  &-bottom{
+    position: absolute;
+    bottom: 30Px;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 .my-input.at-input:after{
   border-bottom-width: 0 !important;

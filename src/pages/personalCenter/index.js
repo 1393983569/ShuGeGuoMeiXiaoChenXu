@@ -27,7 +27,7 @@ export default class Index extends Component {
 
   editPassword() {
     Taro.navigateTo({
-      url: '/pages/personalCenter/editPassword'
+      url: '/pages/personalCenter/editPassword?mobile=' + this.state.mobile
     })
   }
 
@@ -42,6 +42,13 @@ export default class Index extends Component {
       })
     }).catch(err => {
       console.log(err)
+    })
+  }
+
+  out() {
+    Taro.setStorageSync('token', '')
+    Taro.redirectTo({
+      url: '/pages/login/index'
     })
   }
 
@@ -77,7 +84,7 @@ export default class Index extends Component {
               <View style='font-size: 14Px;' className='iconfont icon_rightarrow marketing-icon'></View>
             </View>
           </View>
-          <View className='box-user-out'>
+          <View className='box-user-out' onClick={ () => this.out() }>
             退出登录
           </View>
       </View>

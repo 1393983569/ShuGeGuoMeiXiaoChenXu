@@ -1,7 +1,8 @@
 import Taro, { Component, render } from '@tarojs/taro'
 import { View, Button, Image } from '@tarojs/components'
-import { AtInput, AtModal, AtModalHeader, AtModalContent, AtModalAction, AtActivityIndicator } from 'taro-ui'
-import { getImgCode, checkRandCode, sendSms } from '../../api/public'
+import { AtInput, AtModal, AtModalHeader, AtModalContent, AtModalAction, AtActivityIndicator, AtMessage } from 'taro-ui'
+import { getImgCode, checkRandCode, sendSms, forgetPwd } from '../../api/public'
+import ZdyButtonWidth from '../../component/ZdyButtonWidth'
 import './index.scss'
 
 export default class EditPassword extends Component {
@@ -14,8 +15,10 @@ export default class EditPassword extends Component {
       moblie: '',
       strCode: '',
       interval: '',
-      codeData: '',
-      mobile: ''
+      codeData: 60,
+      mobile: '',
+      code: '',
+      password: ''
     }
   }
 
@@ -23,14 +26,32 @@ export default class EditPassword extends Component {
     navigationBarTitleText: '修改密码'
   }
 
+  componentWillMount() {
+    this.setState({
+      mobile: this.$router.params.mobile,
+      code: '',
+      codeData: 60,
+      isOpened: false,
+      strCode: '',
+      imgeBase: '',
+      password: ''
+    })
+  }
+
   // 验证码
   handleChangeCode(e) {
     console.log(e)
+    this.setState({
+      code: e
+    })
   }
 
   // 新密码
   handleChangeNewPassword(e) {
     console.log(e)
+    this.setState({
+      password: e
+    })
   }
 
   isOpenedState(state) {
@@ -41,11 +62,13 @@ export default class EditPassword extends Component {
 
   // 获取图形验证
   getImgeCode() {
+    if (this.state.codeData !== 60) return
     this.isOpenedState(true)
     getImgCode().then(res => {
       this.setState({
         imgeBase: 'data:image/png;base64,' + res.info.imgCode,
-        strCode: res.info.strCode
+        strCode: res.info.strCode,
+        imgCode: ''
       })
     }).catch(err => {
       console.log(err)
@@ -62,7 +85,8 @@ export default class EditPassword extends Component {
   // 图片验证码取消
   cancelImg() {
     this.setState({
-      isOpened: false
+      isOpened: false,
+      imgCode: ''
     })
   }
 
@@ -88,7 +112,7 @@ export default class EditPassword extends Component {
 
   // 发送验证码
   openSendSms(phone) {
-    sendSms().then(res => {
+    sendSms(phone).then(res => {
 
     }).catch(err => {
       console.log(err)
@@ -128,9 +152,29 @@ export default class EditPassword extends Component {
     })
   }
 
+  // 修改密码确定
+  onClickSub() {
+    forgetPwd(Taro.getStorageSync('adminId').id, this.state.password, this.state.coded).then(res => {
+      this.handleClick('success', '成功')
+      Taro.redirectTo({
+        url: '/pages/personalCenter/index'
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
+  handleClick (type, text) {
+    Taro.atMessage({
+      'message': text,
+      'type': type,
+    })
+  }
+
   render() {
     const { isOpened, imgeBase, mobile } = this.state
     return <View className='edit-password-box'>
+      <AtMessage />
       <View className='edit-password-box-content'>
         <View className='edit-password-box-content-phone'>
           手机号: { mobile }
@@ -147,7 +191,9 @@ export default class EditPassword extends Component {
             />
           </View>
           <View className='edit-password-box-content-code-right' onClick={() => this.getImgeCode()}>
-            发送验证码
+          {
+            codeData === 60 ? '发送验证码' : codeData
+          }
           </View>
         </View>
         <View className='edit-password-box-content-nwe-password'>
@@ -155,7 +201,7 @@ export default class EditPassword extends Component {
               name='newPassword'
               type='text'
               placeholder='请输入新密码'
-              value={this.state.value}
+              value={this.state.password}
               onChange={this.handleChangeNewPassword.bind(this)}
             />
         </View>
@@ -177,6 +223,11 @@ export default class EditPassword extends Component {
           <Button onClick={() => this.confirmImg()}>确定</Button>
         </AtModalAction>
       </AtModal>
+      <View className='edit-password-box-bottom'>
+        <View className='edit-password-box-bottom-flex'>
+          <ZdyButtonWidth name='确定' color='#fff' backgroundColor='#8BC34A' onClickButton={() => this.onClickSub()}/>
+        </View>
+      </View>
     </View>
   }
 }

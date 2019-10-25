@@ -52,7 +52,7 @@ class ForgetPassword extends Component {
   // 页面初次渲染完成时触发，一个页面只会调用一次，代表页面已经准备妥当，可以和视图层进行交互
   componentDidMount () {
     // 判断是否有登录信息
-    if (this.props.counter.token || Taro.getStorageSync('token')) {
+    if (Taro.getStorageSync('token')) {
       Taro.redirectTo({
         url: '/pages/home/index' // 首页
       })
