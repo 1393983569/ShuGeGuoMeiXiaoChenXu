@@ -16,10 +16,27 @@ export function sendSms(mobile) {
   })
 }
 
+/**
+ * 修改密码
+ * @param {*} data
+ */
 export function editPwd(data) {
   const newData = querystring.stringify(data)
   return request({
     url: 'basics/editPwd',
+    method: 'post',
+    data: newData
+  })
+}
+
+/**
+ * 忘记密码
+ * @param {*} data
+ */
+export function forgetPwd(data) {
+  const newData = querystring.stringify(data)
+  return request({
+    url: 'basics/forgetPwd',
     method: 'post',
     data: newData
   })

@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text, Image } from '@tarojs/components'
 import ZdyButton from '../../component/ZdyButton/index'
 import Loading from '../../component/loading/loading'
-import PieChart from '../../component/echartsComponents/pieChart'
+// import PieChart from '../../component/echartsComponents/pieChart'
 import { selectOrderDetail, findMember } from '../../api/member/memberParticulars'
 import './index.scss'
 
@@ -29,18 +29,18 @@ export default class Index extends Component {
     this.getMemberMessage()
   }
 
-  refPieChart = (node) => this.pieChart = node
+  // refPieChart = (node) => this.pieChart = node
 
   // 加载饼状图
-  loatPie() {
-    const chartData = this.state.memberData.categoryOneAmount.map(item => {
-      return {
-        value: item.category,
-        name: item.categoryName
-      }
-    })
-    this.pieChart.refresh(chartData)
-  }
+  // loatPie() {
+  //   const chartData = this.state.memberData.categoryOneAmount.map(item => {
+  //     return {
+  //       value: item.category,
+  //       name: item.categoryName
+  //     }
+  //   })
+  //   this.pieChart.refresh(chartData)
+  // }
 
   // 获取消费记录
   getList() {
@@ -267,9 +267,9 @@ export default class Index extends Component {
                     </View>
                   </View>
                 </View>
-                <View className='box-particulars-pie-chart'>
+                {/* <View className='box-particulars-pie-chart'>
                   <PieChart ref={this.refPieChart}/>
-                </View>
+                </View> */}
                 <View className='box-particulars-analyze-name-conten'>
                     <View className='box-particulars-analyze-name-conten-text'>
                       <View className='box-particulars-analyze-name-conten-segmentation'></View>

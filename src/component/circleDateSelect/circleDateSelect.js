@@ -23,7 +23,7 @@ export default class dateSelect extends Component {
   }
 
   componentWillMount () {
-
+    this.onYear(this.props.defaultYear)
   }
 
   getYearData () {
@@ -121,75 +121,97 @@ export default class dateSelect extends Component {
   }
 
   render () {
-    let {monthList} = this.state
+    let { monthList } = this.state
+    let { showYearProps, showMonthProps, showDayProps } = this.props
     return (
       <View className='box'>
-        <View className='box-content' onClick={this.selectData.bind(this, 'showYear')}>
-            <Text className='box-content-year' style={{width: '30Px'}}>
-              年
+        {
+          showYearProps ?
+          <View className='box-content' onClick={this.selectData.bind(this, 'showYear')}>
+              <Text className='box-content-year' style={{width: '30Px'}}>
+                年
+              </Text>
+              <Text  className='box-content-yearNum'>
+              {this.state.dateSelectValue.year}
+              </Text>
+            <View>
+            {this.state.showYear &&
+              <View className='box-content-list'>
+                {
+                  this.getYearData().map((item, i) => {
+                    return (
+                      <View key={`dateYear_${i}`} onClick={this.onYear.bind(this, item)}>
+                        {item}
+                      </View>
+                    )
+                  })
+                }
+              </View>
+            }
+            </View>
+          </View> :
+          ''
+        }
+        {
+          showMonthProps ?
+          <View className='box-content' onClick={this.selectData.bind(this, 'showMonth')}>
+            <Text className='box-content-month'>
+              月
             </Text>
-            <Text  className='box-content-yearNum'>
-            {this.state.dateSelectValue.year}
+            <Text className='box-content-monthNum'>
+              {this.state.dateSelectValue.month}
             </Text>
-          <View>
-          {this.state.showYear &&
-            <View className='box-content-list'>
+            {this.state.showMonth &&
+              <View  className='box-content-list'>
               {
-                this.getYearData().map((item, i) => {
+                monthList.map((item, i) => {
                   return (
-                    <View key={`dateYear_${i}`} onClick={this.onYear.bind(this, item)}>
+                    <View key={`dateMonth_${i}`} onClick={this.onMonth.bind(this, item)}>
                       {item}
                     </View>
                   )
                 })
               }
             </View>
-          }
-          </View>
-        </View>
-        <View className='box-content' onClick={this.selectData.bind(this, 'showMonth')}>
-          <Text className='box-content-month'>
-            月
-          </Text>
-          <Text className='box-content-monthNum'>
-            {this.state.dateSelectValue.month}
-          </Text>
-          {this.state.showMonth &&
-            <View  className='box-content-list'>
-            {
-              monthList.map((item, i) => {
-                return (
-                  <View key={`dateMonth_${i}`} onClick={this.onMonth.bind(this, item)}>
-                    {item}
-                  </View>
-                )
-              })
             }
-          </View>
-          }
-        </View>
-        <View className='box-content' onClick={this.selectData.bind(this, 'showDay')}>
-          <Text className='box-content-day'>
-            天
-          </Text>
-          <Text className='box-content-dayNum'>
-            {this.state.dateSelectValue.day}
-          </Text>
-          {this.state.showDay &&
-             <View  className='box-content-list'>
-             {
-               this.state.dayList.map((item, i) => {
-                 return (
-                   <View key={`dateDay_${i}`} onClick={this.onDay.bind(this, item)} >
-                     {item}
-                   </View>
-                 )
-               })
-             }
-           </View>
-          }
-        </View>
+          </View> :
+          ''
+        }
+        {
+          showDayProps ?
+          <View className='box-content' onClick={this.selectData.bind(this, 'showDay')}>
+            <Text className='box-content-day'>
+              天
+            </Text>
+            <Text className='box-content-dayNum'>
+              {this.state.dateSelectValue.day}
+            </Text>
+            {this.state.showDay &&
+              <View  className='box-content-list'>
+              {
+                this.state.dayList.map((item, i) => {
+                  return (
+                    <View key={`dateDay_${i}`} onClick={this.onDay.bind(this, item)} >
+                      {item}
+                    </View>
+                  )
+                })
+              }
+            </View>
+            }
+          </View> : ''
+        }
       </View>
     )
   }
+}
+
+dateSelect.defaultProps = {
+  showYearProps: true,
+  showMonthProps: true,
+  showDayProps: true,
+  getSelectValue: () => {
+    console.log('请添加props: getSelectValue(), 返回yyyy-MM-dd')
+  },
+  defaultYear: new Date().getFullYear()
 }

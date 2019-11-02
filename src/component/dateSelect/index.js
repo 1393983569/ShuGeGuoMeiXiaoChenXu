@@ -23,7 +23,19 @@ export default class dateSelect extends Component {
   }
 
   componentWillMount () {
-
+    const time = new Date().Format("yyyy-MM-dd").split('-')
+    const dateSelectValue = {
+      year: time[0],
+      month: time[1],
+      day: time[2]
+    }
+    this.setState({
+      dateSelectValue
+    }, () => {
+      this.props.getSelectValue(`${dateSelectValue.year}-${dateSelectValue.month}-${dateSelectValue.day}`)
+      this.getMonthData()
+      this.getDayData(time[1])
+    })
   }
 
   getYearData () {
@@ -72,6 +84,7 @@ export default class dateSelect extends Component {
   }
 
   onYear (item) {
+    console.log(item, 'onYear')
     this.setState({
       dateSelectValue: {...this.state.dateSelectValue, year: item, month: '--', day: '--'},
       dayList: [],
@@ -82,20 +95,24 @@ export default class dateSelect extends Component {
   }
 
   onMonth (item) {
+    console.log(item, 'onMonth')
     this.setState({
       dateSelectValue: {...this.state.dateSelectValue, month: item, day: '--'},
       dayList: []
+    }, () => {
+      this.props.getSelectValue(`${this.state.dateSelectValue.year}-${item}`)
+      let day = getDayNumByYearMonth(parseInt(this.state.dateSelectValue.year), parseInt(item))
+      this.getDayData(day)
     })
-    this.props.getSelectValue(`${this.state.dateSelectValue.year}-${item}`)
-    let day = getDayNumByYearMonth(parseInt(this.state.dateSelectValue.year), parseInt(item))
-    this.getDayData(day)
   }
 
   onDay (item) {
+    console.log(item, 'onDay')
     this.setState({
       dateSelectValue: {...this.state.dateSelectValue, 'day': item}
+    }, () => {
+      this.props.getSelectValue(`${this.state.dateSelectValue.year}-${this.state.dateSelectValue.month}-${item}`)
     })
-    this.props.getSelectValue(`${this.state.dateSelectValue.year}-${this.state.dateSelectValue.month}-${item}`)
   }
 
   selectData (name) {
@@ -121,10 +138,13 @@ export default class dateSelect extends Component {
   }
 
   render () {
-    let {monthList} = this.state
+    const {monthList} = this.state
+    const { showYearProps, showMonthProps, showDayProps } = this.props
     return (
       <View className='box'>
-        <View className='box-content' onClick={this.selectData.bind(this, 'showYear')}>
+        {
+          showYearProps ?
+          <View className='box-content' onClick={this.selectData.bind(this, 'showYear')}>
             <Text className='box-content-year' style={{width: '30Px'}}>
               年
             </Text>
@@ -146,8 +166,12 @@ export default class dateSelect extends Component {
             </View>
           }
           </View>
-        </View>
-        <View className='box-content' onClick={this.selectData.bind(this, 'showMonth')}>
+        </View>:
+        ''
+        }
+        {
+          showMonthProps ?
+          <View className='box-content' onClick={this.selectData.bind(this, 'showMonth')}>
           <Text className='box-content-month'>
             月
           </Text>
@@ -167,8 +191,12 @@ export default class dateSelect extends Component {
             }
           </View>
           }
-        </View>
-        <View className='box-content' onClick={this.selectData.bind(this, 'showDay')}>
+        </View>:
+        ''
+        }
+        {
+          showDayProps ?
+          <View className='box-content' onClick={this.selectData.bind(this, 'showDay')}>
           <Text className='box-content-day'>
             天
           </Text>
@@ -188,8 +216,16 @@ export default class dateSelect extends Component {
              }
            </View>
           }
-        </View>
+        </View>:
+        ''
+        }
       </View>
     )
   }
+}
+
+dateSelect.defaultProps = {
+  showYearProps: true,
+  showMonthProps: true,
+  showDayProps: true
 }

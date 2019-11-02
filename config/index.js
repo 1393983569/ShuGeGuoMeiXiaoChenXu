@@ -3,10 +3,8 @@
 var config = {
   projectName: 'myApp',
   date: '2019-6-25',
-  designWidth: 750,
+  designWidth: 828,
   deviceRatio: {
-    '640': 1.17,
-    '750': 1,
     '828': 0.905
   },
   sourceRoot: 'src',

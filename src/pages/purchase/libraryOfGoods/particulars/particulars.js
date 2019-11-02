@@ -8,6 +8,11 @@ export default class Index extends Component {
     navigationBarTitleText: '商品详情'
   }
 
+  // 获取商品详情
+  getCommodityDetails() {
+
+  }
+
   render () {
     const scrollTop = 0
     const Threshold = 60

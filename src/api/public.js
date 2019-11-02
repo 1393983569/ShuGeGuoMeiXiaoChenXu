@@ -81,3 +81,13 @@ export function forgetPwd(adminId, password, msgCode) {
     method: 'post'
   })
 }
+
+/**
+ * 查询轮播图
+ */
+export function seeDetailAdv() {
+  return request({
+    url: 'shop/seeDetailAdv',
+    method: 'get'
+  })
+}

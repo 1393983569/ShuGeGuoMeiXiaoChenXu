@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text, Input, Icon } from '@tarojs/components'
 import Loading from '../../../component/loading/loading'
-import { selectList, getAllShopByGoods, addCart } from '../../../api/purchase/shoppingCart'
+import { selectList, shopSelectGoods, addCart } from '../../../api/purchase/shoppingCart'
 import { debounce } from '../../../utils/auth'
 import { connect } from '@tarojs/redux'
 import BottomBar from '../../../component/bottomBar/bottomBar'
@@ -60,7 +60,7 @@ export default class Index extends Component{
                   </View>
                   <View className='menu-bottom-text'>
                     <View className='menu-centre-price'>
-                      ￥{item.sellPrice}
+                      ￥{item.sellPrice ? Math.floor(item.sellPrice) / 100 : 0}
                     </View>
                     <View className='menu-centre-num'>
                       <View className='menu-centre-num-left' onClick={this.changeNum.bind(this, item.amount, '0', item.id, index)}>
@@ -86,21 +86,6 @@ export default class Index extends Component{
   componentDidMount () {
     this.getGradeList()
   }
-
-  // 滑动到底部触发
-  // onScrollToLower(e){
-  //   let num = this.state.pageNum
-  //   console.log(num, this.state.load)
-  //   if (this.state.load !== 'on') {
-  //     this.setState({
-  //       pageNum: num += 1
-  //     }, () => {
-  //       this.getMenuList()
-  //     })
-  //   } else {
-  //     this.getMenuList()
-  //   }
-  // }
 
   getGradeList() {
     let list = []
@@ -190,43 +175,11 @@ export default class Index extends Component{
 
   // 获取商品列表
   getMenuList() {
-    // // 如果已经到底不在访问接口
-    // if (this.state.load === 'on') {
-    //   // this.setState({
-    //   //   load: 'end'
-    //   // })
-    //   return
-    // }
     // 加载状态
     this.setState({
       load: 'loading'
     })
-    getAllShopByGoods(this.state.categoryOneId, this.state.categoryTwoId, this.state.id).then(res => {
-      // if (res.info.records.length === 0) {
-      //   this.setState({
-      //     load: 'on'
-      //   })
-      // } else {
-      //   let listMenu = JSON.parse(JSON.stringify(this.state.menuListData))
-      //   res.info.forEach(item => {
-      //     listMenu.push({
-      //       ...item,
-      //       sellPrice: item.sellPrice / 100
-      //     })
-      //   })
-      //   this.setState({
-      //     ...this.state,
-      //     menuListData: listMenu,
-      //     load: 'end'
-      //   })
-      // }
-      // let listMenu = JSON.parse(JSON.stringify(this.state.menuListData))
-      // res.info.forEach(item => {
-      //   listMenu.push({
-      //     ...item,
-      //     sellPrice: item.sellPrice / 100
-      //   })
-      // })
+    shopSelectGoods(this.state.categoryOneId, this.state.categoryTwoId, this.state.id).then(res => {
       this.setState({
         ...this.state,
         menuListData: res.info.map(item => {

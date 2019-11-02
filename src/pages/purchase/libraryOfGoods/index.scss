@@ -10,7 +10,7 @@
 .box{
   position: fixed;
   max-height: 100vh;
-  top: 30Px;
+  top: 60px;
   // height: 100%;
   // overflow: auto;
   overflow-y:scroll;
@@ -26,12 +26,12 @@
     &-stair{
       display: flex;
       justify-content: space-between;
-      font-size: 17Px;
+      font-size: 28px;
       background-color: #eeeeee;
       text-align: center;
       // height: 50Px;
       // line-height: 50Px;
-      padding: 10Px 10Px;
+      padding: 20px 20px;
       box-sizing: border-box;
       color: #222222;
     }
@@ -40,10 +40,10 @@
     }
     &-centre{
       color: #999999;
-      height: 40Px;
-      line-height: 40Px;
+      height: 80px;
+      line-height: 80px;
       text-align: center;
-      font-size: 14Px;
+      font-size: 28px;
     }
     &-show{
       overflow: hidden;
@@ -66,7 +66,7 @@
   }
   &-right{
     flex: 1;
-    padding: 14Px 9Px;
+    padding: 28px 18px;
     // width:75%;
     overflow: scroll;
   }
@@ -74,25 +74,25 @@
 .menu{
   display: flex;
   flex-direction: row;
-  padding: 10Px;
+  padding: 20px;
   &-left{
-    height: 60Px;
+    height: 120px;
     // width: 60Px;
   }
   &-right{
     flex: 1;
-    padding-left: 10Px;
+    padding-left: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: space-around;
   }
   &-centre-text{
-    margin-right: 5Px;
-    font-size: 13Px;
+    margin-right: 10px;
+    font-size: 28px;
   }
   &-top-text{
-    font-size: 17Px;
+    font-size: 28px;
   }
   &-centre-price{
     display: inline-block;
@@ -104,7 +104,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    line-height: 22Px;
+    line-height: 44px;
     align-items: space-around;
     width: 50%;
     &-left{
@@ -122,16 +122,16 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 10Px;
+    margin-top: 20px;
   }
   &-centre{
     &-icon{
-      font-size: 16Px;
+      font-size: 28px;
       color: #8BC34A;
     }
   }
   &-inventory{
-    margin-top: 10Px;
+    margin-top: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -140,20 +140,20 @@
 
 .border-menu{
   display: flex;
-  font-size: 14Px;
+  font-size: 28px;
   align-items: center;
-  height: 40Px;
+  height: 80px;
   &-left{
-    height: 20Px;
+    height: 40px;
     width: 50%;
-    border-left: 2Px solid #8BC34A;
-    padding-left: 5Px;
+    border-left: 4px solid #8BC34A;
+    padding-left: 10px;
   }
   &-right{
-    height: 20Px;
+    height: 40px;
     width: 50%;
-    border-left: 2Px solid #8BC34A;
-    padding-left: 5Px;
+    border-left: 4px solid #8BC34A;
+    padding-left: 10px;
   }
 }
 
@@ -163,49 +163,49 @@
   position: fixed;
   width: 100%;
   text-align: center;
-  line-height: 30Px;
-  height: 30Px;
+  line-height: 60px;
+  height: 60px;
   z-index: 6;
   &-right{
     color: #fff;
     position: absolute;
-    top: -8Px;
+    top: -4px;
     font-weight: 700;
-    right: 10Px;
-    font-size: 24Px;
+    right: 20px;
+    font-size: 32px;
   }
   &-dialogBox{
     position: absolute;
     background-color: #fff;
-    box-shadow: 0 0 5Px #333;
-    top: 25Px;
-    right: 10Px;
+    box-shadow: 0 0 10px #333;
+    top: 50px;
+    right: 20px;
     color: #666;
     z-index: 6;
-    border-radius: 5Px;
+    border-radius: 10px;
     &:before{
       content: '';
       position: absolute;
-      top: -20Px;
-      right: 15Px;
+      top: -40px;
+      right: 30px;
       width: 0;
       height: 0;
-      border:  10Px solid;
+      border:  20px solid;
       border-color: transparent transparent #fff transparent;
     }
     &-item{
-      font-size: 14Px;
-      padding: 10Px;
+      font-size: 28px;
+      padding: 20px;
       box-sizing: border-box;
       display: flex;
       &-left{
         &-text{
-          font-size: 16Px;
-          margin-right: 5Px;
+          font-size: 28px;
+          margin-right: 10px;
         }
       }
       &:not(:last-child){
-        border-bottom: #DCDFE6 1Px solid;
+        border-bottom: #DCDFE6 2px solid;
       }
     }
 

@@ -1,8 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text, RichText } from '@tarojs/components'
 import { shopFindMessage } from '../../api/InformationForDetails'
-import wxParse from '../../wxParse/wxParse'
-import '../../wxParse/wxParse.wxss'
 import './index.scss'
 
 export default class Index extends Component {

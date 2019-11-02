@@ -1,0 +1,67 @@
+@mixin solid {
+  content: '';
+  display: inline-block;
+  width: 100%;
+  height: 19Px;
+  border-bottom: 1Px solid #8BC34A;
+  flex: 1;
+  margin-left: 5Px;
+}
+.profitAndLossList-box{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: #f6f6f6;
+  &-content{
+    background: #fff;
+    margin: 10Px 14Px;
+    padding: 10Px 14Px;
+    font-size: 14Px;
+    &-head{
+      line-height: 50Px;
+      width: 100%;
+    }
+    &-gd{
+      border-top: 1Px solid #F0F0F0;
+      &-head{
+        width: 100%;
+        display: flex;
+      }
+      &-head:after{
+        @include solid;
+      }
+      View{
+        margin-top: 8Px
+      }
+    }
+    &-kb{
+      &-head{
+        width: 100%;
+        display: flex;
+      }
+      &-head:after{
+        @include solid;
+      }
+      View{
+        margin-top: 8Px
+      }
+    }
+  }
+  &-button{
+    position: absolute;
+    bottom: 30Px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.input-flex{
+  display: flex;
+  align-items: center;
+}
+
+.my-input.at-input{
+  padding: 0;
+}

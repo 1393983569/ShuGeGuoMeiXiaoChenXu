@@ -23,6 +23,27 @@ export function getAllShopByGoods(categoryOneId, categoryTwoId, adminId, pageNum
   }
   let newData = querystring.stringify(data)
   return request({
+    url: '/shop/selectGoods',
+    method: 'post',
+    data: newData
+  })
+}
+
+/**
+ * 分页查询掌柜端查询二级品类下的商品列表
+ * @param {*} categoryOneId
+ * @param {*} categoryTwoId
+ */
+export function shopSelectGoods(categoryOneId, categoryTwoId, adminId, pageNum) {
+  let data = {
+    categoryOneId,
+    categoryTwoId,
+    adminId,
+    pageNum,
+    pageSize: 7
+  }
+  let newData = querystring.stringify(data)
+  return request({
     url: '/shop/getAllShopByGoods',
     method: 'post',
     data: newData

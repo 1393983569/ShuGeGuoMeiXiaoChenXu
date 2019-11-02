@@ -1,7 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text, Input } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import { login } from '../../api/user'
+import { userLogin } from '../../api/user'
+import { AtMessage, AtToast } from 'taro-ui'
 // import imgPng from '../../img/img_bg.png'
 import { add, minus, insertToken, insertUserData, insertMenuList } from '../../actions/counter'
 
@@ -55,7 +56,9 @@ class Index extends Component {
           icon: 'icon_tab_order_normal',
           url: '/pages/purchase/orderForm/orderForm'
         }
-      ]
+      ],
+      isOpened: false,
+      atToastText: ''
     }
     this.changeInput = this.changeInput.bind(this)
     this.changePassword = this.changePassword.bind(this)
@@ -102,6 +105,10 @@ class Index extends Component {
         // url: '/pages/member/memberParticulars', // 会员详情
         // url: '/pages/member/integral', // 积分列表
         // url: '/pages/setUpShop/index', // 店铺设置
+        // url: '/pages/profitAndLoss/profitAndLossList', // 盈亏数据查看
+        // url: '/pages/profitAndLoss/profitAndLossAdd', // 盈亏数据添加
+        // url: '/pages/marketingPlatform/marketingPlatformlList', // 营销平台列表
+        // url: '/pages/marketingPlatform/marketingPlatformDes', // 营销平台详情
       })
     }
   }
@@ -128,7 +135,7 @@ class Index extends Component {
       mobile: this.state.mobile,
       password: this.state.password
     }
-    login(data).then(res => {
+    userLogin(data).then(res => {
       this.props.setUserData(res.info)
       this.props.setToken(res.info.token)
       this.props.setMenuList(JSON.parse(JSON.stringify(this.state.menuList)))
@@ -138,9 +145,17 @@ class Index extends Component {
       })
     }).catch(err => {
       console.log(err)
+      this.setState({
+        atToastText: err
+      }, () => {
+        this.setState({
+          isOpened: true
+        })
+      })
     })
   }
 
+  // isOpened
   changeInput = (e) => {
     this.setState({
       mobile: e.detail.value
@@ -159,9 +174,18 @@ class Index extends Component {
     })
   }
 
+  // 消息提示
+  handleClick (type, text) {
+    Taro.atMessage({
+      'message': text,
+      'type': type,
+    })
+  }
+
   render () {
     return (
       <View className='index' style={`background: url(http://qiniu.freshergo.com/1570763640184.png)`}>
+      <AtToast isOpened={this.state.isOpened} text={this.state.atToastText} ></AtToast>
         <View className='boxForm'>
           <View className='textForm'>
             <Text className='textForm-text'>蔬哥果妹</Text>

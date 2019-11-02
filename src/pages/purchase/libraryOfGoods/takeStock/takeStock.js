@@ -401,10 +401,8 @@ export default class Index extends Component{
     // remark 备注
     // 自然损耗 natureLoss
     // 人工损耗 artificialLoss
-    console.log(this.props.counter)
     const dataList = this.state.shopData
     const list = []
-    console.log(dataList, '@@@@@@@@@@@@@@@@@@@@@@@@@@')
     dataList.forEach(item => {
       let loss = null
       let status = null

@@ -31,7 +31,7 @@ export default class Index extends Component{
   }
 
   config = {
-    navigationBarTitleText: '采购平台'
+    navigationBarTitleText: '商品库'
   }
 
   renderMenuList = () => {
@@ -46,7 +46,7 @@ export default class Index extends Component{
                   <View className='menu-left'>
                     <Image
                       style='width: 60Px;height: 60Px;background: #fff;'
-                      src={item.smallImg}
+                      src={item.goodsDomain.bigImg}
                     />
                   </View>
                   <View className='menu-right'>
@@ -65,7 +65,7 @@ export default class Index extends Component{
                 </View>
                 <View className='border-menu'>
                   <View className='border-menu-left'>
-                    零售价: {parseInt(item.price) * 0.01}￥
+                    零售价: {Math.floor(item.price) / 100}￥
                   </View>
                   <View className='border-menu-right'>
                     折扣价: 字段待定

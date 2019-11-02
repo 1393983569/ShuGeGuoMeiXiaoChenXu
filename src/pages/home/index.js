@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Button, Text, Input, Icon, Swiper, SwiperItem } from '@tarojs/components'
+import { View, Button, Text, Input, Icon, Swiper, SwiperItem, Image } from '@tarojs/components'
 import { AtAvatar } from 'taro-ui'
-import { shopSelectDetails } from '../../api/public'
+import { shopSelectDetails, seeDetailAdv } from '../../api/public'
 // import imgPng from '../../img/img_bg.png'
 import './index.scss'
 
@@ -86,18 +86,19 @@ export default class Index extends Component {
             icon: 'icon_home_backstageuser'
           },
           {
-            name: '店铺设置(未做)',
-            url: '/pages/purchase/orderForm/orderForm',
+            name: '店铺设置',
+            url: '/pages/setUpShop/index',
             icon: 'icon_home_shopset'
           },
           {
-            name: '盈亏数据设置(未做)',
-            url: '/pages/purchase/orderForm/orderForm',
+            name: '盈亏数据设置',
+            url: '/pages/profitAndLoss/profitAndLossList',
             icon: 'icon_home_profitandlossdataSetting'
           }
         ]
       },
-      userData: {}
+      userData: {},
+      imgeList: []
     }
   }
 
@@ -108,6 +109,20 @@ export default class Index extends Component {
 
   componentDidMount() {
     this.getUser()
+    this.getSeeDetailAdv()
+  }
+
+  // 获取轮播图
+  getSeeDetailAdv() {
+    seeDetailAdv().then(res => {
+      this.setState({
+        imgeList: res.info.map(item => {
+          return item.imge
+        })
+      })
+    }).catch(err => {
+      console.log(err)
+    })
   }
 
   // 获取用户信息
@@ -138,6 +153,7 @@ export default class Index extends Component {
 
   // 轮播图
   renderSwiper = () => {
+    const { imgeList } = this.state
     return <Swiper
     className='test-h'
     indicatorColor='#999'
@@ -146,21 +162,29 @@ export default class Index extends Component {
     indicatorDots
     autoplay='true'
     >
-      <SwiperItem>
-        <View className='demo-text-1'>1</View>
-      </SwiperItem>
-      <SwiperItem>
-        <View className='demo-text-2'>2</View>
-      </SwiperItem>
-      <SwiperItem>
-        <View className='demo-text-3'>3</View>
-      </SwiperItem>
+    {
+      imgeList.map(item => {
+        return <SwiperItem key={item}>
+          <Image
+            style='height: 100%; width: 100%; background: #fff;'
+            src={item}
+          />
+        </SwiperItem>
+      })
+    }
     </Swiper>
+  }
+
+  // 跳转营销平台
+  marketingPlatform() {
+    Taro.navigateTo({
+      url: '/pages/marketingPlatform/marketingPlatformlList'
+    })
   }
 
   // 营销平台
   renderMarketing = () => {
-    return <View className='marketing' >
+    return <View className='marketing' onClick={ this.marketingPlatform }>
       <View className='iconfont icon_home_marketingcenter marketing-icon'></View>
       <View className='marketingText' >
         <View>营销平台</View>

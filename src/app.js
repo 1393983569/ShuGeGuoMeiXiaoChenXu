@@ -78,6 +78,10 @@ class App extends Component {
       'pages/member/charge', // 充值记录
       'pages/member/consumption', // 充值记录明细
       'pages/setUpShop/index', // 店铺设置
+      'pages/profitAndLoss/profitAndLossList', // 盈亏数据查看
+      'pages/profitAndLoss/profitAndLossAdd', // 盈亏数据新建
+      'pages/marketingPlatform/marketingPlatformlList', // 盈亏平台列表
+      'pages/marketingPlatform/marketingPlatformDes' // 盈亏平台详情
     ],
     window: {
       backgroundTextStyle: 'light',

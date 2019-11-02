@@ -1,12 +1,12 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text, Input } from '@tarojs/components'
-import { AtInput } from 'taro-ui'
+import { AtInput, AtToast, AtModal, AtModalHeader, AtModalContent, AtModalAction, AtActivityIndicator, AtMessage } from 'taro-ui'
 import { connect } from '@tarojs/redux'
 import { login } from '../../api/user'
 // import imgPng from '../../img/img_bg.png'
 import { add, minus, insertToken, insertUserData, insertMenuList } from '../../actions/counter'
-import { sendSms, editPwd } from '../../api/login/forgetPassword'
-
+import { forgetPwd } from '../../api/login/forgetPassword'
+import { getImgCode, sendSms } from '../../api/public'
 import './index.scss'
 
 // 获取
@@ -34,7 +34,13 @@ class ForgetPassword extends Component {
       password: '',
       codeData: 60,
       code: '',
-      interval: ''
+      interval: '',
+      isOpened: false,
+      imgeBase: '',
+      imgCode: '',
+      isOpenedAtToast: false,
+      isOpenedSub: false,
+      atToastText: ''
     }
   }
 
@@ -61,12 +67,11 @@ class ForgetPassword extends Component {
 
   onLogin = () => {
     let data = {
-      adminId: Taro.getStorageSync('adminId').id,
-      confirmPwd: this.state.password,
+      mobile: this.state.mobile,
       msgCode: this.state.code,
       password: this.state.password
     }
-    editPwd(data).then(res => {
+    forgetPwd(data).then(res => {
       this.props.setUserData(res.info)
       this.props.setToken(res.info.token)
       Taro.setStorageSync('token',res.info.token)
@@ -75,6 +80,13 @@ class ForgetPassword extends Component {
       })
     }).catch(err => {
       console.log(err)
+      this.setState({
+        atToastText: err
+      }, () => {
+        this.setState({
+          isOpenedSub: true
+        })
+      })
     })
   }
 
@@ -107,7 +119,80 @@ class ForgetPassword extends Component {
     })
   }
 
+  // 点击发送验证码
   sendVerificationCode() {
+    if (!this.state.mobile) {
+      this.setState({
+        isOpenedAtToast: true
+      })
+      return
+    } else {
+      this.setState({
+        isOpenedAtToast: false
+      })
+    }
+    let time = this.state.codeData
+    this.getImgeCode()
+  }
+
+  // 输入验证码
+  handleChangeOpenCode(e) {
+    this.setState({
+      imgCode: e
+    })
+  }
+
+  // 显示输入图形验证图片
+  isOpenedState(state) {
+    this.setState({
+      isOpened: state
+    })
+  }
+
+   // 图片验证码取消
+   cancelImg() {
+    this.setState({
+      isOpened: false,
+      imgCode: ''
+    })
+  }
+
+  // 获取图形验证
+  getImgeCode() {
+    if (this.state.codeData !== 60) return
+    this.isOpenedState(true)
+    getImgCode().then(res => {
+      this.setState({
+        imgeBase: 'data:image/png;base64,' + res.info.imgCode,
+        strCode: res.info.strCode,
+        imgCode: ''
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
+  // 图片验证码确认
+  confirmImg() {
+    if (this.state.imgCode === this.state.strCode) {
+      this.sendCode()
+      this.setState({
+        imgCode: '',
+        isOpened: false
+      })
+    } else {
+      this.setState({
+        atToastText: '请输入正确的验证码'
+      }, () => {
+        this.setState({
+          isOpenedSub: true
+        })
+      })
+    }
+  }
+
+  // 倒计时
+  sendCode() {
     if (this.state.interval) {
       return
     }
@@ -130,14 +215,28 @@ class ForgetPassword extends Component {
     }, 1000)
   }
 
+  // 消息提示
+  handleClick (type, text) {
+    Taro.atMessage({
+      'message': text,
+      'type': type,
+    })
+  }
 
+  // 返回
+  getBack() {
+    Taro.redirectTo({
+      url: '/pages/login/index'
+    })
+  }
 
   render () {
-    const { codeData } = this.state
+    const { codeData, isOpened, imgeBase, isOpenedAtToast } = this.state
     return (
       <View className='forgetPassword' style={`background: url(http://qiniu.freshergo.com/1570763640184.png)`}>
+      <AtToast isOpened={this.state.isOpenedSub} text={this.state.atToastText} ></AtToast>
         <View className='forgetPassword-box-head'>
-          <View className='forgetPassword-box-head-left'>
+          <View className='forgetPassword-box-head-left' onClick={() => this.getBack()}>
             <View className='iconfont icon_back_arrow forgetPassword-box-head-left-icon'></View>
           </View>
         </View>
@@ -148,10 +247,10 @@ class ForgetPassword extends Component {
             <View className='forgetPassword-box-boxForm-head-textb'>掌柜端</View>
           </View>
           <View className='forgetPassword-box-boxForm-inputForm'>
-            <Input type='text' value={this.start.mobile} onInput={this.changeInput} className='inputCustom' placeholder='请输入手机号' focus/>
+            <Input type='text' value={this.state.mobile} onInput={this.changeInput} className='inputCustom' placeholder='请输入手机号' focus/>
             <View className='forgetPassword-box-boxForm-inputForm-code'>
               <View className='forgetPassword-box-boxForm-inputForm-code-input'>
-                <Input type='text' value={this.start.code} className='inputCustom' onInput={this.changeCode} placeholder='请输入验证码' style='margin-bottom: 0; border: none'/>
+                <Input type='text' value={this.state.code} className='inputCustom' onInput={this.changeCode} placeholder='请输入验证码' style='margin-bottom: 0; border: none'/>
               </View>
               <View className='forgetPassword-box-boxForm-inputForm-code-send' onClick={() => this.sendVerificationCode()}>
                 <View>
@@ -168,6 +267,24 @@ class ForgetPassword extends Component {
           </View>
         </View>
       </View>
+      <AtModal isOpened={isOpened}>
+        <AtModalHeader>验证码</AtModalHeader>
+        <AtModalContent>
+          <Image src={ 'data:image/jpeg' + imgeBase } style="height: 150Px"/>
+          <AtInput
+            name='code'
+            type='text'
+            placeholder='请输入验证码'
+            value={this.state.imgCode}
+            onChange={this.handleChangeOpenCode.bind(this)}
+          />
+        </AtModalContent>
+        <AtModalAction>
+          <Button onClick={() => this.cancelImg()}>取消</Button>
+          <Button onClick={() => this.confirmImg()}>确定</Button>
+        </AtModalAction>
+      </AtModal>
+      <AtToast isOpened={isOpenedAtToast} text="请输入手机号" icon="close-circle"></AtToast>
       </View>
     )
   }

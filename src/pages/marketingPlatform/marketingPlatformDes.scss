@@ -1,0 +1,47 @@
+.box{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: #f6f6f6;
+  &-content{
+    margin: 14Px 10Px;
+    padding: 14Px 10Px;
+    background-color: #fff;
+    overflow: hidden;
+    &-head{
+      overflow: hidden;
+      &-left{
+        float: left;
+      }
+      &-right{
+        float: right;
+      }
+    }
+    &-list{
+      &-title{
+
+      }
+      &-table{
+        font-size: 14Px;
+        &-head{
+          margin-top: 10Px;
+          display: flex;
+          justify-content: space-around;
+          text-align: center;
+          align-items: center;
+          View{
+            width: 40%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.my-at-switch.at-switch{
+  padding: 0;
+}
+
+.my-at-switch.at-switch:after{
+  border: none;
+}
