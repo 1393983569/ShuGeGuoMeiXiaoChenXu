@@ -31,6 +31,7 @@
       // line-height: 50Px;
       padding: 20px 20px;
       color: #222222;
+      text-align: left;
     }
     &-stair:active{
       background-color: #dadada;
@@ -119,7 +120,10 @@
       color: #F9F9F9;
     }
     &-centre{
-
+      &-input{
+        text-align: center;
+        width: 45px;
+      }
     }
   }
   &-bottom-text{

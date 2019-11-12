@@ -2,10 +2,10 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text, Input } from '@tarojs/components'
 import { AtMessage } from 'taro-ui'
 import BottomBar from '../../../component/bottomBar/bottomBar'
-import { selectPageCart, addCart, deleteCart, addShopOrder } from '../../../api/purchase/shoppingCart'
+import { selectPageCart, addCart, deleteCart, addShopOrder } from '../../../api/purchase/orderEdit'
 import { connect } from '@tarojs/redux'
 import { setOrderState } from '../../../actions/counter'
-import './index.scss'
+import './orderEdit.scss'
 
 // 获取redux
 @connect(({ counter }) => ({
@@ -15,41 +15,33 @@ import './index.scss'
     dispatch(setOrderState(state))
   }
 }))
-
 export default class Index extends Component{
   constructor (props) {
     super(props)
     this.state = {
       menuListData: [],
-      startX: 0,
+      startX: '',
       delBtnWidth: '70',
       endData: 0,
       id: Taro.getStorageSync('adminId').id,
       shopId: Taro.getStorageSync('adminId').shopId,
       totalPrices: 0,
-      totalPricesEslectState: false,
-      delAnimate: '',
-      endX: 0,
-      animatio: {}
+      // totalPricesEslectState: false,
+      suborderNo: ''
     }
   }
 
   config = {
-    navigationBarTitleText: '购物车'
+    navigationBarTitleText: '订单编辑'
   }
 
   componentDidMount () {
     this.getShoppingCart()
   }
 
-
   componentWillMount() {
-    // 创建动画
     this.setState({
-      animatio: Taro.createAnimation({
-        duration: 50,
-        timingFunction: 'linear'
-      })
+      suborderNo: this.$router.params.orderId
     })
   }
 
@@ -60,12 +52,7 @@ export default class Index extends Component{
           {
             shoppingList.map((shopItem, shopIndex) => {
              return <View className='menu-box' key={`${shopIndex}_me`} >
-              <View className='menu'
-              animation={shopItem.delAnimate}
-              // style={`right: ${shopItem.txtStyle}Px;`}
-              onTouchStart={this.touchS}
-              onToucHend={e => this.touchH(e, indexF, shopIndex)}
-              >
+              <View className='menu' style={`right: ${shopItem.txtStyle}Px;`} onTouchStart={this.touchS} onTouchMove={e => this.touchM(e, indexF, shopIndex)} onToucHend={e => this.touchH(e, indexF, shopIndex)}>
                 <View className='menu-select'>
                   {
                     shopItem.selectState ?
@@ -100,10 +87,7 @@ export default class Index extends Component{
                         -
                       </View>
                       <View className='menu-centre-num-centre'>
-                        {/* {shopItem.amount} */}
-                        <View className='menu-centre-num-centre'>
-                          <Input type='text' value={shopItem.amount} className='menu-centre-num-centre-input' onBlur={ this.inputNum.bind(this, shopItem.id, indexF) }/>
-                        </View>
+                        {shopItem.amount}
                       </View>
                       <View className='menu-centre-num-right' onClick={this.changeNum.bind(this, shopItem.amount, '1', shopItem.id, shopIndex, indexF)}>
                         +
@@ -163,13 +147,13 @@ export default class Index extends Component{
 
   // 获取列表数据
   getShoppingCart() {
-    selectPageCart(this.state.id).then(res => {
+    selectPageCart(this.state.suborderNo).then(res => {
       let data = {}
       let listData = []
-      res.info.forEach((item, index) => {
+      res.info[0].orderDetailList.forEach((item, index) => {
         if (!data[item.categoryOne.name]) {
           let {goodsDomain} = item
-          data[item.categoryOne.name] = []
+          data[item.categoryOneName] = []
           data[item.categoryOne.name].push({
             name: goodsDomain.name,
             bigImg: goodsDomain.bigImg,
@@ -216,7 +200,10 @@ export default class Index extends Component{
       }
       this.setState({
         menuListData: listData
-      }, () => this.getTotalPrices())
+      }, () => {
+        this.getTotalPrices()
+        this.selectTotalPrices()
+      })
     }).catch(err => {
       console.log(err)
     })
@@ -247,31 +234,6 @@ export default class Index extends Component{
         menuListData: list,
         load: 'on'
       }, () => this.getTotalPrices())
-      // this.getMenuList()
-    }).catch(err => {
-      console.log(err)
-    })
-  }
-
-  // 输入框
-  inputNum(id, index, e) {
-    let list = this.state.menuListData
-    let data = {
-      goodsId: id,
-      adminId: this.state.id,
-      categoryOneId: this.state.categoryOneId,
-      categoryTwoId: this.state.categoryTwoId,
-      shopId: this.state.shopId,
-      number: e.detail.value
-    }
-    addCart(data).then(res => {
-      list[index].amount = data.number
-      console.log(list[index])
-      this.setState({
-        ...this.state,
-        menuListData: list,
-        load: 'on'
-      })
       // this.getMenuList()
     }).catch(err => {
       console.log(err)
@@ -353,7 +315,7 @@ export default class Index extends Component{
       list.push(newData)
     })
     this.setState({
-      totalPricesEslectState: state,
+      // totalPricesEslectState: state,
       menuListData: list
     }, () => this.getTotalPrices())
   }
@@ -406,36 +368,67 @@ export default class Index extends Component{
   }
 
   touchS = (e) => {
-    const startX = e.touches[0].clientX
     // 滑动开始的坐标
     this.setState({
-      startX
-    }, () => {
-      console.log(startX, '开始')
+      startX: e.touches[0].clientX
     })
   }
 
   touchH = (e, indexF, index) => {
-    console.log(e.changedTouches[0].clientX, '结束')
-    const { startX, menuListData, animatio } = this.state
-    const list = menuListData
-    const _animatio = animatio
-    const endX = e.changedTouches[0].clientX
-    const distance = Math.floor(startX) - Math.floor(endX)
-    console.log(distance, startX, endX, '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-    if (distance > 40) {
-      _animatio.translateX(-70).step()
-      // 展示删除
-      list[indexF].shoppingList[index].delAnimate = _animatio.export()
+    const getList = (state) => {
+      let dataList = JSON.parse(JSON.stringify(this.state.menuListData))
+      let data = dataList[indexF].shoppingList[index]
+      // 循环父
+      if (state) {
+        data.txtStyle = 70
+      } else {
+        let num = data.txtStyle
+        data.txtStyle = num - 15
+        if (data.txtStyle < 0) {
+          data.txtStyle = 0
+          clearInterval(setTime)
+        }
+      }
+      return dataList
+    }
+    if (this.state.endData < this.state.delBtnWidth) {
+      var setTime = setInterval(() => {
+        this.setState({
+          menuListData: getList(false)
+        })
+      }, 5)
+    } else {
       this.setState({
-        menuListData: list,
+        menuListData: getList(true)
       })
-    } else if (distance < -40){
-      _animatio.translateX(0).step()
-      // 复位
-      list[indexF].shoppingList[index].delAnimate = _animatio.export()
+    }
+  }
+
+  touchM = (e, indexF, index) => {
+    if (e.touches.length === 1) {
+      let dataList = JSON.parse(JSON.stringify(this.state.menuListData))
+      let data = dataList[indexF].shoppingList[index]
+      // 记录触摸点位置的X坐标
+      let moveX = e.touches[0].clientX
+      let txtStyle = this.state.menuListData[indexF].shoppingList[index].txtStyle
+      // 计算起始点坐标与当前触摸点的差值
+      let disX = this.state.startX - moveX
+      // 删除按钮宽度
+      let delBtnWidth = this.state.delBtnWidth
+      if (disX < 40 && txtStyle < 40) {
+        txtStyle = "0"
+      } else {
+        // 如果大于按钮宽度 就恒定为按钮宽度
+        if (disX > delBtnWidth) {
+          txtStyle = delBtnWidth
+        } else {
+          txtStyle = disX
+        }
+      }
+      data.txtStyle = txtStyle
       this.setState({
-        menuListData: list
+        menuListData: dataList,
+        endData: txtStyle
       })
     }
   }
@@ -444,27 +437,27 @@ export default class Index extends Component{
     return (
       <View>
          <AtMessage />
-        <View className='box'>
+        {/* <View className='box'>
           <View className='box-list'>
             {this.renderShopList()}
             <View className='box-list-fill'></View>
           </View>
-        </View>
+        </View> */}
         <View className='totalPrices'>
           <View className='totalPrices-content'>
-            <Button size='mini' className='totalPrices-content-button' onClick={this.createOrder}>生成订单</Button>
+            <Button size='mini' className='totalPrices-content-button' onClick={this.createOrder}>保存</Button>
             <Text className='totalPrices-content-text'>
               合计: ￥{this.state.totalPrices}
             </Text>
-            {
+            {/* {
               this.state.totalPricesEslectState?
               <View className='iconfont icon_selectedall totalPrices-content-select' onClick={this.selectTotalPrices.bind(this, !this.state.totalPricesEslectState)}></View> :
               <View className='iconfont icon_unselectall totalPrices-content-select' onClick={this.selectTotalPrices.bind(this, !this.state.totalPricesEslectState)}></View>
-            }
-            <Text className='totalPrices-content-all-select'>全选</Text>
+            } */}
+            {/* <Text className='totalPrices-content-all-select'>全选</Text> */}
           </View>
         </View>
-        <BottomBar/>
+        {/* <BottomBar/> */}
       </View>
     )
   }

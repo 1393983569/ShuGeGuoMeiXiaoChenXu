@@ -12,7 +12,8 @@ export default class MarketingPlatformDes extends Component {
     this.state = {
       id: '',
       data: {},
-      categoryOneNameList: []
+      categoryOneNameList: [],
+      openState: 0
     }
   }
 
@@ -35,7 +36,8 @@ export default class MarketingPlatformDes extends Component {
       console.log(this.shopCategory(res.info.goods))
       this.setState({
         data: res.info,
-        categoryOneNameList: this.shopCategory(res.info.goods)
+        categoryOneNameList: this.shopCategory(res.info.goods),
+        openState: res.info.status
       })
     }).catch(err => {
       console.log(err)
@@ -115,8 +117,8 @@ export default class MarketingPlatformDes extends Component {
                 <View className='box-content-list-table-head'>
                   <View>{ _item.goodsName || '暂无' }</View>
                   <View>DR={ _item.discountRate || '暂无' }</View>
-                  <View>{ price || '暂无' }</View>
-                  <View>{ discountRate || '暂无' }</View>
+                  <View>￥{ price || '暂无' }</View>
+                  <View>￥{ discountRate || '暂无' }</View>
                 </View>
               </View>
             })

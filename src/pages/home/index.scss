@@ -8,11 +8,11 @@
   .head{
     background-color: rgba(65, 77, 85, 0.5);
     color: #EAEBEC;
-    font-size: 16Px;
-    height: 45Px;
-    line-height: 45Px;
-    font-weight: 700;
-    padding: 0 10Px;
+    font-size: 32px;
+    height: 90px;
+    line-height: 90px;
+    font-weight: 600;
+    padding: 0 20px;
     position: relative;
     box-sizing: border-box;
     overflow: hidden;
@@ -29,68 +29,70 @@
       float: right;
       position: relative;
       &-icon{
-        font-size: 20Px;
+        font-size: 40px;
         color: #EAEBEC;
       }
       .dot{
         position: absolute;
-        width: 10Px;
-        height: 10Px;
-        border-radius: 5Px;
+        width: 20px;
+        height: 20px;
+        border-radius: 10px;
         background:#E51C23;
-        top: 5Px;
-        right:-5Px;
+        top: 10px;
+        right:-10px;
       }
     }
   }
   .marketing{
     display: flex;
-    padding: 15Px 14Px;
+    padding: 30px 28px;
     flex-direction: row;
-    height: 90Px;
+    height: 180px;
     background-color: #444C52;
     justify-content: left;
     align-items: center;
     .marketingText{
       display: inline-block;
-      margin-left: 15Px;
+      margin-left: 30px;
       color: #FEFEFF;
-      font-size: 16Px;
+      font-size: 32px;
       font-weight: 700;
     }
     &-icon{
-      font-size: 35Px;
+      font-size: 70px;
       color: #FEFEFF;
     }
   }
   .statement{
     .text{
-      padding-left: 20Px;
-      height: 110Px;
-      line-height: 110Px;
+      padding-left: 40px;
+      height: 220px;
+      line-height: 220px;
       background-color: rgba(66, 74, 81, 0.5);
       color: #FEFEFF;
-      font-size: 28Px;
+      font-size: 56px;
     }
     .icon-bar{
       color: #FEFEFF;
       display: flex;
-      padding: 0 20Px;
-      height: 90Px;
+      padding: 0 40px;
+      height: 180px;
       flex-direction: row;
       justify-content: flex-start;
       align-items: center;
       text-align: center;
       background-color: rgba(0, 0, 0, 0.4);
       &-icon{
-        font-size: 24Px;
+        font-size: 48px;
       }
       &-item{
         width: 20%;
-        margin: 0 10Px;
+        margin: 0 20px;
       }
     }
   }
 }
 
-
+.test-h{
+  height: 276px;
+}

@@ -1,10 +1,19 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
 import { queryNoPageOrder } from '../../../api/purchase/hasBeenOpened'
+import { connect } from '@tarojs/redux'
+import { setOrderState } from '../../../actions/counter'
 import '../../../fonts/iconfont.css'
-
 import './index.scss'
 
+// 获取redux
+@connect(({ counter }) => ({
+  counter
+}), (dispatch) => ({
+  setOrderState (state) {
+    dispatch(setOrderState(state))
+  }
+}))
 export default class Index extends Component {
 
   constructor (props) {
@@ -15,7 +24,12 @@ export default class Index extends Component {
   }
 
   componentDidMount () {
-    queryNoPageOrder(3).then(res => {
+    this.getList()
+  }
+
+  // 获取数据
+  getList() {
+    queryNoPageOrder(3, Taro.getStorageSync('adminId').shopId, Taro.getStorageSync('orderItem'), Taro.getStorageSync('orderName')).then(res => {
       const list = res.info.map(item => {
         return {
           id: item.id,
@@ -32,6 +46,14 @@ export default class Index extends Component {
     })
   }
 
+  // 跳转详情
+  goParticulars(orderId, e) {
+    this.props.setOrderState('已入库')
+    Taro.navigateTo({
+      url: '/pages/purchase/orderForm/orderParticulars?orderId=' + orderId + '&state="已入库"'
+    })
+  }
+
   render() {
     return(
       <View>
@@ -39,7 +61,7 @@ export default class Index extends Component {
           this.state.dataList.map((item, index) => {
             return(
               <View className='didNotOpen' key={index + 'f'}>
-                <View className='didNotOpen-head'>
+                <View className='didNotOpen-head' onClick={this.goParticulars.bind(this, item.orderNo)}>
                   <Text>
                     订单号：{item.orderNo}
                   </Text>
@@ -61,7 +83,7 @@ export default class Index extends Component {
                     合计
                   </Text>
                   <Text className='didNotOpen-sum-right'>
-                    ￥{parseInt(item.totalMoney) * 0.01}
+                    ￥{item.totalMoney}
                   </Text>
                 </View>
                 <View className='didNotOpen-button'>

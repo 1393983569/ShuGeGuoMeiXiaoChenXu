@@ -2,6 +2,11 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
 import './index.scss'
 import { findSubOrder, updateOrderStorage, shopAddInven } from '../../../api/purchase/childrenOrderParticulars'
+import { connect } from '@tarojs/redux'
+
+@connect(({ counter }) => ({
+  counter
+}))
 
 export default class Index extends Component {
   constructor (props) {
@@ -176,6 +181,7 @@ export default class Index extends Component {
 
   renderOrder(data) {
     const list = data.subOrderDetailList
+    const { counter } = this.props
     if (!list || list.length === 0) {
       return
     }
@@ -187,9 +193,9 @@ export default class Index extends Component {
           </View>
           <View>
             {
-              data.warehousing ?
-              <Button className='btn-max-w button-custom-selected' type='primary'>已入库</Button> :
-              <Button className='btn-max-w button-custom' type='primary' onClick={this.putBinStorage}>入库</Button>
+              counter.orderState === '已派单'?
+              <Button className='btn-max-w button-custom' type='primary' onClick={this.putBinStorage}>入库</Button>:
+              <Button className='btn-max-w button-custom-selected' type='primary'>{counter.orderState}</Button>
             }
           </View>
         </View>
@@ -223,7 +229,7 @@ export default class Index extends Component {
                         <View className="td">{listItem.name}</View>
                         <View className="td">{listItem.id}</View>
                         <View className="td">{listItem.standards}</View>
-                        <View className="td">{parseInt(listItem.price) * 0.01}</View>
+                        <View className="td">{Math.floor(parseInt(listItem.price)) / 100}</View>
                         <View className="td" style={listItem.modificationState ? 'color: red' : ''}>{listItem.amount}</View>
                         <View className="td" style={listItem.modificationState ? 'color: red' : ''}>
                           {
@@ -232,7 +238,7 @@ export default class Index extends Component {
                             <Input className='td-input' type='number' onBlur={this.onInputWarehouseNum.bind(this, item, listItem, index)} value={listItem.inputQuantity} maxLength='15'/>
                           }
                         </View>
-                        <View className="td">{parseInt(listItem.amount) * parseInt(listItem.price)}</View>
+                        <View className="td">{Math.floor(parseInt(listItem.amount) * parseInt(listItem.price)) / 100}</View>
                       </View>
                     </View>
                   })}
@@ -285,7 +291,7 @@ export default class Index extends Component {
                   <View className='iconfont icon_shoplocation orderParticulars-message-icon'></View>
                 </View>
                 <Text>
-                  甘肃省兰州市城关区雁南街道雁西路630号雁南街道雁西路630号
+                  {shoppingList.shopDomain.provinceDomain}{shoppingList.shopDomain.cityDomain}{shoppingList.shopDomain.detailsAddress}
                 </Text>
               </View>
             </View>
@@ -294,16 +300,16 @@ export default class Index extends Component {
                 <Text className='orderMessage-head-left'>
                   订单信息
                 </Text>
-                <Text className='orderMessage-head-right'>
+                {/* <Text className='orderMessage-head-right'>
                   已派单  5/12
-                </Text>
+                </Text> */}
               </View>
               <View className='orderMessage-content'>
                 <Text className='orderMessage-content-text'>
                   订单编号：
                 </Text>
                 <Text className='orderMessage-content-text-color'>
-                  620101200119022630001
+                  {shoppingList.suborderNo}
                 </Text>
               </View>
               <View className='orderMessage-content'>
@@ -311,17 +317,17 @@ export default class Index extends Component {
                   订单编号：
                 </Text>
                 <Text>
-                  2019-04-02  23:25:40
+                {shoppingList.createTime}
                 </Text>
               </View>
-              <View className='orderMessage-content'>
+              {/* <View className='orderMessage-content'>
                 <Text className='orderMessage-content-text'>
                   供应商：
                 </Text>
                 <Text>
                   供应商二
                 </Text>
-              </View>
+              </View> */}
             </View>
             {this.renderOrder(shoppingList)}
           </ScrollView>

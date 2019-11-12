@@ -15,7 +15,7 @@ import './index.scss'
 export default class Index extends Component{
   constructor(props) {
     super(props)
-    const { menuList } =
+    // const { menuList } =
     this.state = {
       load: '',
       menuListData: [],
@@ -26,6 +26,13 @@ export default class Index extends Component{
       id: Taro.getStorageSync('adminId').id,
       shopId: Taro.getStorageSync('adminId').shopId
     }
+  }
+
+  // 跳转商品详情
+  shopParticulars(id) {
+    Taro.navigateTo({
+      url: '/pages/purchase/libraryOfGoods/goodsShelfDetails/goodsShelfDetails?id=' + id
+    })
   }
 
   config = {
@@ -42,6 +49,7 @@ export default class Index extends Component{
               <View className='menu' key={`${index}_me`}>
                 <View className='menu-left'>
                   <Image
+                    onClick={this.shopParticulars.bind(this, item.id)}
                     style='width: 90Px;height: 90Px;background: #fff;'
                     src={item.smallImg}
                   />
@@ -67,7 +75,7 @@ export default class Index extends Component{
                         -
                       </View>
                       <View className='menu-centre-num-centre'>
-                        {item.amount}
+                        <Input type='text' value={item.amount} className='menu-centre-num-centre-input' onBlur={ this.inputNum.bind(this, item.id, index) }/>
                       </View>
                       <View className='menu-centre-num-right' onClick={this.changeNum.bind(this, item.amount, '1', item.id, index)}>
                         +
@@ -226,6 +234,31 @@ export default class Index extends Component{
       console.log(err)
     })
   }
+
+  // 输入框
+  inputNum(id, index, e) {
+    let list = this.state.menuListData
+    let data = {
+      goodsId: id,
+      adminId: this.state.id,
+      categoryOneId: this.state.categoryOneId,
+      categoryTwoId: this.state.categoryTwoId,
+      shopId: this.state.shopId,
+      number: e.detail.value
+    }
+    addCart(data).then(res => {
+      list[index].amount = data.number
+      console.log(list[index])
+      this.setState({
+        ...this.state,
+        menuListData: list,
+        load: 'on'
+      })
+      // this.getMenuList()
+    }).catch(err => {
+      console.log(err)
+    })
+   }
 
   render () {
     const scrollTop = 0

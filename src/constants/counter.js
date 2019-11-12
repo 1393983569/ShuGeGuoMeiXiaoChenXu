@@ -12,3 +12,9 @@ export const INSERT_USER_DATA = 'insert_user_data'
 
 // 货架 购物车 订单
 export const INSERT_MENU_LIST = 'insertMenuList'
+
+// 当前订单状态
+export const ORDER_STATE = 'orderState'
+
+// 当前导航栏的index
+export const NAVIGATION_INDEX = 'navigationIndex'

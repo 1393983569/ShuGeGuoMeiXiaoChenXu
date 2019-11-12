@@ -37,9 +37,16 @@ export default class Index extends Component{
 
   // 编辑/保存 状态
   handleState(state, index, e) {
-    console.log(state, index)
     const dataList = JSON.parse(JSON.stringify(this.state.dataList))
-    dataList[index].state = state
+    dataList[index].state = true
+    this.setState({
+      dataList
+    })
+  }
+
+  handleAdd(index) {
+    const dataList = JSON.parse(JSON.stringify(this.state.dataList))
+    dataList[index].state = false
     this.setState({
       dataList
     })
@@ -60,7 +67,7 @@ export default class Index extends Component{
                   <View>
                     {
                       item.state ?
-                      <Button className='btn-max-w box-content-button' plain type='primary' onClick={this.handleState.bind(this, !item.state, index)}>保存</Button> :
+                      <Button className='btn-max-w box-content-button' plain type='primary' onClick={this.handleAdd.bind(this, index)}>保存</Button> :
                       <Button className='btn-max-w box-content-button' plain type='primary' onClick={this.handleState.bind(this, !item.state, index)}>编辑</Button>
                     }
                   </View>

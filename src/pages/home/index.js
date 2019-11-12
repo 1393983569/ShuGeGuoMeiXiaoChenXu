@@ -2,8 +2,18 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text, Input, Icon, Swiper, SwiperItem, Image } from '@tarojs/components'
 import { AtAvatar } from 'taro-ui'
 import { shopSelectDetails, seeDetailAdv } from '../../api/public'
+import { connect } from '@tarojs/redux'
+import { navigationIndex } from '../../actions/counter'
 // import imgPng from '../../img/img_bg.png'
 import './index.scss'
+
+@connect(({ counter }) => ({
+  counter
+}), (dispatch) => ({
+  navigationIndex (index) {
+    dispatch(navigationIndex(index))
+  }
+}))
 
 export default class Index extends Component {
 
@@ -143,11 +153,18 @@ export default class Index extends Component {
     })
   }
 
+  // 跳转消息
+  navigationToInformation() {
+    Taro.navigateTo({
+      url: '/pages/information/index'
+    })
+  }
+
   // 页眉提示
-  renderHint = (text) => {
-    return <View className='hint'>
+  renderHint = () => {
+    return <View className='hint' onClick={ () => this.navigationToInformation() }>
       <View className='iconfont icon_home_massage hint-icon'></View>
-      <View className='dot' />
+      {/* <View className='dot' /> */}
     </View>
   }
 
@@ -202,7 +219,7 @@ export default class Index extends Component {
       <View className='icon-bar'>
       {
         list.map((item, index) => {
-            return <View key={`${index}_m`} className='icon-bar-item' onClick={this.clickUrl.bind(this, item.url)}>
+            return <View key={`${index}_m`} className='icon-bar-item' onClick={this.clickUrl.bind(this, item.url, index)}>
               <View className={`iconfont ${item.icon} icon-bar-icon`}></View>
               <View>{item.name}</View>
             </View>
@@ -212,9 +229,10 @@ export default class Index extends Component {
     </View>
   }
 
-  clickUrl(e) {
+  clickUrl(url, index, e) {
+    this.props.navigationIndex(index)
     Taro.navigateTo({
-      url: e
+      url: url
     })
   }
 
@@ -239,7 +257,7 @@ export default class Index extends Component {
         >
           <View className='head'>
             <View className='head-left' onClick={ () => this.personalCenter() }>
-              <AtAvatar image={userData.imge} circle='true' size='small' style='display: inline-block; width: 60Px'/>
+              <AtAvatar image={userData.imge} circle='true' size='small' style='display: inline-block; width: 60px'/>
               <View style='margin-left: 5Px;'>{ userData.roleName } - { userData.name }</View>
             </View>
             <View className='head-right'>

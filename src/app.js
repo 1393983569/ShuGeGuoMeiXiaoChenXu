@@ -58,8 +58,10 @@ class App extends Component {
       'pages/InformationForDetails/index', // 资讯详情
       'pages/reportForms/manage/index', // 经营分析
       'pages/purchase/goodsShelf/goodsShelf', // 货架
+      'pages/purchase/libraryOfGoods/goodsShelfDetails/goodsShelfDetails', // 货架商品详情
       'pages/purchase/shoppingCart/shoppingCart', // 购物车
       'pages/purchase/orderForm/orderForm', // 订单
+      'pages/purchase/orderForm/orderEdit', // 订单编辑
       'pages/purchase/orderForm/orderParticulars', // 大订单详情
       'pages/purchase/orderForm/childrenOrderParticulars', // 子订单详情
       'pages/purchase/libraryOfGoods/libraryOfGoodsList', // 商品库

@@ -1,7 +1,13 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
-import './index.scss'
 import { findByOrderIdOne } from '../../../api/purchase/orderParticulars'
+import { connect } from '@tarojs/redux'
+import './index.scss'
+
+// 获取redux
+@connect(({ counter }) => ({
+  counter
+}))
 
 export default class Index extends Component {
   constructor (props) {
@@ -10,7 +16,8 @@ export default class Index extends Component {
       stateList: [],
       stateData: {},
       orderId: '',
-      stateName: ''
+      stateName: '',
+      editState: false
     }
   }
 
@@ -22,6 +29,15 @@ export default class Index extends Component {
     this.getOrderData(this.$router.params.orderId)
   }
 
+  componentWillMount() {
+    // orderEdit
+    this.setState({
+      orderEdit: this.$router.params.orderId
+    })
+  }
+
+  // setOrderState
+
   // 获取订单数据
   getOrderData(orderId) {
     this.setState({
@@ -29,7 +45,6 @@ export default class Index extends Component {
       stateName: this.$router.params.state
     })
     findByOrderIdOne(orderId).then(res => {
-      console.log(res)
       try {
         const stateList = res.info.map((item, index) => {
           return {
@@ -99,11 +114,6 @@ export default class Index extends Component {
 
   renderOrder() {
     const { stateData } = this.state
-    if (Object.keys(stateData).length === 0) {
-      return (
-        <View></View>
-      )
-    }
     return(
       <View className='orderList'>
         <View className='orderList-head'>
@@ -118,7 +128,7 @@ export default class Index extends Component {
           <View className="th">小计金额</View>
         </View>
         {
-          stateData.orderDetailList.map((item, index) => {
+          stateData.orderDetailList ? stateData.orderDetailList.map((item, index) => {
             return(
               <View key={index + 'category'}>
                 <View className='category'>
@@ -146,7 +156,7 @@ export default class Index extends Component {
                 }
               </View>
             )
-          })
+          }) : null
         }
       </View>
     )
@@ -154,6 +164,7 @@ export default class Index extends Component {
 
   renderChildOrder() {
     const { stateData } = this.state
+    const { counter } = this.props
     return(
       <View className='childOrderList'>
         <View className='childOrderList-heat'>
@@ -186,7 +197,7 @@ export default class Index extends Component {
                     <Text>￥{item.money}</Text>
                   </View>
                   <View>
-                    <Button size='mini' className='childOrderList-content-button'>已派单</Button>
+                    <Button size='mini' className='childOrderList-content-button'>{ counter.orderState }</Button>
                   </View>
                   <View onClick={this.goChildrenOrder.bind(this, item.suborder_no, item.id)}>
                     <View className='iconfont icon_rightarrow' style='font-size: 14Px; color: #8BC34A'></View>
@@ -204,6 +215,39 @@ export default class Index extends Component {
     const scrollStyle = {
       height: '100%'
     }
+    const { counter } = this.props
+    let icon = null
+    let text = null
+    switch (counter.orderState) {
+      case '已派单':
+        {
+          icon = <View className='iconfont icon_orderstatus_distributed orderParticulars-state-icon'></View>
+          text = '已派单'
+        }
+        break;
+      case '已拆单':
+        {
+          icon = <View className='iconfont icon_orderstatus_dismantled orderParticulars-state-icon'></View>
+          text = '已派单'
+        }
+        break;
+      case '已入库':
+        {
+          icon = <View className='iconfont icon_orderstatus_warehouseed orderParticulars-state-icon'></View>
+          text = null
+        }
+        break;
+      case '未拆单':
+        {
+          icon = <View className='iconfont icon_orderstatus_undismantle orderParticulars-state-icon'></View>
+          text = '已拆单'
+        }
+        break;
+
+      default: {
+        icon = null
+      }
+    }
     return (
       <View className='orderParticulars'>
         <View className='orderParticulars-box'>
@@ -215,7 +259,7 @@ export default class Index extends Component {
           >
           {/* 滑动部分 */}
             <View className='orderParticulars-state'>
-              <View className='iconfont icon_orderstatus_distributed orderParticulars-state-icon'></View>
+              {icon}
               {this.state.stateName}
             </View>
             <View className='orderParticulars-message'>
@@ -246,7 +290,10 @@ export default class Index extends Component {
                   订单信息
                 </Text>
                 <Text className='orderMessage-head-right'>
-                  已派单  {stateData.statusCount}/{stateData.subOrderCount}
+                {
+                  text ? text + stateData.statusCount+ '/' + stateData.subOrderCount : ''
+                }
+
                 </Text>
               </View>
               <View className='orderMessage-content'>
@@ -267,7 +314,9 @@ export default class Index extends Component {
               </View>
             </View>
             {this.renderOrder()}
-            {this.renderChildOrder()}
+            {
+              counter.orderState !== '未拆单' ? <View>{this.renderChildOrder()}</View> : null
+            }
           </ScrollView>
         </View>
       </View>

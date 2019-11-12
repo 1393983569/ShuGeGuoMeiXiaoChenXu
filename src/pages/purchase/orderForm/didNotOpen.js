@@ -1,10 +1,19 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
 import { queryNoPageOrder } from '../../../api/purchase/hasBeenOpened'
+import { connect } from '@tarojs/redux'
+import { setOrderState } from '../../../actions/counter'
 import '../../../fonts/iconfont.css'
-
 import './index.scss'
 
+// 获取redux
+@connect(({ counter }) => ({
+  counter
+}), (dispatch) => ({
+  setOrderState (state) {
+    dispatch(setOrderState(state))
+  }
+}))
 export default class Index extends Component {
 
   constructor (props) {
@@ -15,7 +24,12 @@ export default class Index extends Component {
   }
 
   componentDidMount () {
-    queryNoPageOrder(0).then(res => {
+    this.getList()
+  }
+
+  // 获取列表
+  getList() {
+    queryNoPageOrder(0, Taro.getStorageSync('adminId').shopId, Taro.getStorageSync('orderItem'), Taro.getStorageSync('orderName')).then(res => {
       const list = res.info.map(item => {
         return {
           id: item.id,
@@ -34,8 +48,16 @@ export default class Index extends Component {
 
   // 跳转详情
   goParticulars(orderId, e) {
+    this.props.setOrderState('未拆单')
     Taro.navigateTo({
-      url: '/pages/purchase/orderForm/orderParticulars?orderId=' + orderId + '&state="已派单"'
+      url: '/pages/purchase/orderForm/orderParticulars?orderId=' + orderId + '&state="未拆单"&orderEdit=' + false
+    })
+  }
+
+  // 编辑
+  orderEtid(orderId) {
+    Taro.navigateTo({
+      url: '/pages/purchase/orderForm/orderEdit?orderId=' + orderId + '&state="未拆单"&orderEdit=' +true
     })
   }
 
@@ -68,14 +90,14 @@ export default class Index extends Component {
                     合计
                   </Text>
                   <Text className='didNotOpen-sum-right'>
-                    ￥{parseInt(item.totalMoney) * 0.01}
+                    ￥{item.totalMoney}
                   </Text>
                 </View>
                 <View className='didNotOpen-button'>
                   <View className='didNotOpen-button-box'>
                     <Button size='mini' disabled className='didNotOpen-button-b'>未拆单</Button>
                     <Button size='mini' disabled className='didNotOpen-button-b'>删除</Button>
-                    <Button size='mini' className='didNotOpen-button-b'>编辑</Button>
+                    <Button size='mini' className='didNotOpen-button-b' onClick={() => this.orderEtid(item.orderNo)}>编辑</Button>
                   </View>
                 </View>
               </View>

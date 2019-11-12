@@ -1,10 +1,10 @@
 @mixin menu-plus-subtract {
-  width: 17Px;
-  height: 17Px;
-  line-height: 17Px;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
   text-align: center;
   background-color: #8BC34A;
-  border-radius: 3Px;
+  border-radius: 6px;
   overflow: hidden;
 }
 .box{
@@ -34,6 +34,7 @@
       padding: 20px 20px;
       box-sizing: border-box;
       color: #222222;
+      text-align: left;
     }
     &-stair:active{
       background-color: #dadada;

@@ -1,9 +1,10 @@
 import {
   ADD,
-  MINUS,
   INSERT_AUTHORIZE,
   INSERT_USER_DATA,
-  INSERT_MENU_LIST
+  INSERT_MENU_LIST,
+  ORDER_STATE,
+  NAVIGATION_INDEX
  } from '../constants/counter'
 
 const INITIAL_STATE = {
@@ -11,7 +12,9 @@ const INITIAL_STATE = {
   token: '',
   id: '',
   shopId: '',
-  menuList: []
+  menuList: [],
+  orderState: '',
+  navigationIndex: ''
 }
 
 export default function counter (state = INITIAL_STATE, action) {
@@ -36,6 +39,16 @@ export default function counter (state = INITIAL_STATE, action) {
       return {
         ...state,
         menuList: action.menuList
+      }
+      case ORDER_STATE:
+      return {
+        ...state,
+        orderState: action.orderState
+      }
+      case NAVIGATION_INDEX:
+      return {
+        ...state,
+        navigationIndex: action.navigationIndex
       }
      default:
        return state

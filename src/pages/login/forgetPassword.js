@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text, Input } from '@tarojs/components'
-import { AtInput, AtToast, AtModal, AtModalHeader, AtModalContent, AtModalAction, AtActivityIndicator, AtMessage } from 'taro-ui'
+import { AtInput, AtToast, AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui'
 import { connect } from '@tarojs/redux'
 import { login } from '../../api/user'
 // import imgPng from '../../img/img_bg.png'
@@ -72,9 +72,14 @@ class ForgetPassword extends Component {
       password: this.state.password
     }
     forgetPwd(data).then(res => {
+      console.log(res, 'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr')
       this.props.setUserData(res.info)
       this.props.setToken(res.info.token)
       Taro.setStorageSync('token',res.info.token)
+      Taro.setStorageSync('adminId', {
+        id: res.info.id,
+        shopId: res.info.shopId
+      })
       Taro.redirectTo({
         url: '/pages/home/index'
       })
@@ -85,6 +90,13 @@ class ForgetPassword extends Component {
       }, () => {
         this.setState({
           isOpenedSub: true
+        }, () => {
+          setTimeout(() => {
+            this.setState({
+              atToastText: '',
+              isOpenedSub: false
+            })
+          }, 3000)
         })
       })
     })
@@ -121,6 +133,20 @@ class ForgetPassword extends Component {
 
   // 点击发送验证码
   sendVerificationCode() {
+    if (/[\s\.]/g.test(this.state.mobile) || this.state.mobile.length > 11) {
+      this.setState({
+        isOpenedSub: true,
+        atToastText: '请输入正确的手机号'
+      }, () => {
+        setTimeout(() => {
+          this.setState({
+            atToastText: '',
+            isOpenedSub: false
+          })
+        }, 3000)
+      })
+      return
+    }
     if (!this.state.mobile) {
       this.setState({
         isOpenedAtToast: true
@@ -153,7 +179,7 @@ class ForgetPassword extends Component {
    cancelImg() {
     this.setState({
       isOpened: false,
-      imgCode: ''
+      isOpenedSub: false
     })
   }
 
@@ -182,11 +208,15 @@ class ForgetPassword extends Component {
       })
     } else {
       this.setState({
-        atToastText: '请输入正确的验证码'
+        atToastText: '请输入正确的验证码',
+        isOpenedSub: true
       }, () => {
-        this.setState({
-          isOpenedSub: true
-        })
+        setTimeout(() => {
+          this.setState({
+            atToastText: '',
+            isOpenedSub: false
+          })
+        }, 3000)
       })
     }
   }
@@ -215,14 +245,6 @@ class ForgetPassword extends Component {
     }, 1000)
   }
 
-  // 消息提示
-  handleClick (type, text) {
-    Taro.atMessage({
-      'message': text,
-      'type': type,
-    })
-  }
-
   // 返回
   getBack() {
     Taro.redirectTo({
@@ -231,10 +253,10 @@ class ForgetPassword extends Component {
   }
 
   render () {
-    const { codeData, isOpened, imgeBase, isOpenedAtToast } = this.state
+    const { codeData, isOpened, imgeBase, isOpenedAtToast, isOpenedSub, atToastText } = this.state
     return (
       <View className='forgetPassword' style={`background: url(http://qiniu.freshergo.com/1570763640184.png)`}>
-      <AtToast isOpened={this.state.isOpenedSub} text={this.state.atToastText} ></AtToast>
+      <AtToast isOpened={isOpenedSub} text={atToastText} ></AtToast>
         <View className='forgetPassword-box-head'>
           <View className='forgetPassword-box-head-left' onClick={() => this.getBack()}>
             <View className='iconfont icon_back_arrow forgetPassword-box-head-left-icon'></View>

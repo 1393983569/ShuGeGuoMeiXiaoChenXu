@@ -107,6 +107,11 @@ export default class EditPassword extends Component {
         imgCode: '',
         isOpened: false
       })
+    } else {
+      this.handleClick('warning', '验证码错误')
+      this.setState({
+        imgCode: ''
+      })
     }
   }
 
@@ -154,7 +159,8 @@ export default class EditPassword extends Component {
 
   // 修改密码确定
   onClickSub() {
-    forgetPwd(Taro.getStorageSync('adminId').id, this.state.password, this.state.coded).then(res => {
+    console.log(Taro.getStorageSync('adminId').id, this.state.password, this.state.code, 'eeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+    forgetPwd(Taro.getStorageSync('adminId').id, this.state.password, this.state.code).then(res => {
       this.handleClick('success', '成功')
       Taro.redirectTo({
         url: '/pages/personalCenter/index'

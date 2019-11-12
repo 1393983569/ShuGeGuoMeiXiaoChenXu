@@ -146,7 +146,7 @@ export default class ProfitAndLossList extends Component {
                 name='rent'
                 type='number'
                 placeholder='请输入数字'
-                value={this.state.subData.rent}
+                value={this.state.subData.rentValue}
                 onChange={this.handleChangeRent.bind(this)}
               />
             </View>
@@ -159,7 +159,7 @@ export default class ProfitAndLossList extends Component {
               name='wages'
               type='number'
               placeholder='请输入数字'
-              value={this.state.subData.wages}
+              value={this.state.subData.wagesValue}
               onChange={this.handleChangeWages.bind(this)}
             />
             </View>
@@ -172,7 +172,7 @@ export default class ProfitAndLossList extends Component {
               name='hydropower'
               type='number'
               placeholder='请输入数字'
-              value={this.state.subData.hydropower}
+              value={this.state.subData.hydropowerValue}
               onChange={this.handleChangeHydropower.bind(this)}
             />
             </View>
@@ -185,7 +185,7 @@ export default class ProfitAndLossList extends Component {
               name='otherExpenses'
               type='number'
               placeholder='请输入数字'
-              value={this.state.subData.otherExpenses}
+              value={this.state.subData.otherExpensesValue}
               onChange={this.handleChangeOtherExpenses.bind(this)}
             />
             </View>
@@ -204,7 +204,7 @@ export default class ProfitAndLossList extends Component {
               name='marketing'
               type='number'
               placeholder='请输入数字'
-              value={this.state.subData.marketing}
+              value={this.state.subData.marketingValue}
               onChange={this.handleChangeMarketing.bind(this)}
             />
             </View>
@@ -217,7 +217,7 @@ export default class ProfitAndLossList extends Component {
               name='otherVariables'
               type='number'
               placeholder='请输入数字'
-              value={this.state.subData.otherVariables}
+              value={this.state.subData.otherVariablesValue}
               onChange={this.handleChangeOtherVariables.bind(this)}
             />
             </View>

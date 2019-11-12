@@ -4,33 +4,33 @@
   width: 100%;
   background-color: #F6F6F6;
   box-sizing: border-box;
-  padding: 11Px 14Px;
+  padding: 22px 28px;
   &-content{
-    margin-top: 10Px;
-    padding: 0 10Px;
+    margin-top: 20px;
+    padding: 0 20px;
     background-color: #ffffff;
     &-head{
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1Px solid #eeeeee;
-      font-size: 14Px;
-      height: 50Px;
-      line-height: 50Px;
+      border-bottom: 2px solid #eeeeee;
+      font-size: 28px;
+      height: 100px;
+      line-height: 100px;
     }
     &-bottom{
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 50Px;
-      line-height: 50Px;
+      height: 100px;
+      line-height: 100px;
       &-text{
         &-button{
           display: flex;
           justify-content: space-between;
           align-items: center;
           View:first-child{
-            margin-right: 5Px;
+            margin-right: 10px;
           }
         }
       }

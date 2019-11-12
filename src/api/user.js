@@ -2,8 +2,11 @@ import request from '.././utils/request'
 var querystring = require('querystring')
 
 export function userLogin(data) {
-  console.log(data, 'data...............................')
-  let newData = querystring.stringify(data)
+  const datas = {
+    ...data,
+    type: 2
+  }
+  let newData = querystring.stringify(datas)
   return request({
     url: '/basics/login',
     method: 'post',

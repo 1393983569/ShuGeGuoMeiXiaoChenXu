@@ -2,9 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text, Input, Icon, Image } from '@tarojs/components'
 import Loading from '../../../component/loading/loading'
 import { selectList, getAllShopByGoods} from '../../../api/purchase/shoppingCart'
-import { debounce } from '../../../utils/auth'
 import { connect } from '@tarojs/redux'
-import BottomBar from '../../../component/bottomBar/bottomBar'
 
 import './index.scss'
 
@@ -42,7 +40,7 @@ export default class Index extends Component{
           menuListData.map((item, index) => {
             return (
               <View key={`${index}_me`} style={'border-bottom: 1Px #ECECEC solid;'}>
-                <View className='menu' onClick={this.shopParticulars.bind(this)}>
+                <View className='menu' onClick={this.shopParticulars.bind(this, item.id)}>
                   <View className='menu-left'>
                     <Image
                       style='width: 60Px;height: 60Px;background: #fff;'
@@ -65,10 +63,10 @@ export default class Index extends Component{
                 </View>
                 <View className='border-menu'>
                   <View className='border-menu-left'>
-                    零售价: {Math.floor(item.price) / 100}￥
+                    零售价: ￥{ Math.floor(item.goodsDomain.price) / 100 }
                   </View>
                   <View className='border-menu-right'>
-                    折扣价: 字段待定
+                    折扣价: ￥{ Math.floor(item.goodsDomain.price * (item.rate / 100)) / 100 }
                   </View>
                 </View>
               </View>
@@ -171,13 +169,6 @@ export default class Index extends Component{
 
   // 获取商品列表
   getMenuList() {
-    // // 如果已经到底不在访问接口
-    // if (this.state.load === 'on') {
-    //   // this.setState({
-    //   //   load: 'end'
-    //   // })
-    //   return
-    // }
     // 加载状态
     this.setState({
       load: 'loading'
@@ -230,9 +221,9 @@ export default class Index extends Component{
   }
 
   // 跳转商品详情
-  shopParticulars() {
+  shopParticulars(id) {
     Taro.navigateTo({
-      url: '/pages/purchase/libraryOfGoods/particulars/particulars'
+      url: '/pages/purchase/libraryOfGoods/particulars/particulars?id=' + id
     })
   }
 
@@ -250,7 +241,7 @@ export default class Index extends Component{
         <View className='heat-date'>
           <View>
             <Text>
-              2019-2-25
+              { new Date().Format("yyyy-MM-dd") }
             </Text>
           </View>
           <View>

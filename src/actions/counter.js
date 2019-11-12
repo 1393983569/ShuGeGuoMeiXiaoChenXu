@@ -6,7 +6,9 @@ import {
   CHANGE_APP_ON_LAUNCH,
   INSERT_AUTHORIZE,
   INSERT_USER_DATA,
-  INSERT_MENU_LIST
+  INSERT_MENU_LIST,
+  ORDER_STATE,
+  NAVIGATION_INDEX
 } from '../constants/counter'
 
 export const add = () => {
@@ -52,5 +54,21 @@ export const insertMenuList = (arr) => {
   return {
     type: INSERT_MENU_LIST,
     menuList: arr
+  }
+}
+
+// 订单状态
+export const setOrderState = (orderState) => {
+  return {
+    type: ORDER_STATE,
+    orderState: orderState
+  }
+}
+
+// 写入当前导航的下标
+export const navigationIndex = (index) => {
+  return {
+    type: NAVIGATION_INDEX,
+    navigationIndex: index
   }
 }

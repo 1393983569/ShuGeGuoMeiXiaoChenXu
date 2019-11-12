@@ -1,5 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
+import { View, Button, Input } from '@tarojs/components'
+import { AtInput, AtIcon }  from 'taro-ui'
 import DateSelect from '../../../component/circleDateSelect/circleDateSelect.js'
 import BottomBar from '../../../component/bottomBar/bottomBar'
 import BePutInStorage from './bePutInStorage'
@@ -31,7 +32,8 @@ export default class Index extends Component {
           clickState: false
         }
       ],
-      buttonFormClick: '未拆单'
+      buttonFormClick: '未拆单',
+      searchValue: ''
     }
   }
 
@@ -39,9 +41,50 @@ export default class Index extends Component {
     navigationBarTitleText: '订单'
   }
 
+  componentWillMount() {
+    Taro.setStorageSync('orderItem', '')
+  }
+
+  // 未拆单
+  didNotOpenRef = (node) => this.refDidNotOpen = node
+  // 已拆单
+  hasBeenOpenedRef = (node) => this.refHasBeenOpened = node
+  // 已派单
+  deliveryRef = (node) => this.refDelivery = node
+  // 已入库
+  bePutInStorageRef = (node) => this.refBePutInStorage = node
+
   // 获取日期
   getSelectValue(e) {
-    console.log(e)
+    Taro.setStorageSync('orderItem', e)
+    this.judgeFunction()
+  }
+
+  // 搜索
+  clickSearch() {
+    this.judgeFunction()
+  }
+
+  // 判断调用哪个
+  judgeFunction() {
+    if (this.refDidNotOpen || this.refHasBeenOpened || this.refDelivery || this.refBePutInStorage) {
+      switch (this.state.buttonFormClick) {
+        case '未拆单':
+          this.refDidNotOpen.getList()
+          break;
+        case '已拆单':
+          this.refHasBeenOpened.getList()
+          break;
+        case '已派单':
+          this.refDelivery.getList()
+          break;
+        case '已入库':
+          this.refBePutInStorage.getList()
+          break;
+        default:
+          break;
+      }
+    }
   }
 
   // 按钮切换
@@ -68,6 +111,11 @@ export default class Index extends Component {
     })
   }
 
+  // 搜索输入框
+  handleChangeSearch(e) {
+    Taro.setStorageSync('orderName', e.target.value)
+  }
+
   render () {
     let { buttonListData, buttonFormClick } = this.state
     let windowHeight = Taro.getSystemInfoSync().windowHeight
@@ -78,6 +126,21 @@ export default class Index extends Component {
     return (
       <View>
         <View className='item'>
+          <View className='at_input'>
+            <View className='at_input_contennt'>
+              <Input
+                  className='my_input'
+                  type='text'
+                  placeholder='请输入订单编号和商品名称进行搜索'
+                  onInput={this.handleChangeSearch.bind(this)}
+                />
+              <View
+                onClick={() => this.clickSearch()}
+                className='my_icon'>
+                <AtIcon className='zdy_at_icon' value='search' size='20' color='#fff'/>
+              </View>
+            </View>
+          </View>
           <DateSelect getSelectValue={e => this.getSelectValue(e)}></DateSelect>
         </View>
         <View className='box'>
@@ -99,14 +162,13 @@ export default class Index extends Component {
               scrollWithAnimation
               style={scrollStyle}
             >
-               {buttonFormClick === '未拆单' && <DidNotOpen/>}
-               {buttonFormClick === '已拆单' && <HasBeenOpened/>}
-               {buttonFormClick === '已派单' && <Delivery/>}
-               {buttonFormClick === '已入库' && <BePutInStorage/>}
+               {buttonFormClick === '未拆单' && <DidNotOpen ref={this.didNotOpenRef}/>}
+               {buttonFormClick === '已拆单' && <HasBeenOpened ref={this.hasBeenOpenedRef}/>}
+               {buttonFormClick === '已派单' && <Delivery ref={this.deliveryRef}/>}
+               {buttonFormClick === '已入库' && <BePutInStorage ref={this.bePutInStorageRef}/>}
             </ScrollView>
           </View>
         </View>
-        <BottomBar/>
       </View>
     )
   }

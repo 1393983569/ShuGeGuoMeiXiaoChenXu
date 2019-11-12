@@ -98,10 +98,7 @@ $bg-color: #8BC34A;
       color: #8BC34A;
     }
     &-centre{
-      &-input{
-        text-align: center;
-        width: 45px;
-      }
+
     }
   }
   &-bottom-text{
@@ -137,17 +134,17 @@ $bg-color: #8BC34A;
 
 .shoppingList{
   position:relative;
-  top: 15Px;
+  top: 30px;
   background-color: #ffffff;
   box-sizing:border-box;
-  margin: 14Px;
-  border-radius: 6Px;
+  margin: 28px;
+  border-radius: 12px;
   overflow: hidden;
-  margin-bottom: 20Px;
+  margin-bottom: 40px;
 }
 
 .select-icon{
-  font-size:20Px;
+  font-size: 40px;
   color: #8BC34A;
   display: inline-block;
   z-index: 6;
@@ -155,41 +152,40 @@ $bg-color: #8BC34A;
 
 .totalPrices{
   position: fixed;
-  bottom: 60Px;
-  height: 80Px;
+  bottom: 0px;
+  height: 160px;
   width: 100%;
   background-color: $bg-color;
   z-index: 4;
   &-content{
     background-color: $bg-color;
-    height: 50Px;
-    line-height: 50Px;
+    height: 100px;
+    line-height: 100px;
     width: 100%;
-    padding: 0 20Px;
+    padding: 0 40px;
     box-sizing: border-box;
     &-text{
       float: right;
       font-weight: 700;
       color: #ffffff;
-      margin-right: 10Px;
+      margin-right: 20px;
     }
     &-button{
       float: right;
-      margin: 10Px 0;
+      margin: 20px 0;
       float: right;
       color: $bg-color;
-      border-radius: 20Px;
+      border-radius: 40px;
     }
     &-select{
-      font-size:20Px;
+      font-size: 40px;
       color: #ffffff;
       display: inline-block;
       z-index: 6;
     }
     &-all-select{
       color: #ffffff;
-      margin-left: 5Px;
-
+      margin-left: 10px;
     }
   }
 }

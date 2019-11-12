@@ -28,6 +28,7 @@ import './index.scss'
     dispatch(insertMenuList(arr))
   }
 }))
+
 class Index extends Component {
   constructor (props) {
     super(props)
@@ -62,7 +63,7 @@ class Index extends Component {
     }
     this.changeInput = this.changeInput.bind(this)
     this.changePassword = this.changePassword.bind(this)
-    this.onLogin = this.onLogin.bind(this)
+    this.onUserLogin = this.onUserLogin.bind(this)
   }
 
   config = {
@@ -130,10 +131,24 @@ class Index extends Component {
 
   // 监听用户上拉触底事件 可以在全局配置的 window 选项中或页面配置中设置触发距离 onReachBottomDistance
   // onReachBottom() {}
-  onLogin = () => {
+  onUserLogin = () => {
     let data = {
       mobile: this.state.mobile,
       password: this.state.password
+    }
+    if (/[\s\.]/g.test(this.state.mobile) || this.state.mobile.length > 11) {
+      this.setState({
+        isOpened: true,
+        atToastText: '请输入正确的手机号'
+      }, () => {
+        setTimeout(() => {
+          this.setState({
+            atToastText: '',
+            isOpened: false
+          })
+        }, 3000)
+      })
+      return
     }
     userLogin(data).then(res => {
       this.props.setUserData(res.info)
@@ -150,6 +165,13 @@ class Index extends Component {
       }, () => {
         this.setState({
           isOpened: true
+        }, () => {
+          setTimeout(() => {
+            this.setState({
+              atToastText: '',
+              isOpened: false
+            })
+          }, 3000)
         })
       })
     })
@@ -199,7 +221,7 @@ class Index extends Component {
             <View className='forget-the-password-left' onClick={() => this.forgetPassword()}>忘记密码</View>
           </View>
           <View className='buttonForm'>
-            <Button  className='buttonForm-button' plain type='primary' onClick={this.onLogin} >登录</Button>
+            <Button  className='buttonForm-button' plain type='primary' onClick={this.onUserLogin} >登录</Button>
           </View>
         </View>
       </View>

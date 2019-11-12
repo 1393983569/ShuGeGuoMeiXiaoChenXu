@@ -1,11 +1,12 @@
 @mixin menu-plus-subtract {
-  width: 17Px;
-  height: 17Px;
-  line-height: 17Px;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
   text-align: center;
   background-color: #8BC34A;
-  border-radius: 3Px;
+  border-radius: 6px;
   overflow: hidden;
+  font-size: 30px;
 }
 .box{
   position: fixed;
@@ -26,18 +27,18 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 17Px;
+      font-size: 28px;
       background-color: #eeeeee;
       text-align: center;
       // height: 50Px;
       // line-height: 50Px;
-      padding: 10Px 10Px;
+      padding: 20px 20px;
       box-sizing: border-box;
       color: #222222;
-      text-align: center;
+      text-align: left;
     }
     &-location:last-child{
-      margin-bottom: 100Px;
+      margin-bottom: 200px;
     }
     &-stair:active{
       background-color: #dadada;
@@ -54,10 +55,10 @@
     // }
     &-centre{
       color: #999999;
-      height: 40Px;
-      line-height: 40Px;
+      height: 80px;
+      line-height: 80px;
       text-align: center;
-      font-size: 14Px;
+      font-size: 28px;
     }
     &-show{
       overflow: hidden;
@@ -79,7 +80,7 @@
     }
   }
   &-right{
-    padding: 14Px 9Px;
+    padding: 28px 18px;
     // width:75%;
     overflow: scroll;
     flex: 1;
@@ -88,25 +89,30 @@
 .menu{
   display: flex;
   flex-direction: row;
-  padding: 10Px;
+  padding: 20px;
+  font-size: 28px;
   &-left{
-    height: 60Px;
+    height: 180px;
+    display: flex;
+    align-items: center;
     // width: 60Px;
   }
   &-right{
     flex: 1;
-    padding-left: 10Px;
+    // padding-left: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: space-around;
+    padding: 20px;
+    font-size: 28px;
   }
   &-centre-text{
-    margin-right: 5Px;
-    font-size: 13Px;
+    margin-right: 10px;
+    font-size: 28px;
   }
   &-top-text{
-    font-size: 17Px;
+    font-size: 32px;
   }
   &-centre-price{
     display: inline-block;
@@ -118,7 +124,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    line-height: 22Px;
+    line-height: 44px;
     align-items: space-around;
     width: 50%;
     &-left{
@@ -136,16 +142,17 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 10Px;
+    margin-top: 20px;
   }
   &-centre{
     &-icon{
-      font-size: 16Px;
+      font-size: 32px;
       color: #8BC34A;
     }
   }
   &-inventory{
-    margin-top: 10Px;
+    font-size: 28px;
+    margin-top: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -153,7 +160,8 @@
 }
 
 .down-content{
-  font-size: 16Px;
+  font-size: 26px;
+  padding: 28px;
   &-input{
     vertical-align: center;
     display: flex;
@@ -163,28 +171,28 @@
     align-items: center;
     justify-content: space-between;
     &-state{
-      width: 50Px;
-      height: 30Px;
-      line-height: 30Px;
+      width: 100px;
+      height: 60px;
+      line-height: 60px;
       text-align: center;
-      border: #999999 1Px solid;
-      border-radius: 4Px;
+      border: #999999 2px solid;
+      border-radius: 8px;
       color: #999;
     }
   }
   View{
-    margin: 5Px 0;
+    margin: 10px 0;
   }
   &-loss{
     display: flex;
     justify-content: space-between;
     &-state{
       width: 48%;
-      height: 30Px;
-      line-height: 30Px;
+      height: 60px;
+      line-height: 60px;
       text-align: center;
-      border: #999999 1Px solid;
-      border-radius: 4Px;
+      border: #999999 2px solid;
+      border-radius: 8px;
       color: #999;
     }
   }
@@ -192,19 +200,19 @@
 
 .add-bottom{
   width: 100%;
-  height: 90Px;
+  height: 180px;
   background-color: #fff;
   position: fixed;
-  border-radius: 30Px 30Px 0 0;
+  border-radius: 60px 60px 0 0;
   bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 -1Px 1Px 0 rgb(233, 233, 233);
+  box-shadow: 0 -2px 2px 0 rgb(233, 233, 233);
   &-button{
     width: 75%;
-    height: 40Px;
-    line-height: 40Px;
+    height: 80px;
+    line-height: 80px;
     background-color: #8BC34A !important;
     color: #fff;
     &:active{
@@ -218,8 +226,8 @@
   top: 0;
   color: #fff;
   background: #8BC34A;
-  padding: 5Px 14Px;
-  font-size: 14Px;
+  padding: 10px 28px;
+  font-size: 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;

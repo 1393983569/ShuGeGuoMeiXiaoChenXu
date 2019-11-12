@@ -186,7 +186,7 @@ export default class Index extends Component{
           item.natureLoss =  false
           item.artificialLoss = false
           // 实际库存
-          item.realInventory = item.amount
+          item.realInventory = item.computerStock
           // 备注
           item.remark = ''
           // 差额
@@ -246,7 +246,7 @@ export default class Index extends Component{
             // item.balance = item.difference
             item.balance = Math.abs(parseInt(item.computer_stock) - parseInt(item.actualInventory))
             item.smallImg = item.small_img
-            item.amount = item.computer_stock
+            item.computerStock = item.computer_stock
             return item
           } catch(e) {
             console.log(e)
@@ -322,17 +322,17 @@ export default class Index extends Component{
   setInventory(index, e) {
     let list = JSON.parse(JSON.stringify(this.state.menuListData))
     list[index].realInventory = e.detail.value
-    if (parseInt(list[index].amount) - parseInt(list[index].realInventory) === 0) {
+    if (parseInt(list[index].computerStock) - parseInt(list[index].realInventory) === 0) {
       list[index].balanceFewState = false
       list[index].balanceMoreState = false
-    } else if (parseInt(list[index].amount) - parseInt(list[index].realInventory) > 0) {
+    } else if (parseInt(list[index].computerStock) - parseInt(list[index].realInventory) > 0) {
       list[index].balanceFewState = true
       list[index].balanceMoreState = false
     } else {
       list[index].balanceFewState = false
       list[index].balanceMoreState = true
     }
-    list[index].balance = Math.abs(parseInt(list[index].amount) - parseInt(list[index].realInventory))
+    list[index].balance = Math.abs(parseInt(list[index].computerStock) - parseInt(list[index].realInventory))
     this.setState({
       menuListData: list
     }, () => {
@@ -393,7 +393,7 @@ export default class Index extends Component{
     // remark 备注
     // adminId  掌柜端id this.props.counter.shopId
     // categoryTwoId 二级品类id this.state.categoryTwoId
-    // amount computerStock 电脑库存
+    // computerStock computerStock 电脑库存
     // difference 盘点差额
     // id goodsId 商品id
     // naturalLoss 自然损耗
@@ -432,8 +432,10 @@ export default class Index extends Component{
         adminId: Taro.getStorageSync('adminId').id,
         shopId: Taro.getStorageSync('adminId').shopId,
         categoryTwoId: this.state.categoryTwoId,
-        computerStock: item.amount,
-        goodsId: item.id,
+        computerStock: item.computerStock,
+        goodsId: item.goodsId,
+        id: item.id,
+        inventoryId: item.id,
         loss,
         status
       }
@@ -493,8 +495,8 @@ export default class Index extends Component{
   renderContentDown = (item, index) => {
     let remarkAndLoss = null
     let realInventory = parseInt(item.realInventory)
-    let amount = parseInt(item.amount)
-    if (isNaN(realInventory) || realInventory === amount || realInventory === amount || item.balanceMoreState) {
+    let computerStock = parseInt(item.computerStock)
+    if (isNaN(realInventory) || realInventory === computerStock || realInventory === computerStock || item.balanceMoreState) {
       remarkAndLoss = <View className='down-content-input'>
       <View>备注：</View>
       <View>
@@ -563,7 +565,7 @@ export default class Index extends Component{
                   <View className='menu-left'>
                     <Image
                       style='width: 60Px;height: 60Px;background: #fff;'
-                      src={item.smallImg}
+                      src={item.goodsDomain.bigImg}
                     />
                   </View>
                   <View className='menu-right'>
@@ -580,7 +582,7 @@ export default class Index extends Component{
                     </View>
                     <View className='menu-inventory'>
                       <Text className='menu-centre-text' style='color: #FF9800; font-weight: 700'>
-                        电脑库存（斤）: {item.amount}
+                        电脑库存（斤）: {item.computerStock}
                       </Text>
                       <View className='menu-centre-text'>
                         {
