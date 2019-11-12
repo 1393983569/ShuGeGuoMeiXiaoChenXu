@@ -173,7 +173,7 @@ export default class Index extends Component{
     this.setState({
       load: 'loading'
     })
-    getAllShopByGoods(this.state.categoryOneId, this.state.categoryTwoId, this.state.id).then(res => {
+    getAllShopByGoods(this.state.categoryOneId, this.state.categoryTwoId, this.state.id, '', this.state.shopId).then(res => {
       this.setState({
         ...this.state,
         menuListData: res.info.map(item => {

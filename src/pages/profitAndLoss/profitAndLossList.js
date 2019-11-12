@@ -120,10 +120,10 @@ export default class ProfitAndLossList extends Component {
               return <View className='profitAndLossList-box-content' key={item.id}>
               <View className='profitAndLossList-box-content-head'>
                 <View className='profitAndLossList-box-content-head-left'>
-                  { item.createTime.split(' ')[0] }
+                  { item.createTime.split(' ')[0].split('-')[0] + '-' + item.createTime.split(' ')[0].split('-')[1] }
                 </View>
                 <View className='profitAndLossList-box-content-head-right' onClick={() => this.clickUnfold(index)}>
-                  总成本 = { this.moneyFormatting(item.totalCost) }元
+                  总成本 = { this.moneyFormatting(Math.floor(item.totalCost) / 100) }元
                   {
                     item.unfold ?
                     <View className='iconfont icon_uparrow profitAndLossList-box-content-head-right-icon'></View>:

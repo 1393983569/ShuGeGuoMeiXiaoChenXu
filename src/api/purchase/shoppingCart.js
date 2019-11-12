@@ -13,13 +13,14 @@ export function selectList() {
  * @param {*} categoryOneId
  * @param {*} categoryTwoId
  */
-export function getAllShopByGoods(categoryOneId, categoryTwoId, adminId, pageNum) {
+export function getAllShopByGoods(categoryOneId, categoryTwoId, adminId, pageNum, shopId) {
   let data = {
     categoryOneId,
     categoryTwoId,
     adminId,
     pageNum,
-    pageSize: 7
+    pageSize: 7,
+    shopId
   }
   let newData = querystring.stringify(data)
   return request({

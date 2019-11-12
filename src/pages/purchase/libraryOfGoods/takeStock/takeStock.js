@@ -172,7 +172,7 @@ export default class Index extends Component{
 
   // 获取添加盘点的数据
   getAddCheckData() {
-    getAllShopByGoods(this.state.categoryOneId, this.state.categoryTwoId, this.state.id).then(res => {
+    getAllShopByGoods(this.state.categoryOneId, this.state.categoryTwoId, this.state.id, '', this.state.shopId).then(res => {
       this.setState({
         ...this.state,
         menuListData: this.echoData(res.info.map(item => {

@@ -3,7 +3,7 @@ import { View, Button, Image } from '@tarojs/components'
 import DateSelect from '../../component/dateSelect/index'
 import { selectProfitLoss } from '../../api/profitAndLoss/profitAndLossAdd'
 import ZdyButtonWidth from '../../component/ZdyButtonWidth/index'
-import { AtInput }  from 'taro-ui'
+import { AtInput, AtMessage }  from 'taro-ui'
 import './profitAndLossAdd.scss'
 
 export default class ProfitAndLossList extends Component {
@@ -101,13 +101,31 @@ export default class ProfitAndLossList extends Component {
   // 提交
   onClickSub() {
     const data = this.state.subData
+    data.rent = data.rent * 100
+    data.wages = data.wages * 100
+    data.hydropower = data.hydropower * 100
+    data.otherExpenses = data.otherExpenses * 100
+    data.marketing = data.marketing * 100
+    data.otherVariables
     data.updateTime = this.state.yearData
+    data.shopId = Taro.getStorageSync('adminId').shopId
     selectProfitLoss(data).then(res => {
       this.setState({
         subData: {}
       })
+      Taro.navigateTo({
+        url: '/pages/profitAndLoss/profitAndLossList'
+      })
     }).catch(err => {
+      this.handleClick('warning', err)
+    })
+  }
 
+  // 消息提示
+  handleClick (type, text) {
+    Taro.atMessage({
+      'message': text,
+      'type': type,
     })
   }
 
@@ -119,6 +137,7 @@ export default class ProfitAndLossList extends Component {
       height: `${windowHeight}Px`
     }
     return <View className='profitAndLossList-box'>
+    <AtMessage/>
     <ScrollView
         className='scrollview scrollviewHeight'
         scrollY
