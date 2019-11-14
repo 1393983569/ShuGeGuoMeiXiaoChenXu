@@ -71,7 +71,7 @@ export function selectPageCart(orderNo) {
   }
   let newData = querystring.stringify(data)
   return request({
-    url: '/shop/findByOrderIdOne',
+    url: '/shop/findByOrderNo',
     data: newData,
     method: 'post'
   })
@@ -114,5 +114,18 @@ export function addRecord(data) {
     url: `/shop/addRecord`,
     method: 'post',
     data
+  })
+}
+
+/**
+ * 修改订单商品数量
+ * @param {*} data
+ */
+export function updateAmount(data) {
+  let newData = querystring.stringify({data})
+  return request({
+    url: '/shop/updateAmount',
+    data: data,
+    method: 'post'
   })
 }

@@ -565,7 +565,7 @@ export default class Index extends Component{
                   <View className='menu-left'>
                     <Image
                       style='width: 60Px;height: 60Px;background: #fff;'
-                      src={item.goodsDomain.bigImg}
+                      src={item.small_img}
                     />
                   </View>
                   <View className='menu-right'>

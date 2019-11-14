@@ -156,7 +156,6 @@ export default class Index extends Component {
     const list  = []
     this.state.shoppingList.subOrderDetailList.forEach((item, index) => {
       item.categoryList.forEach((_item, _index) => {
-        console.log(_item)
         list.push({
           id: _item.ids,
           // 条形码
@@ -172,8 +171,12 @@ export default class Index extends Component {
     })
     shopAddInven(list, this.state.subOrderId).then(res => {
       console.log(res)
-      // 入库成功后
-      this.getDataList()
+      this.setState({
+        shoppingList: []
+      }, () => {
+        // 入库成功后
+        this.getDataList()
+      })
     }).catch(err => {
       console.log(err)
     })
@@ -300,9 +303,6 @@ export default class Index extends Component {
                 <Text className='orderMessage-head-left'>
                   订单信息
                 </Text>
-                {/* <Text className='orderMessage-head-right'>
-                  已派单  5/12
-                </Text> */}
               </View>
               <View className='orderMessage-content'>
                 <Text className='orderMessage-content-text'>

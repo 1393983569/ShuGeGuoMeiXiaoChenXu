@@ -30,4 +30,15 @@ export function shopPageRecord(year, month, day, pageNum) {
   })
 }
 
-
+/**
+ * 删除盘点记录表
+ * @param {*} recordingTime
+ */
+export function deleteShopStaff(recordingTime) {
+  let newData = querystring.stringify({recordingTime})
+  return request({
+    url: '/shop/deleteRecord',
+    data: newData,
+    method: 'POST'
+  })
+}

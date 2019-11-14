@@ -197,7 +197,7 @@ export default class Index extends Component {
                     <Text>￥{item.money}</Text>
                   </View>
                   <View>
-                    <Button size='mini' className='childOrderList-content-button'>{ counter.orderState }</Button>
+                    <Button size='mini' className='childOrderList-content-button'>{ item.status ? '已派单' : '未派单' }</Button>
                   </View>
                   <View onClick={this.goChildrenOrder.bind(this, item.suborder_no, item.id)}>
                     <View className='iconfont icon_rightarrow' style='font-size: 14Px; color: #8BC34A'></View>
@@ -218,11 +218,13 @@ export default class Index extends Component {
     const { counter } = this.props
     let icon = null
     let text = null
+    let status = false
     switch (counter.orderState) {
       case '已派单':
         {
           icon = <View className='iconfont icon_orderstatus_distributed orderParticulars-state-icon'></View>
           text = '已派单'
+          status = true
         }
         break;
       case '已拆单':
@@ -289,12 +291,13 @@ export default class Index extends Component {
                 <Text className='orderMessage-head-left'>
                   订单信息
                 </Text>
-                <Text className='orderMessage-head-right'>
                 {
-                  text ? text + stateData.statusCount+ '/' + stateData.subOrderCount : ''
+                  status ? <Text className='orderMessage-head-right'>
+                  {
+                    text ? text + stateData.statusCount+ '/' + stateData.subOrderCount : ''
+                  }
+                  </Text> : null
                 }
-
-                </Text>
               </View>
               <View className='orderMessage-content'>
                 <Text className='orderMessage-content-text'>

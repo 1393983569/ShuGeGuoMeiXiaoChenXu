@@ -68,7 +68,7 @@ export default class Index extends Component{
                   </View>
                   <View className='menu-bottom-text'>
                     <View className='menu-centre-price'>
-                      ￥{item.sellPrice ? Math.floor(item.sellPrice) / 100 : 0}
+                      ￥{item.sellPrice ? Math.floor(item.sellPrice) : 0}
                     </View>
                     <View className='menu-centre-num'>
                       <View className='menu-centre-num-left' onClick={this.changeNum.bind(this, item.amount, '0', item.id, index)}>

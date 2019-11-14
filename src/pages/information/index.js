@@ -18,12 +18,12 @@ export default class Index extends Component {
         {
           value: '通知',
           text: '通知',
-          checked: false
+          checked: true
         },
         {
           value: '资讯',
           text: '资讯',
-          checked: true
+          checked: false
         }
       ],
       content: [],
@@ -42,6 +42,7 @@ export default class Index extends Component {
 
   onButton (item, i) {
     const list = [...this.state.list]
+
     list.map((itemx, ix) => {
       itemx.checked = false
       if ( i + '' === ix + '') {

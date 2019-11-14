@@ -3,7 +3,8 @@ import { View, Button, Text } from '@tarojs/components'
 import DateSelect from '../../../../component/circleDateSelect/circleDateSelect.js'
 import ZdyButton from '../../../../component/ZdyButton'
 import Loading from '../../../../component/loading/loading'
-import { shopPageRecord } from '../../../../api/purchase/inventoryRecords'
+import { shopPageRecord, deleteShopStaff } from '../../../../api/purchase/inventoryRecords'
+import { AtMessage } from 'taro-ui'
 import './index.scss'
 
 export default class Index extends Component {
@@ -58,7 +59,8 @@ export default class Index extends Component {
       } else {
         this.unfinishedState()
       }
-      const data = JSON.parse(JSON.stringify(this.state.dataList))
+      // const data = JSON.parse(JSON.stringify(this.state.dataList))
+      const data = []
       res.info.records.forEach((item, index) => {
         data.push({
           time: item.recording_time,
@@ -73,8 +75,23 @@ export default class Index extends Component {
     })
   }
 
-  onClickDelete() {
-    console.log('ssssssssssssss')
+  onClickDelete(item) {
+    deleteShopStaff(item.time).then(res => {
+      console.log(res)
+      this.getList()
+      this.handleClick('success', '成功')
+    }).catch(err => {
+      console.log(err)
+      this.handleClick('warning', '失败')
+    })
+  }
+
+  // 消息提示
+  handleClick (type, text) {
+    Taro.atMessage({
+      'message': text,
+      'type': type,
+    })
   }
 
   onClickEdit() {
@@ -142,6 +159,7 @@ export default class Index extends Component {
     }
     return (
       <View>
+        <AtMessage/>
         <View className='box-head'>
           <DateSelect getSelectValue ={e => this.getSelectValue(e)}/>
         </View>
@@ -158,8 +176,8 @@ export default class Index extends Component {
           >
           {
             this.state.dataList.map((item, index) => {
-              return <View className='box-content' onClick={ this.skipParticulars.bind(this, item.id, item.time) } key={index + '_p'}>
-                <View className='box-content-head'>
+              return <View className='box-content' key={index + '_p'}>
+                <View className='box-content-head' onClick={ this.skipParticulars.bind(this, item.id, item.time) }>
                   <View>
                     盘点时间：{item.time}
                   </View>
@@ -173,10 +191,10 @@ export default class Index extends Component {
                   </View>
                   <View className='box-content-bottom-text-button'>
                     <View>
-                      <ZdyButton name='删除' color='#666' onClickButton={this.onClickDelete}/>
+                      <ZdyButton name='删除' color='#666' onClickButton={() => this.onClickDelete(item)}/>
                     </View>
                     <View>
-                      <ZdyButton name='编辑' color='#666' onClickButton={this.onClickEdit}/>
+                      <ZdyButton name='编辑' color='#666' onClickButton={ this.skipParticulars.bind(this, item.time) }/>
                     </View>
                   </View>
                 </View>
