@@ -68,31 +68,35 @@ export default class Index extends Component {
               src={shopObj.goodsDomain.bigImg}
             />
             <View className='box-head-state'>
-              已上线
+            {
+              shopObj.goodsDomain.isShelf ? '已上线' : '已下线'
+            }
             </View>
           </View>
           <View  className='box-one'>
             <View>
-              草莓
+              {
+                shopObj.goodsName
+              }
             </View>
             <View className='box-one-name'>
               <View>
-                采购价：<Text style='color: #FF9800'>￥{Math.floor(shopObj.goodsDomain.purchasePrice) / 100}</Text>
+                采购价：<Text style='color: #FF9800'>￥{Math.floor(shopObj.goodsDomain.sellPrice) / 100}</Text>
               </View>
               <View>
                 零售价：<Text style='color: #FF9800'>￥{Math.floor(shopObj.goodsDomain.price) / 100}</Text>
               </View>
               <View>
-                折扣率：<Text style='color: #FF9800'>{shopObj.rate}%</Text>
+                折扣率：<Text style='color: #FF9800'>{shopObj.rate ? shopObj.rate + '%' : '暂无'}</Text>
               </View>
               <View>
-                折扣价：<Text style='color: #FF9800'>￥{Math.floor(shopObj.goodsDomain.price) / 100 }</Text>
+                折扣价：<Text style='color: #FF9800'>￥{Math.floor(shopObj.goodsDomain.price * (shopObj.rate ? shopObj.rate / 100 : 1)) / 100 }</Text>
               </View>
             </View>
           </View>
           <View className='box-tow'>
-            <View>品类：{shopObj.goodsDomain.tab}-{shopObj.goodsDomain.rate}</View>
-            <View>商品条码：{shopObj.goodsDomain.barCode}</View>
+            <View>品类：{shopObj.categoryOneName}-{shopObj.categoryTwoName}</View>
+            <View>商品条码：{shopObj.barCode ? shopObj.barCode : '暂无' }</View>
             <View>商品ID：{shopObj.goodsId}</View>
             <View>规格：{shopObj.goodsDomain.standards}</View>
             <View>单位：{shopObj.goodsDomain.unit}</View>
@@ -100,28 +104,28 @@ export default class Index extends Component {
           </View>
           <View className='box-tow'>
             <View>
-              人工损耗（斤）：15
+              人工损耗（斤）：{ shopObj.recordDomain && Math.abs(shopObj.recordDomain.artificial) ? Math.abs(shopObj.recordDomain.artificial) : '暂无' }
             </View>
             <View>
-              自然损耗（斤）：5
+              自然损耗（斤）：{ shopObj.recordDomain && Math.abs(shopObj.recordDomain.natural) ? Math.abs(shopObj.recordDomain.natural) : '暂无' }
             </View>
           </View>
           <View className='box-tow'>
             <View>
-              保质期预警：10天
+              保质期预警：{ shopObj.goodsDomain.qualityDate || '暂无' }
             </View>
             <View>
-              保鲜期预警：48小时
+              保鲜期预警：{ shopObj.goodsDomain.freshDate || '暂无' }
             </View>
           </View>
           <View className='box-tow' style='height: 30Px;line-height: 30Px;'>
-            产地：国内-甘肃省-兰州市
+            产地：{ shopObj.goodsDomain.countryId === 999999 ? '国外' : `${shopObj.goodsDomain.province.name}-${shopObj.goodsDomain.city.name}-${shopObj.goodsDomain.area.name}`}
           </View>
           <View className='box-tow'  style='height: 30Px;line-height: 30Px;'>
-            电脑库存（斤）：30
+            电脑库存（斤）：{ shopObj.computerStock }
           </View>
           <View className='box-tow'  style='height: 30Px;line-height: 30Px;'>
-            备注：当季蔬菜
+            备注：{ shopObj.goodsDomain.remark ? shopObj.goodsDomain.remark : '暂无' }
           </View>
           <View>
             <Button className='btn-max-w box-button' plain >下线</Button>

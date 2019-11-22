@@ -1,9 +1,9 @@
 import request from '../.././utils/request'
 var querystring = require('querystring')
 
-export function selectList() {
+export function selectList(shopId) {
   return request({
-    url: '/basics/selectList',
+    url: '/shop/getCategory?shopId=' + shopId,
     method: 'get'
   })
 }

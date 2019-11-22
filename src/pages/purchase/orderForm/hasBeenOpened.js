@@ -36,7 +36,7 @@ export default class Index extends Component {
           id: item.id,
           orderNo: item.orderNo,
           orderDetails: item.orderDetails,
-          totalMoney: item.totalMoney
+          totalMoney: Math.floor(item.totalMoney) / 100
         }
       })
       this.setState({

@@ -60,8 +60,8 @@ export default class Index extends Component{
       ...this.state,
       gradeList: []
     })
-    selectList().then(res => {
-      res.info.forEach(element => {
+    selectList(Taro.getStorageSync('adminId').shopId).then(res => {
+      JSON.parse(res.info).forEach(element => {
         list.push(
           {
             id: element.id,
@@ -565,7 +565,7 @@ export default class Index extends Component{
                   <View className='menu-left'>
                     <Image
                       style='width: 60Px;height: 60Px;background: #fff;'
-                      src={item.small_img}
+                      src={item.goodsDomain.smallImg}
                     />
                   </View>
                   <View className='menu-right'>

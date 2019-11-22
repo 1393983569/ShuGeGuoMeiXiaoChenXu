@@ -81,7 +81,9 @@ export default class Index extends Component {
               category_two_id: item.category_two_id,
               bar_code: item.bar_code,
               standards: item.standards,
+              sub_order_id: item.sub_order_id,
               price: item.price,
+              goods_id: item.goods_id,
               amount: item.amount,
               inputQuantity: item.input_quantity,
               money: item.money,
@@ -98,6 +100,8 @@ export default class Index extends Component {
           name: item.name,
           id: item.goods_id,
           standards: item.standards,
+          sub_order_id: item.sub_order_id,
+          goods_id: item.goods_id,
           price: item.price,
           amount: item.amount,
           inputQuantity: item.inputQuantity,
@@ -128,7 +132,9 @@ export default class Index extends Component {
         }
         list = [{
           id: _item.ids,
-          inputQuantity: _item.inputQuantity ? _item.inputQuantity : 0
+          inputQuantity: _item.inputQuantity ? _item.inputQuantity : 0,
+          subOrderId: _item.sub_order_id,
+          goodsId: _item.goods_id,
         }]
       }
       return _item
@@ -140,6 +146,7 @@ export default class Index extends Component {
 
   // 修改入库数量
   upStoerNumber(list, shoppingList) {
+    console.log(list, 'ggggggggggggggggggggggggggggggg')
     updateOrderStorage(list).then(res => {
       console.log(res)
       this.setState({
@@ -152,7 +159,7 @@ export default class Index extends Component {
 
   // 入库
   putBinStorage() {
-    console.log(this.state.shoppingList)
+    console.log(this.state.shoppingList, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
     const list  = []
     this.state.shoppingList.subOrderDetailList.forEach((item, index) => {
       item.categoryList.forEach((_item, _index) => {
@@ -182,6 +189,17 @@ export default class Index extends Component {
     })
   }
 
+  getSumMoney(list) {
+    let sum = 0
+    list.forEach(_item => {
+      _item.categoryList.forEach(item => {
+        sum += Math.floor(item.inputQuantity * item.price) / 100
+      })
+    })
+
+    return sum
+  }
+
   renderOrder(data) {
     const list = data.subOrderDetailList
     const { counter } = this.props
@@ -196,9 +214,9 @@ export default class Index extends Component {
           </View>
           <View>
             {
-              counter.orderState === '已派单'?
+              !data.warehousing ?
               <Button className='btn-max-w button-custom' type='primary' onClick={this.putBinStorage}>入库</Button>:
-              <Button className='btn-max-w button-custom-selected' type='primary'>{counter.orderState}</Button>
+              <Button className='btn-max-w button-custom-selected' type='primary'>已入库</Button>
             }
           </View>
         </View>
@@ -241,7 +259,7 @@ export default class Index extends Component {
                             <Input className='td-input' type='number' onBlur={this.onInputWarehouseNum.bind(this, item, listItem, index)} value={listItem.inputQuantity} maxLength='15'/>
                           }
                         </View>
-                        <View className="td">{Math.floor(parseInt(listItem.amount) * parseInt(listItem.price)) / 100}</View>
+                        <View className="td">{Math.floor(parseInt(listItem.inputQuantity) * parseInt(listItem.price)) / 100}</View>
                       </View>
                     </View>
                   })}
@@ -255,7 +273,7 @@ export default class Index extends Component {
             总计金额
           </Text>
           <Text className='aggregate-right'>
-            ￥{item.money}
+            ￥{this.getSumMoney(list)}
           </Text>
         </View>
       </View>

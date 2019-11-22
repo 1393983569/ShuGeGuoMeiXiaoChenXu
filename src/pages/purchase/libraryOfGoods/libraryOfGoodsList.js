@@ -49,11 +49,11 @@ export default class Index extends Component{
                   </View>
                   <View className='menu-right'>
                     <View className='menu-top-text' >
-                      {item.name}
+                      {item.goodsName}
                     </View>
                     <View className='menu-inventory' >
                       <Text className='menu-centre-text'>
-                        电脑库存（斤）: {item.amount}
+                        电脑库存（斤）: {item.computerStock}
                       </Text>
                       <View className='menu-centre-text'>
                         <View className='iconfont icon_rightarrow menu-centre-icon'></View>
@@ -66,7 +66,7 @@ export default class Index extends Component{
                     零售价: ￥{ Math.floor(item.goodsDomain.price) / 100 }
                   </View>
                   <View className='border-menu-right'>
-                    折扣价: ￥{ Math.floor(item.goodsDomain.price * (item.rate / 100)) / 100 }
+                    折扣价: ￥{ Math.floor(item.goodsDomain.price * (item.rate ? item.rate / 100 : 1)) / 100 }
                   </View>
                 </View>
               </View>
@@ -87,8 +87,8 @@ export default class Index extends Component{
       ...this.state,
       gradeList: []
     })
-    selectList().then(res => {
-      res.info.forEach(element => {
+    selectList(Taro.getStorageSync('adminId').shopId).then(res => {
+      JSON.parse(res.info).forEach(element => {
         list.push(
           {
             id: element.id,

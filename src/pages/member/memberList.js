@@ -136,9 +136,8 @@ export default class Index extends Component {
                   <View className='box-head-left'>
                     <View>
                       <Image
-                      // src={ item.avatar }
+                      src={ item.avatar }
                       style='width: 40Px;height: 40Px;border-radius: 4Px;'
-                      src='https://camo.githubusercontent.com/3e1b76e514b895760055987f164ce6c95935a3aa/687474703a2f2f73746f726167652e333630627579696d672e636f6d2f6d74642f686f6d652f6c6f676f2d3278313531333833373932363730372e706e67'
                       />
                     </View>
                     <View>

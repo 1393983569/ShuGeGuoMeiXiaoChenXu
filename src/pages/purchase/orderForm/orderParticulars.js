@@ -52,7 +52,7 @@ export default class Index extends Component {
             orderNo: item.orderNo,
             createTime: item.createTime,
             type: item.type,
-            totalMoney: item.totalMoney,
+            totalMoney: Math.floor(item.totalMoney) / 100,
             shopId: item.shopId,
             orderDetailList: this.getRuleList(item.orderDetailList, 'category_one_id', 'goodsName'),
             subOrderList: item.subOrderList,
@@ -112,6 +112,17 @@ export default class Index extends Component {
     })
   }
 
+  // 总计金额
+  getSumData(_list) {
+    let sum = 0
+    _list.forEach(item => {
+      item.list.forEach(_item => {
+        sum += Math.floor(_item.price * parseInt(_item.detailAmount))
+      })
+    })
+    return sum / 100
+  }
+
   renderOrder() {
     const { stateData } = this.state
     return(
@@ -149,7 +160,7 @@ export default class Index extends Component {
                         <View className="td">{_item.standards}</View>
                         <View className="td">￥{parseInt(_item.price) * 0.01}</View>
                         <View className="td">{_item.detailAmount}</View>
-                        <View className="td">￥{_item.money}</View>
+                        <View className="td">￥{Math.floor(parseInt(_item.detailAmount) * parseInt(_item.price)) / 100}</View>
                       </View>
                     )
                   })
@@ -158,6 +169,11 @@ export default class Index extends Component {
             )
           }) : null
         }
+        <View className='sumData'>
+          {
+            '总计金额:￥' + this.getSumData(stateData.orderDetailList)
+          }
+        </View>
       </View>
     )
   }
@@ -194,10 +210,10 @@ export default class Index extends Component {
                 <View className='childOrderList-content-text'>
                   <View>
                     <Text>订单金额：</Text>
-                    <Text>￥{item.money}</Text>
+                    <Text>￥{Math.floor(item.money) / 100}</Text>
                   </View>
                   <View>
-                    <Button size='mini' className='childOrderList-content-button'>{ item.status ? '已派单' : '未派单' }</Button>
+                    <Button size='mini' className='childOrderList-content-button'>{ item.status + '' === '1' ? '已派单' : item.status + ''  === '0' ? '未派单' : '已收货' }</Button>
                   </View>
                   <View onClick={this.goChildrenOrder.bind(this, item.suborder_no, item.id)}>
                     <View className='iconfont icon_rightarrow' style='font-size: 14Px; color: #8BC34A'></View>

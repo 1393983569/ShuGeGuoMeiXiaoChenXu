@@ -173,7 +173,7 @@ export default class Index extends Component{
           data[item.categoryOne.name].push({
             name: goodsDomain.name,
             bigImg: goodsDomain.bigImg,
-            purchasePrice: goodsDomain.purchasePrice / 100,
+            purchasePrice: goodsDomain.sellPrice / 100,
             unit: goodsDomain.unit,
             amount: item.number,
             selectState: false,
@@ -376,7 +376,7 @@ export default class Index extends Component{
           let data = {
             ...itenx,
             goodsName: itenx.name,
-            money: parseInt(itenx.amount) * parseInt(itenx.purchasePrice),
+            money: parseInt(itenx.amount) * parseInt(itenx.purchasePrice) * 100,
             price: itenx.purchasePrice * 100
           }
           delete data.bigImg
@@ -390,8 +390,7 @@ export default class Index extends Component{
       })
     })
     if (list.length > 0) {
-      addShopOrder(list, this.state.totalPrices, this.state.shopId).then(res => {
-        console.log(res)
+      addShopOrder(list, this.state.totalPrices * 100, this.state.shopId).then(res => {
         this.getShoppingCart()
         this.props.setOrderState('未拆单')
         Taro.navigateTo({
@@ -422,7 +421,6 @@ export default class Index extends Component{
     const _animatio = animatio
     const endX = e.changedTouches[0].clientX
     const distance = Math.floor(startX) - Math.floor(endX)
-    console.log(distance, startX, endX, '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
     if (distance > 40) {
       _animatio.translateX(-70).step()
       // 展示删除
